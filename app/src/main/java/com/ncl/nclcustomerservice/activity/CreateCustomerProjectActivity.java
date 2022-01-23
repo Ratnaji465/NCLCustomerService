@@ -244,6 +244,7 @@ public class CreateCustomerProjectActivity extends NetworkChangeListenerActivity
                     }
                 }
 
+
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
