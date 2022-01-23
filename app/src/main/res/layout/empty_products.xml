@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.ncl.nclcustomerservice.customviews.CustomTextView
+        style="@style/TextView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_toolbar_multi"
+        android:padding="@dimen/_10sdp"
+        android:text="Message"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp" />
+
+    <com.ncl.nclcustomerservice.customviews.CustomTextView
+        android:id="@+id/tvMessage"
+        style="@style/TextView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_12sdp"
+        android:layout_marginRight="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:gravity="left"
+        android:lineSpacingExtra="@dimen/_3sdp"
+        android:singleLine="false"
+        android:text="There is no Price List tagged for selected Customer, Please assign Price List to Customer then create sales Order ." />
+
+    <com.ncl.nclcustomerservice.customviews.CustomTextView
+        android:id="@+id/close"
+        style="@style/TextView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@color/different_green"
+        android:padding="@dimen/_12sdp"
+        android:text="ok"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp" />
+
+</LinearLayout>

@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    tools:context="com.ncl.nclcustomerservice.activity.PaymentCollectionsInsertActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/filter_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/line"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_20sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                       android:id="@+id/customerHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="Customer" />
+
+                    <com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/payment_insert_customer_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_spinner" />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_10sdp"
+                >
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:text="Contact" />
+
+                <Spinner
+                    android:id="@+id/payment_insert_contact_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/custom_spinner">
+
+                </Spinner>
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Customer SAP"
+                    android:gravity="center_vertical"
+
+                    />
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/sapCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="center_vertical"
+
+                    />
+
+                <include
+                    android:id="@+id/customer_location"
+                    layout="@layout/custom_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_12sdp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tvDivisionThird"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="Division" />
+
+                    <com.ncl.nclcustomerservice.customviews.MultiSelectionSpinner
+                        android:id="@+id/division_insertThird"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_spinner" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <!--<include-->
+            <!--android:id="@+id/payment_insert_invoicenumber"-->
+            <!--layout="@layout/custom_background"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/_35sdp"-->
+            <!--android:layout_marginTop="@dimen/_12sdp" />-->
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="vertical">
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/gray"
+                    android:text="Cash Information"
+                    android:textColor="@color/black"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_5sdp"/>
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Payment Type"
+                    />
+
+                <Spinner
+                    android:id="@+id/paymenttype_spinner_insert"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/custom_spinner">
+
+                </Spinner>
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:text="Payment Date" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/pcash_paymentdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="center_vertical"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cash_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <include
+                    android:id="@+id/pcash_insert_amount"
+                    layout="@layout/custom_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_12sdp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/check_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/_2sdp"-->
+                <!--android:text="Deposit Date" />-->
+
+                <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+                <!--android:id="@+id/pcheckinsert_check_date"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/_30sdp"-->
+                <!--android:layout_marginTop="@dimen/_2sdp"-->
+                <!--android:background="@drawable/button_bg_white"/>-->
+
+                <include
+                    android:id="@+id/pcheck_insert_bankname"
+                    layout="@layout/custom_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_12sdp" />
+
+                <include
+                    android:id="@+id/pcheck_insert_checknumber"
+                    layout="@layout/custom_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_12sdp" />
+
+                <include
+                    android:id="@+id/pcheck_insert_amount"
+                    layout="@layout/custom_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_12sdp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:text="Deposit Date" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/cheque_Deposit_Date"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="center_vertical"
+                    android:text="" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="Status" />
+
+                    <Spinner
+                        android:id="@+id/payment_status_spinner_insert"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_spinner">
+
+                    </Spinner>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/online_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <include
+                    android:id="@+id/payment_insert_bankname"
+                    layout="@layout/custom_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_12sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/transactiontypeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="Transfer Type/Payment type *" />
+
+                    <Spinner
+                        android:id="@+id/transactiontype_spinner_insert"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_spinner">
+
+                    </Spinner>
+
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/payment_insert_transaction_number"
+                    layout="@layout/custom_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_12sdp" />
+
+                <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/_2sdp"-->
+                <!--android:text="Payment Date" />-->
+
+                <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+                <!--android:id="@+id/ponline_paymentdate"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/_30sdp"-->
+                <!--android:layout_marginTop="@dimen/_2sdp"-->
+                <!--android:background="@drawable/button_bg_white"/>-->
+
+                <include
+                    android:id="@+id/ponline_insert_amount"
+                    layout="@layout/custom_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_12sdp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCurrency"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textColor="@color/text_color"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:id="@+id/main_rel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="3dp"
+                android:orientation="horizontal">
+
+
+
+                <TextView
+                    android:id="@+id/tv_file_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Upload Image"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/iv_file_preview"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:padding="8dp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_centerInParent="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_baseline_camera_alt_24"/>
+
+            </LinearLayout>
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/gray"
+                android:text="Comments By Commercial Team"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_5sdp"/>
+            <include
+                android:id="@+id/comments_by_commercial_team"
+                layout="@layout/custom_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_65sdp"
+                android:layout_marginTop="@dimen/_12sdp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_80sdp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_above="@+id/bottom_layout"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/_7sdp"
+        android:paddingTop="@dimen/_7sdp">
+
+        <com.ncl.nclcustomerservice.customviews.CustomButton
+            android:id="@+id/save_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg_green"
+            android:text="save"
+            android:textColor="@android:color/white" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:background="@drawable/button_bg_red"
+            android:text="cancel"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

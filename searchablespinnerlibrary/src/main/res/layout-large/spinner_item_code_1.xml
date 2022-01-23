@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.kenmeidearu.searchablespinnerlibrary.CustomTextView
+        android:id="@+id/spinnerHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4sp"
+        android:gravity="left"
+        android:text="isihead"
+        android:singleLine="true"
+        android:padding="@dimen/_5sdp"
+        android:textColor="@android:color/black"
+        >
+    </com.kenmeidearu.searchablespinnerlibrary.CustomTextView>
+</RelativeLayout>

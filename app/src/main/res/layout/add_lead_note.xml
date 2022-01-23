@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_marginTop="@dimen/_10sdp">
+
+
+
+
+
+       <LinearLayout
+           android:layout_width="@dimen/_100sdp"
+           android:layout_height="@dimen/_50sdp"
+           android:orientation="vertical"
+           android:visibility="gone"
+           android:layout_marginLeft="@dimen/_5sdp"
+           android:weightSum="1">
+
+           <com.ncl.nclcustomerservice.customviews.CustomTextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="bottom"
+               android:text="Work done id"
+               />
+
+           <EditText
+               android:id="@+id/etWorkDoneId"
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:background="@drawable/button_bg_white"/>
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="@dimen/_100sdp"
+           android:layout_height="@dimen/_50sdp"
+           android:orientation="vertical"
+           android:layout_marginLeft="@dimen/_5sdp"
+           android:weightSum="1">
+
+           <com.ncl.nclcustomerservice.customviews.CustomTextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="bottom"
+               android:text="Date"
+               />
+
+           <TextView
+               android:id="@+id/etDate"
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="1"
+               android:hint="DD-MM-YYYY"
+               android:gravity="center"
+               android:background="@drawable/button_bg_white"/>
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="@dimen/_100sdp"
+           android:layout_height="@dimen/_70sdp"
+           android:orientation="vertical"
+           android:layout_marginLeft="@dimen/_10sdp"
+           android:weightSum="1">
+
+           <com.ncl.nclcustomerservice.customviews.CustomTextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Remarks"
+               />
+
+           <EditText
+               android:id="@+id/etRemarks"
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="1"
+               android:inputType="text"
+               android:gravity="start"
+               android:background="@drawable/button_bg_white"/>
+       </LinearLayout>
+
+
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:layout_marginLeft="@dimen/_10sdp"
+           android:layout_marginTop="@dimen/_10sdp"
+           android:orientation="horizontal">
+
+           <LinearLayout
+               android:id="@+id/addlayout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center">
+
+               <ImageView
+                   android:layout_width="@dimen/_25sdp"
+                   android:layout_height="@dimen/_25sdp"
+                   android:src="@drawable/add_table"
+                   android:text="+" />
+           </LinearLayout>
+
+           <LinearLayout
+               android:id="@+id/removelayout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:visibility="gone"
+               >
+
+               <ImageView
+                   android:layout_width="@dimen/_25sdp"
+                   android:layout_height="@dimen/_25sdp"
+                   android:layout_marginLeft="@dimen/_5sdp"
+                   android:gravity="center"
+                   android:src="@drawable/decrease_table"
+                   />
+           </LinearLayout>
+       </LinearLayout>
+
+   </LinearLayout>
+
+</LinearLayout>

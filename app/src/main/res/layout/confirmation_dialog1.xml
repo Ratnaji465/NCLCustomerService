@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_margin="@dimen/_10sdp">
+
+            <com.ncl.nclcustomerservice.customviews.CustomButton
+                android:id="@+id/ok"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:background="@drawable/button_background_green"
+                android:text="MAP"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp"
+                android:layout_weight="1"/>
+            <com.ncl.nclcustomerservice.customviews.CustomButton
+                android:id="@+id/cancel"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/_20sdp"
+                style="@style/Button"
+                android:layout_width="0dp"
+                android:background="@drawable/button_bg_red_zero_radius"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+
+    <include layout="@layout/filter_toolbar"
+        android:id="@+id/toolbar_layout"/>
+
+
+    <LinearLayout
+        android:layout_below="@+id/toolbar_layout"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:layout_above="@+id/sign_linear"
+        android:orientation="vertical" />
+
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/sign_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:background="@android:color/white">
+
+        <Button
+            android:id="@+id/getsign"
+            style="@style/TextView15Bold"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_toolbar_multi"
+            android:text="save"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_13sdp"
+            tools:ignore="ButtonStyle" />
+
+        <!--<Button-->
+            <!--android:id="@+id/getsign"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="@string/hint_save"-->
+            <!--android:layout_marginRight="@dimen/_8sdp"-->
+            <!--android:textSize="@dimen/_13sdp"-->
+            <!--style="@style/TextView15Bold"-->
+            <!--tools:ignore="ButtonStyle"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:background="@color/background_green" />-->
+
+    </LinearLayout>
+
+</RelativeLayout>

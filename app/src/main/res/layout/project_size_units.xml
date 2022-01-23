@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:padding="@dimen/_5sdp"
+        android:text="No of Units"
+        android:textAllCaps="true"
+        android:textColor="@android:color/black" />
+    <com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/textInput_noofblocks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_weight="1"
+        android:hint="No.of blocks"
+        app:boxStrokeColor="@color/toolbar_top"
+        app:boxStrokeWidth="1px"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextView7"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tv_noofblocks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:singleLine="false"
+            android:inputType="number"
+            android:layout_marginLeft="10dp"
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/textInput_nooffloorsperblock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="No.of Floors per block"
+        app:boxStrokeColor="@color/toolbar_top"
+        app:boxStrokeWidth="1px"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextView7"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tv_nooffloorsperblock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:singleLine="false"
+            android:inputType="number"
+            android:layout_marginLeft="10dp"
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/textInput_noofflatsperblock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="No.of Flats per block"
+        app:boxStrokeColor="@color/toolbar_top"
+        app:boxStrokeWidth="1px"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/TextView7"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tv_noofflatsperblock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:singleLine="false"
+            android:inputType="number"
+            android:layout_marginLeft="10dp"
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

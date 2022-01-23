@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ncl.nclcustomerservice.activity.InsertLeadActivity">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/filter_toolbar" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_layout"
+        android:layout_below="@+id/title_bar"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/grey"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Lead's Information"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black" />
+
+                    <include layout="@layout/general_info_layout" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/grey"
+                        android:padding="@dimen/_5sdp"
+                        android:text="BILLING ADDRESS"
+                        android:textColor="@android:color/black" />
+
+
+                    <CheckBox
+                        android:id="@+id/same_addr_box"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@color/grey"
+                        android:paddingLeft="@dimen/_4sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="Same address As above"
+                        android:textStyle="bold" />
+
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@color/grey"
+                        android:padding="@dimen/_5sdp"
+                        android:text="OTHERS"
+                        android:textColor="@android:color/black" />
+
+                    <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1px"-->
+                    <!--android:background="@color/gray" />-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/description"
+                            layout="@layout/custom_background"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp" />
+
+                        <CheckBox
+                            android:id="@+id/do_not_call_box"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Do Not Call" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/grey"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Project Information"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/black" />
+
+                    <include
+                        android:id="@+id/projectname_insert"
+                        layout="@layout/custom_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp" />
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tvProjectType"
+                        style="@style/TextView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:gravity="left"
+                        android:text="Project Type"
+                        android:textColor="@color/gray" />
+
+                    <Spinner
+                        android:id="@+id/projecttype_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_spinner" />
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tvProjectClass"
+                        style="@style/TextView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:gravity="left"
+                        android:text="Class of project"
+                        android:textColor="@color/gray" />
+
+                    <Spinner
+                        android:id="@+id/classofproject_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_spinner" />
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tvProjectStatus"
+                        style="@style/TextView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:gravity="left"
+                        android:text="Status of Project"
+                        android:textColor="@color/gray" />
+
+                    <Spinner
+                        android:id="@+id/statusproject_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/custom_spinner" />
+
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tvProjectSizeClass"
+                        style="@style/TextView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:gravity="left"
+                        android:text="Size of project in SFT"
+                        android:textColor="@color/gray" />
+
+                    <Spinner
+                        android:id="@+id/sizeofproject_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:visibility="gone"
+                        android:background="@drawable/custom_spinner" />
+                    <com.ncl.nclcustomerservice.customviews.CustomEditText
+                        android:id="@+id/et_sizeofproject"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/button_bg_white"
+                        android:gravity="left|center"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <include
+                        android:id="@+id/project_size_unit"
+                        layout="@layout/custom_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_12sdp" />
+                    <include
+                        android:id="@+id/project_size_unit_new"
+                        layout="@layout/project_size_units"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_marginTop="@dimen/_12sdp" />
+
+                    <include
+                        android:id="@+id/no_of_floor_block"
+                        layout="@layout/custom_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_12sdp" />
+                    <include
+                        android:id="@+id/no_of_flats"
+                        layout="@layout/custom_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_12sdp" />
+
+                    <include
+                        android:id="@+id/cubic_mertres"
+                        layout="@layout/custom_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_12sdp" />
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/grey"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:text="Address of Site"
+                        android:textAllCaps="true"
+                        android:gravity="start"
+                        style="@style/TextView12"
+                        android:textColor="@android:color/black" />
+
+                    <include
+                        android:id="@+id/shipping_layout"
+                        layout="@layout/address_layout_site" />
+                </LinearLayout>
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/grey"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Contact within the project"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black" />
+
+                <include
+                    android:id="@+id/contact_within_p_layout"
+                    layout="@layout/contact_within_project" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:nestedScrollingEnabled="false"
+                    android:scrollbarSize="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:id="@+id/associated_contact_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"></LinearLayout>
+                </HorizontalScrollView>
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/grey"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Note on action taken/work done"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black" />
+
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:nestedScrollingEnabled="false"
+                    android:scrollbarSize="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:id="@+id/note_on_action_taken_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"></LinearLayout>
+                </HorizontalScrollView>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_above="@+id/bottom_layout"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.ncl.nclcustomerservice.customviews.CustomButton
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg_green"
+            android:text="save"
+            android:textColor="@android:color/white" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:background="@drawable/button_bg_red"
+            android:text="cancel"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</RelativeLayout>

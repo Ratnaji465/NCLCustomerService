@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:id="@+id/tvProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="Product" />
+
+            <com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/opportunirty_product_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_spinner">
+
+            </com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llprice"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="Price" />
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:id="@+id/opportunirty_price_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg_white"
+                android:gravity="left">
+
+            </com.ncl.nclcustomerservice.customviews.CustomTextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/plant_layout"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:weightSum="2">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:id="@+id/tvPlant"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="Plant" />
+
+            <Spinner
+                android:id="@+id/opportunirty_plant_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_spinner">
+
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="Quantity" />
+
+            <EditText
+                android:id="@+id/opportunity_insert_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg_white"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llkg"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="Kgs" />
+
+            <EditText
+                android:id="@+id/etKg"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg_white"
+                android:enabled="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llmt"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="MT" />
+
+            <EditText
+                android:id="@+id/etMt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg_white"
+                android:enabled="false"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lldiscount"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="Discount" />
+
+            <EditText
+                android:id="@+id/opportunity_insert_discount"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg_white"
+                android:inputType="number" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llsubtotal"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="SubTotal" />
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:id="@+id/opportunity_insert_subtotal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg_white">
+
+            </com.ncl.nclcustomerservice.customviews.CustomTextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/addlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/add_table"
+                    android:text="+" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/removelayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:src="@drawable/decrease_table" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:weightSum="2">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/properties_layout"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/_10sdp"-->
+    <!--android:layout_marginTop="@dimen/_10sdp"-->
+    <!--android:layout_weight="1.5"-->
+    <!--android:orientation="vertical"-->
+    <!--android:weightSum="3">-->
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/color_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1.3"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="3">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_5sdp"-->
+    <!--android:layout_weight="1.5"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_2sdp"-->
+    <!--android:text="Product" />-->
+
+    <!--<Spinner-->
+    <!--android:id="@+id/opportunirty_product_spinner"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/_25sdp"-->
+    <!--android:layout_marginTop="@dimen/_3sdp"-->
+    <!--android:background="@drawable/custom_spinner"></Spinner>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/_15sdp"-->
+    <!--android:layout_marginTop="@dimen/_5sdp"-->
+    <!--android:layout_weight="1.5"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_2sdp"-->
+    <!--android:text="Price" />-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:id="@+id/opportunirty_price_spinner"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_3sdp"-->
+    <!--android:background="@drawable/button_bg_white">-->
+
+    <!--</com.suprasoft.ncl.customviews.CustomTextView>-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/size_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1.3"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="3">-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomEditText-->
+    <!--android:id="@+id/opportunity_insert_quantity"-->
+    <!--style="@style/TextView10"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_10sdp"-->
+    <!--android:layout_weight="1.5"-->
+    <!--android:background="@drawable/button_bg_white"-->
+    <!--android:gravity="left"-->
+    <!--android:hint="Quantity"-->
+    <!--android:inputType="number" />-->
+
+
+    <!--<com.suprasoft.ncl.customviews.CustomEditText-->
+    <!--android:id="@+id/opportunity_insert_discount"-->
+    <!--style="@style/TextView10"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/_15sdp"-->
+    <!--android:layout_marginTop="@dimen/_10sdp"-->
+    <!--android:layout_weight="1.5"-->
+    <!--android:background="@drawable/button_bg_white"-->
+    <!--android:gravity="left"-->
+    <!--android:hint="Discount"-->
+    <!--android:inputType="number" />-->
+
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/probulity_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_5sdp"-->
+    <!--android:layout_weight="1.5"-->
+    <!--android:orientation="vertical"-->
+    <!--android:visibility="gone">-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_2sdp"-->
+    <!--android:text="Probulity (%)" />-->
+
+    <!--<Spinner-->
+    <!--android:id="@+id/opportunirty_probulity_spinner"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_3sdp"-->
+    <!--android:background="@drawable/custom_spinner"></Spinner>-->
+    <!--</LinearLayout>-->
+
+    <!--&lt;!&ndash;  <LinearLayout-->
+    <!--android:id="@+id/date_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1.3"-->
+    <!--android:weightSum="3"-->
+    <!--android:visibility="gone"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_weight="1.5">-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_5sdp"-->
+    <!--android:text="Schedule From Date" />-->
+
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:id="@+id/opportunity_insert_fromdate"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:paddingTop="@dimen/_7sdp"-->
+    <!--android:paddingBottom="@dimen/_7sdp"-->
+    <!--android:layout_marginTop="@dimen/_10sdp"-->
+    <!--android:background="@drawable/button_bg_white"-->
+    <!--android:text=""-->
+    <!--android:inputType="number" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_marginLeft="@dimen/_15sdp"-->
+    <!--android:layout_weight="1.5">-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_5sdp"-->
+    <!--android:text="Schedule Upto Date" />-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:id="@+id/opportunity_insert_uptodate"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:paddingTop="@dimen/_7sdp"-->
+    <!--android:paddingBottom="@dimen/_7sdp"-->
+    <!--android:layout_marginTop="@dimen/_3sdp"-->
+    <!--android:text=""-->
+    <!--android:background="@drawable/button_bg_white"-->
+    <!--android:inputType="number" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>&ndash;&gt;-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/add_remove_layout"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginRight="@dimen/_5sdp"-->
+    <!--android:layout_weight="0.5"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="2">-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/addlayout"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/add_button"-->
+    <!--android:layout_width="@dimen/_30sdp"-->
+    <!--android:layout_height="@dimen/_30sdp"-->
+    <!--android:src="@drawable/add_table"-->
+    <!--android:text="+" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/removelayout"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:visibility="gone">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/remove_button"-->
+    <!--android:layout_width="@dimen/_30sdp"-->
+    <!--android:layout_height="@dimen/_30sdp"-->
+    <!--android:layout_marginLeft="@dimen/_5sdp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:src="@drawable/decrease_table" />-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="@dimen/_minus20sdp"-->
+    <!--android:layout_marginLeft="@dimen/_10sdp"-->
+    <!--android:layout_marginTop="@dimen/_5sdp"-->
+    <!--android:text="SubTotal" />-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/_10sdp"-->
+    <!--android:weightSum="2">-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomTextView-->
+    <!--android:id="@+id/opportunity_insert_subtotal"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/_17sdp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/button_bg_white"-->
+    <!--android:text="0" />-->
+
+
+    <!--&lt;!&ndash;<include&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/opportunity_insert_subtotal"&ndash;&gt;-->
+    <!--&lt;!&ndash;layout="@layout/custom_background"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="@dimen/_5sdp" />&ndash;&gt;-->
+
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1px"-->
+    <!--android:background="@color/gray" />-->
+    <!---->
+    <!--</LinearLayout>-->
+
+</LinearLayout>

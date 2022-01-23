@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--  <ImageView
+          android:id="@+id/duo_view_option_selector_side"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/view_option_text_layout"
+          android:layout_alignTop="@+id/view_option_text_layout"
+          android:src="@drawable/duo_shape_rectangled_red"/>
+
+      <RelativeLayout
+          android:id="@+id/view_option_text_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_toRightOf="@+id/duo_view_option_selector_side"
+          android:padding="16dp">
+
+          <ImageView
+              android:id="@+id/duo_view_option_selector"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="16dp"
+              android:src="@drawable/duo_shape_circled_white"/>
+
+          <TextView
+              android:id="@+id/duo_view_option_text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="16dp"
+              android:layout_toRightOf="@+id/duo_view_option_selector"
+              android:gravity="center_vertical|start"
+              android:text="@string/app_name"
+              android:textAppearance="?android:attr/textAppearanceLarge"
+              android:textColor="@android:color/white"
+              android:textStyle="bold"/>
+      </RelativeLayout>-->
+    <RelativeLayout
+        android:id="@+id/option_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/drawer_item_bg">
+
+        <RelativeLayout
+            android:id="@+id/linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <ImageView
+                android:id="@+id/nav_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/dashboard_icon" />
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:id="@+id/nav_itemname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="35dp"
+                android:layout_toRightOf="@+id/nav_icon"
+                android:gravity="center_vertical"
+                android:text="DASHBOARD"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="13dp"
+                app:fontName="@string/regular" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="75dp"
+                android:src="@drawable/arrow" />
+        </RelativeLayout>
+
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@+id/linear"-->
+        <!--android:layout_marginLeft="50dp"-->
+        <!--android:layout_marginRight="60dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:alpha="0.5"-->
+        <!--android:background="@color/white_transparent" />-->
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            android:id="@+id/tvCustomerCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer (Company) Name *"
+            android:textAllCaps="true" />
+
+        <AutoCompleteTextView
+            android:id="@+id/at_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company"
+            android:inputType="textAutoComplete|textAutoCorrect"
+            android:singleLine="true" />
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            android:id="@+id/tvlead_source"
+            style="@style/TextView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="left"
+            android:text="lead source"
+            android:textColor="@color/gray" />
+
+        <Spinner
+            android:id="@+id/lead_source"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:background="@drawable/custom_spinner" />
+
+
+
+
+
+        <include
+            android:id="@+id/billing_layout"
+            layout="@layout/address_layout_leads" />
+
+    </LinearLayout>
+</LinearLayout>

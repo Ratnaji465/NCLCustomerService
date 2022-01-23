@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+
+        >
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:text="*"
+            android:textColor="@color/red"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:gravity="center_vertical"
+            android:text="Name of Contact"
+            android:textColor="@color/gray" />
+
+
+    </LinearLayout>
+
+    <com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/associate_contacts_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@drawable/custom_spinner"
+        android:layout_margin="@dimen/_2sdp"
+        >
+
+    </com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:gravity="center"
+
+        >
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="*"
+            android:textColor="@color/red"
+            android:textSize="25sp"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/designation"
+            layout="@layout/custom_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/email"
+        layout="@layout/custom_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_12sdp" />
+
+    <com.ncl.nclcustomerservice.customviews.CustomTextView
+        android:id="@+id/tvCell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Cell" />
+
+    <com.ncl.nclcustomerservice.customviews.CustomEditText
+        android:id="@+id/cell"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="@drawable/button_bg_white"
+        android:gravity="left|center"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <com.ncl.nclcustomerservice.customviews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Phone" />
+
+    <com.ncl.nclcustomerservice.customviews.CustomEditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="@drawable/button_bg_white"
+        android:gravity="left|center"
+        android:imeOptions="actionNext"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <com.ncl.nclcustomerservice.customviews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Company" />
+
+    <com.ncl.nclcustomerservice.customviews.CustomEditText
+        android:id="@+id/companyTxt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="@drawable/button_bg_white"
+        android:gravity="left|center"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:enabled="false"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:orientation="vertical">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            android:id="@+id/tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textAllCaps="true" />
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:background="@drawable/custom_spinner">
+
+        </Spinner>
+    </LinearLayout>
+
+
+    <com.ncl.nclcustomerservice.customviews.CustomTextView
+        style="@style/TextView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center_vertical"
+        android:text="Associate contact"
+        android:textColor="@color/gray" />
+
+</LinearLayout>

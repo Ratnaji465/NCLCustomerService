@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#B6B6B6</color>
+    <color name="colorPrimaryDark">#27262D</color>
+    <color name="green">#008000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="edit_text_boarder">#dadada</color>
+    <color name="listview_header_color">#5E0A05</color>
+    <color name="light_grey">#F7F7F7</color>
+    <color name="gray">#9d9a94</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="text_color">#3A3365</color>
+    <color name="button_color">#27262D</color>
+    <color name="nav_item_select_color">#ecebe9</color>
+    <color name="different_green">#00e0aa</color>
+    <color name="black">#000000</color>
+    <color name="blue">#338DFF</color>
+    <color name="transparent_50P">#80000000</color>
+    <color name="red">#ff0000</color>
+    <color name="toolbar">#4F5384</color>
+    <color name="piechartgreen">#00E0AA</color>
+    <color name="background_grey">#E1E1E1</color>
+    <color name="background_green">#00E0AA</color>
+    <color name="background_red">#F96E76</color>
+    <color name="toolbar_bottom">#00437c</color>
+    <color name="toolbar_top">#000a31</color>
+    <color name="grey">#CCD3D6</color>
+    <color name="color_ticketid">#343433</color>
+    <color name="background_blue">#007e9f</color>
+    <color name="yellow">#80EDDC43</color>
+
+</resources>

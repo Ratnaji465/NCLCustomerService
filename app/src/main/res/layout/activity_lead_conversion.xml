@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/filter_toolbar" />
+
+    <Spinner
+        android:id="@+id/customer_spinner"
+        android:background="@drawable/custom_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp" />
+
+    <!--<CheckBox-->
+        <!--android:id="@+id/customer_check"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/_5sdp"-->
+        <!--android:text="" />-->
+
+    <include
+        android:id="@+id/contact"
+        layout="@layout/custom_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        />
+
+    <CheckBox
+        android:id="@+id/opportunity_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:text="Do you want to Create Opportunity" />
+
+    <com.ncl.nclcustomerservice.customviews.CustomButton
+        android:id="@+id/convert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/button_bg_green"
+        android:text="convert"
+        android:textColor="@android:color/white" />
+</LinearLayout>

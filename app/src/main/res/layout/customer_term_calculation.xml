@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:weightSum="2">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Credit Limit Rs. Lakhs"
+            android:textColor="@color/black" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/amount"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:weightSum="2">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Security Instruments"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/security_instruments"
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_white"
+            android:gravity="center"
+            android:inputType="text"
+            android:text=""
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:singleLine="false"
+            android:text="PDC Cheque no"
+            android:textColor="@color/black" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/pdc_chequeno"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_white"
+            android:gravity="center"
+            android:inputType="text"
+            android:text="" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2"
+        android:visibility="gone">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:text="freight"
+            android:textColor="@color/black" />
+
+        <Spinner
+            android:id="@+id/freight"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_spinner"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            android:id="@+id/bank"
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Bank"
+            android:textColor="@color/black"
+            android:visibility="visible" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/etbank"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg_white"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:inputType="text"
+            android:text=""
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Security deposit amount Rs"
+            android:textColor="@color/black" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/security_deposit_amount"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Bank guarntee amount Rs"
+            android:textColor="@color/black" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/bank_guarntee_amountrs"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="L C amount Rs"
+            android:textColor="@color/black" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/lc_amount_rs"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_white"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:orientation="vertical"
+       >
+
+        <com.ncl.nclcustomerservice.customviews.CustomTextView
+            style="@style/TextView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Remarks"
+            android:textColor="@color/black" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/etRemarks"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_white"
+            android:gravity="center"
+            android:inputType="text"
+            android:text="" />
+
+    </LinearLayout>
+</LinearLayout>

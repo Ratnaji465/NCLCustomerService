@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ncl.nclcustomerservice.activity.DailyHistoryActivity">
+
+    <include layout="@layout/filter_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_toolbar_multi"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_40sdp"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:orientation="vertical">
+
+                <com.ncl.sensationalagri.customviews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check in"
+                    android:textColor="@android:color/white" />
+
+                <com.ncl.sensationalagri.customviews.CustomTextView
+                    android:id="@+id/checkin_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="03:50 PM"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:orientation="vertical">
+
+                <com.ncl.sensationalagri.customviews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check Out"
+                    android:textColor="@android:color/white" />
+
+                <com.ncl.sensationalagri.customviews.CustomTextView
+                    android:id="@+id/checkout_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hh.mm.ss"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <com.ncl.sensationalagri.customviews.CustomTextView
+        style="@style/TextView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="remarks"
+        android:textColor="@color/color_ticketid"
+        android:textSize="@dimen/_12sdp" />
+
+    <com.ncl.sensationalagri.customviews.CustomTextView
+        android:id="@+id/remarks"
+        style="@style/TextView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text=""
+        android:textAllCaps="false"
+        android:textColor="@color/color_ticketid"
+        android:textSize="@dimen/_10sdp" />
+
+    <com.ncl.sensationalagri.customviews.CustomTextView
+        style="@style/TextView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="Customer Signature"
+        android:textColor="@color/color_ticketid"
+        android:textSize="@dimen/_12sdp" />
+
+    <com.ncl.sensationalagri.customviews.CircleImageView
+        android:id="@+id/signature"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_2sdp" />
+
+</LinearLayout>

@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">NCL Customer Service</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="submit">Submit</string>
+    <string name="copied">Copied.</string>
+    <string name="font_semibold">fonts/Montserrat-SemiBold.ttf</string>
+    <string name="pick_image_intent_text">Please Choose Image</string>
+    <string name = "required_asterisk"><![CDATA[<font color=\'#ff0000\'>&nbsp*</font>]]></string>
+
+
+    <string-array name="menuOptions">
+        <item>Dashboard</item>
+        <item>Leads</item>
+        <item>Contacts</item>
+        <item>Customers</item>
+        <item>Opportunities</item>
+        <item>Contracts</item>
+        <item>Sales Orders</item>
+        <item>Third Party Orders</item>
+        <item>Sales Calls</item>
+        <item>Complaints</item>
+        <item>TA and DA</item>
+        <item>Notifications</item>
+        <item>LOGOUT</item>
+    </string-array>
+
+
+  <!--  <string-array name="menuOptions">
+        <item>Dashboard</item>
+        <item>Leads</item>
+        <item>Contacts</item>
+
+        <item>LOGOUT</item>
+    </string-array>-->
+
+    <string name="location_updated">Location updated</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="a_new_update_is_available">New update available</string>
+    <string name="update">Update</string>
+    <string name="noti_channel_default">Default Channel</string>
+    <string name="btn_retry_not">Retry</string>
+    <string name="btn_cancel_not">Cancel</string>
+    <string name="file_upload_successful">Data synced successfully..</string>
+    <string name="in_progress">in progress</string>
+    <string name="message_failed">Data has been not uploaded</string>
+    <string name="message_upload_success">Uploading Success</string>
+    <string name="error_upload_failed">Uploading failed</string>
+    <string name="message_upload_failed">Data is not uploaded. Please TRY AGAIN</string>
+    <string name="uploading">Fetching master data from server.Please Wait...</string>
+
+
+</resources>

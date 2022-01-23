@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "871182804931",
+    "project_id": "ncl-customer-service-a83fd",
+    "storage_bucket": "ncl-customer-service-a83fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871182804931:android:8796e4804ce13039473f76",
+        "android_client_info": {
+          "package_name": "com.ncl.nclcustomerservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871182804931-23fld130unecasahklo2ffishb2u6d1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ncl.nclcustomerservice",
+            "certificate_hash": "0a7aafcf6d1e21072922923199f7cc16083e0081"
+          }
+        },
+        {
+          "client_id": "871182804931-mvnh3q6s0qvteae5tkj42p7aoenfqf70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSL8TzwV_15tUWdPXZEhAsYAcFdzJchNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871182804931-mvnh3q6s0qvteae5tkj42p7aoenfqf70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

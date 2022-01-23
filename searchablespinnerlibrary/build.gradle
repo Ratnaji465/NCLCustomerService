@@ -1,0 +1,126 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'searchablespinner'
+
+    publishedGroupId = 'com.kenmeidearu.searchablespinner'
+    libraryName = 'SearchableSpinner'
+    artifact = 'searchablespinner'
+
+    libraryDescription = 'A custom spinner with an extra functionality of searching the items in the spinner.'
+
+    siteUrl = 'https://github.com/kenmeidearu/SearchableSpinner'
+    gitUrl = 'https://github.com/kenmeidearu/SearchableSpinner.git'
+
+    libraryVersion = '1.3.1'
+
+    developerId = 'kenmeidearu'
+    developerName = 'Kenmeidearu San'
+    developerEmail = 'kenmeidearu@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+def siteUrl = 'https://github.com/kenmeidearu/SearchableSpinner'
+def gitUrl = 'https://github.com/kenmeidearu/SearchableSpinner.git'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 30
+        versionCode 8
+        versionName "1.5.2"
+    }
+    buildTypes {
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+apply plugin: 'com.jfrog.bintray'
+
+version = "1.5.2"
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "SearchableSpinner"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = "com.kenmeidearu.searchablespinner"
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'A simple spinner with an extra ability to search for the items.'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'kenmeidearu'
+                        name 'Kenmeidearu San'
+                        email 'kenmeidearu@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'de.hdodenhof:circleimageview:2.0.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.3'
+
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+

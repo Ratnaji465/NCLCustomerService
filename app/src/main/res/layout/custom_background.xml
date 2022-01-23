@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/textInput_username"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:hint=""
+    app:boxStrokeColor="@color/toolbar_top"
+    app:boxStrokeWidth="1px"
+    app:hintEnabled="true"
+    app:hintTextAppearance="@style/TextView7"
+
+    >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_10sdp"
+        android:singleLine="false"
+        android:layout_marginLeft="10dp"
+
+        />
+</com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+
+
+    <!--<android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/textInput_username"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:background="@drawable/button_bg_white"--><!--android:hint="User Name"--><!--android:textColorHint="@color/gray">-->
+
+    <!--<com.suprasoft.ncl.customviews.CustomEditText--><!--android:id="@+id/username"--><!--style="@style/TextView10"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@android:color/transparent"--><!--android:gravity="left"--><!--android:inputType="textCapWords"--><!--android:padding="@dimen/_5sdp"--><!--android:textColor="@color/black" />--><!--</android.support.design.widget.TextInputLayout>-->
