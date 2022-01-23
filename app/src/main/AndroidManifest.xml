@@ -45,11 +45,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         <activity android:name="com.ncl.nclcustomerservice.activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <uses-library
@@ -113,7 +113,13 @@
             android:name="com.ncl.nclcustomerservice.activity.NewSignUpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.SignUp"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".activity.CreateCustomerProjectActivity"/>
+        <activity android:name=".activity.CreateCustomerProjectActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service android:name="com.ncl.nclcustomerservice.fcm.MyFirebaseMessagingService1">
             <intent-filter>

@@ -129,9 +129,6 @@ public class SplashActivity extends AppCompatActivity implements RetrofitRespons
 
 
         } else {
-
-//            setContentView(R.layout.splash);
-//            new RetrofitRequestController(this).sendRequest(Constants.RequestNames.APP_CURRENT_VERSION, "", false);
             Intent homeIntent;
             if (Common.getUserIdFromSP(SplashActivity.this) == 0) {
                 homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -159,7 +156,6 @@ public class SplashActivity extends AppCompatActivity implements RetrofitRespons
                     Intent homeIntent;
                     if (Common.getUserIdFromSP(SplashActivity.this) == 0) {
                         homeIntent = new Intent(getApplicationContext(), LoginActivity.class);
-//                        homeIntent.putExtra("role", roleId);
                     } else {
                         homeIntent = new Intent(getApplicationContext(), MainActivity.class);
                     }
@@ -173,10 +169,6 @@ public class SplashActivity extends AppCompatActivity implements RetrofitRespons
     }
 
     private void showUpdateDialog() {
-
-        //Common.getDefaultSP(this).edit().putBoolean(Constants.SharedPreferencesKeys.LOGIN_STATUS,false);
-
-
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(Common.getStringResourceText(R.string.a_new_update_is_available));
         builder.setPositiveButton(Common.getStringResourceText(R.string.update), new DialogInterface.OnClickListener() {
@@ -196,10 +188,4 @@ public class SplashActivity extends AppCompatActivity implements RetrofitRespons
         builder.setCancelable(false);
         builder.show();
     }
-
-//    private void showNotificationMessage(Context myFirebaseMessagingService1, String title, String message, Intent intent) {
-//        NotificationUtils notificationUtils = new NotificationUtils(myFirebaseMessagingService1);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        notificationUtils.showNotificationMessage(title, message, intent);
-//    }
 }

@@ -88,10 +88,6 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         db = DatabaseHandler.getDatabase(this);
-
-//        loginService = new LoginServiceImpl(LoginActivity.this);
-       /* username.setText("a0361");
-        password.setText("1234");*/
         username.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 if (username.getText().toString().matches(emailPattern) && s.length() > 0) {
@@ -105,16 +101,6 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
 
             }
         });
-
-//        myViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
-//        Register_new.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, NewSignUpActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
 
         forgot_password.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,7 +214,7 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                             usersTeam = loginResVo.usersTeam;
 
 
-                            if (loginResVo.profileId.equalsIgnoreCase("1")|| loginResVo.profileName==null || loginResVo.profileName.contains("Comercial")|| loginResVo.profileName.contains("Commercial")) {
+                            if (loginResVo.profileId.equalsIgnoreCase("1") || loginResVo.profileName == null || loginResVo.profileName.contains("Comercial") || loginResVo.profileName.contains("Commercial")) {
                                 Toast.makeText(this, "Your not Autherized for login", Toast.LENGTH_SHORT).show();
                                 Common.dismissProgressDialog(progressDialog);
                                 return;
@@ -245,7 +231,7 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                             Common.saveDepartmentIdIntoSP(loginResVo.departmentId);
                             Common.saveDepartmentIdIntoSP(loginResVo.departmentName);
                             Common.saveMobileIntoSP(loginResVo.phone);
-                           // Common.saveUserPassword(password.getText().toString().trim());
+                            // Common.saveUserPassword(password.getText().toString().trim());
                             Common.saveObject(this, loginResVo);
                             Common.saveUserTeam(loginResVo.usersTeam);
                             Common.saveDivisions(loginResVo.divisions);
@@ -269,19 +255,19 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
 //                                Team team = new Team();
 //                                team.teamId = Common.getTeamUserIdFromSP(this);
 //                                team.roleId = String.valueOf(Common.getRoleIdFromSP(this));
-                              //  new RetrofitRequestController(this).sendRequest(Constants.RequestNames.MASTERS_LIST, team, true);
+                            //  new RetrofitRequestController(this).sendRequest(Constants.RequestNames.MASTERS_LIST, team, true);
 
-                                if (Common.haveInternet(this)) {
-                                    Intent mIntent = new Intent(this, OffLineDataUploadService.class);
-                                    OffLineDataUploadService.enqueueWork(this, mIntent);
-                                }
+                            if (Common.haveInternet(this)) {
+                                Intent mIntent = new Intent(this, OffLineDataUploadService.class);
+                                OffLineDataUploadService.enqueueWork(this, mIntent);
+                            }
 
-                                Common.dismissProgressDialog(progressDialog);
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("profileid", loginResVo.profileId);
-                                intent.putExtra("leftnav", (Serializable) leftNavs);
-                                startActivity(intent);
-                                finish();
+                            Common.dismissProgressDialog(progressDialog);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("profileid", loginResVo.profileId);
+                            intent.putExtra("leftnav", (Serializable) leftNavs);
+                            startActivity(intent);
+                            finish();
 
 
                         }
@@ -349,7 +335,7 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                                 }*/
                                 for (int i = 0; i < customerLists.size(); i++) {
                                     long key = db.commonDao().insertCustomerList(customerLists.get(i));
-                                    if (customerLists.get(i).customerUserList!=null) {
+                                    if (customerLists.get(i).customerUserList != null) {
                                         for (int j = 0; j < customerLists.get(i).customerUserList.size(); j++) {
                                             customerLists.get(i).customerUserList.get(j).lineitemid = (int) key;
                                         }
@@ -383,11 +369,11 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                                         db.commonDao().insertOpportunityBrandLineItem(opportunitiesLists.get(i).brandsProduct);
                                     }
 
-                                    if (opportunitiesLists.get(i).associateContact != null){
-                                        for (int k = 0;k<opportunitiesLists.get(i).associateContact.size();k++){
+                                    if (opportunitiesLists.get(i).associateContact != null) {
+                                        for (int k = 0; k < opportunitiesLists.get(i).associateContact.size(); k++) {
                                             opportunitiesLists.get(i).associateContact.get(k).contactId = String.valueOf(opportunitiesLists.get(i).opportunityId);
                                         }
-                                       // db.commonDao().insertAssociateContacts(opportunitiesLists.get(i).associateContact);
+                                        // db.commonDao().insertAssociateContacts(opportunitiesLists.get(i).associateContact);
                                     }
                                 }
                             }
@@ -423,9 +409,9 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
 
                     if (loginResVo.profileId.equalsIgnoreCase("1")) {
 
-                        Toast.makeText(this,"Your Not Autherized for Admin",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Your Not Autherized for Admin", Toast.LENGTH_SHORT).show();
                         Common.dismissProgressDialog(progressDialog);
-                    }else {
+                    } else {
                         Common.dismissProgressDialog(progressDialog);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.putExtra("profileid", loginResVo.profileId);
@@ -454,9 +440,9 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                             db.commonDao().insertContact(contactList);
 
                             List<CustomerList> customerLists = updateTableResVo.customerList;
-                           // db.commonDao().insertCustomer(customerList);
+                            // db.commonDao().insertCustomer(customerList);
 
-                            if (customerLists!=null) {
+                            if (customerLists != null) {
                                 for (int i = 0; i < customerLists.size(); i++) {
                                     long key = db.commonDao().insertCustomerList(customerLists.get(i));
                                     if (customerLists.get(i).customerUserList != null) {
