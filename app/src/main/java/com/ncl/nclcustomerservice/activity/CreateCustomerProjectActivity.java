@@ -129,6 +129,7 @@ public class CreateCustomerProjectActivity extends NetworkChangeListenerActivity
     protected void onDestroy() {
         super.onDestroy();
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,7 +152,32 @@ public class CreateCustomerProjectActivity extends NetworkChangeListenerActivity
         rowView.findViewById(R.id.etACName).setVisibility(View.GONE);
         rowView.findViewById(R.id.ph_name_spinner).setVisibility(View.VISIBLE);
         ll_associate_contacts.addView(rowView);
-        addProjectContactDetails(false);
+        ProjectContactAdapter projectContactAdapter = new ProjectContactAdapter(getApplication(), 0, projectHeadReqVoList);
+        ProjectHeadName_spinner.setAdapter(projectContactAdapter);
+        ProjectHeadName_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    etPHMobile.setText("");
+                    etPHDepartment.setText("");
+                    etPHCompanyName.setText("");
+                } else {
+                    associateContactForSpinnerList = new ArrayList<>();
+                    String phName = projectHeadReqVoList.get(position).projectHeadName;
+                    etPHMobile.setText(projectHeadReqVoList.get(position).projectHeadMobile);
+                    etPHDepartment.setText(projectHeadReqVoList.get(position).projectHeadDepartment);
+                    etPHCompanyName.setText(projectHeadReqVoList.get(position).companyOrClientName);
+                    associateContactForSpinnerList.clear();
+                    associateContactForSpinnerList.addAll(projectHeadReqVoList.get(position).associateContacts);
+                    addProjectContactDetails();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
 // Contractor Details
         contactContractorLists = db.commonDao().getAllCustomerContactList();
         CustomerContactResponseVo.ContactContractorList contactContractorList = new CustomerContactResponseVo.ContactContractorList();
@@ -254,8 +280,8 @@ public class CreateCustomerProjectActivity extends NetworkChangeListenerActivity
         }
     }
 
-    private void addProjectContactDetails(Boolean isAddRemove) {
-        associateContactForSpinnerList = new ArrayList<>();
+    private void addProjectContactDetails() {
+
         for (int i = 0; i < ll_associate_contacts.getChildCount(); i++) {
             View ll_associate_contacts_view = ll_associate_contacts.getChildAt(i);
             AssociateContactViewHolder viewHolder = new AssociateContactViewHolder(ll_associate_contacts_view);
@@ -273,7 +299,7 @@ public class CreateCustomerProjectActivity extends NetworkChangeListenerActivity
                 @Override
                 public void onClick(View v) {
                     ll_associate_contacts.removeViewAt(finalI);
-                    addProjectContactDetails(true);
+                    addProjectContactDetails();
                 }
             });
             viewHolder.addLayout_ac.setOnClickListener(new View.OnClickListener() {
@@ -283,58 +309,34 @@ public class CreateCustomerProjectActivity extends NetworkChangeListenerActivity
                     rowView1.findViewById(R.id.etACName).setVisibility(View.GONE);
                     rowView1.findViewById(R.id.ph_name_spinner).setVisibility(View.VISIBLE);
                     ll_associate_contacts.addView(rowView1);
-                    addProjectContactDetails(true);
+                    addProjectContactDetails();
                 }
             });
-
-            ProjectContactAdapter projectContactAdapter = new ProjectContactAdapter(getApplication(), 0, projectHeadReqVoList);
-            ProjectHeadName_spinner.setAdapter(projectContactAdapter);
-            ProjectHeadName_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 0) {
-                        etPHMobile.setText("");
-                        etPHDepartment.setText("");
-                        etPHCompanyName.setText("");
-                    } else {
-                        String phName = projectHeadReqVoList.get(position).projectHeadName;
-                        etPHMobile.setText(projectHeadReqVoList.get(position).projectHeadMobile);
-                        etPHDepartment.setText(projectHeadReqVoList.get(position).projectHeadDepartment);
-                        etPHCompanyName.setText(projectHeadReqVoList.get(position).companyOrClientName);
-                        associateContactForSpinnerList.clear();
-                        associateContactForSpinnerList.addAll(projectHeadReqVoList.get(position).associateContacts);
-                        if (associateContactForSpinnerList.size() > 0) {
-                            ProjectHeadReqVo.AssociateContact associateContact = new ProjectHeadReqVo.AssociateContact();
-                            associateContact.contactProjectHeadAssociateContactName = "Select";
-                            associateContact.contactProjectheadAssociatecontactId = "0";
-                            associateContact.contactId = "0";
-                            associateContactForSpinnerList.add(0, associateContact);
-                            AssociateContactAdapter associateContactAdapter = new AssociateContactAdapter(getApplication(), 0, associateContactForSpinnerList);
-                            viewHolder.ph_name_spinner.setAdapter(associateContactAdapter);
-                            viewHolder.ph_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                    if (position > 0) {
-                                        viewHolder.etACMobile.setText(associateContactForSpinnerList.get(position).contactProjectHeadAssociateContactMobile);
-                                        viewHolder.etACDesignation.setText(associateContactForSpinnerList.get(position).contactProjectHeadAssociateContactDesignation);
-                                    } else {
-                                        viewHolder.etACMobile.setText("");
-                                        viewHolder.etACDesignation.setText("");
-                                    }
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-                                }
-                            });
+            if (associateContactForSpinnerList.size() > 0) {
+                ProjectHeadReqVo.AssociateContact associateContact = new ProjectHeadReqVo.AssociateContact();
+                associateContact.contactProjectHeadAssociateContactName = "Select";
+                associateContact.contactProjectheadAssociatecontactId = "0";
+                associateContact.contactId = "0";
+                associateContactForSpinnerList.add(0, associateContact);
+                AssociateContactAdapter associateContactAdapter = new AssociateContactAdapter(getApplication(), 0, associateContactForSpinnerList);
+                viewHolder.ph_name_spinner.setAdapter(associateContactAdapter);
+                viewHolder.ph_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position > 0) {
+                            viewHolder.etACMobile.setText(associateContactForSpinnerList.get(position).contactProjectHeadAssociateContactMobile);
+                            viewHolder.etACDesignation.setText(associateContactForSpinnerList.get(position).contactProjectHeadAssociateContactDesignation);
+                        } else {
+                            viewHolder.etACMobile.setText("");
+                            viewHolder.etACDesignation.setText("");
                         }
                     }
-                }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+            }
         }
     }
 
