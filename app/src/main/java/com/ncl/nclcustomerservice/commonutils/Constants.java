@@ -138,6 +138,7 @@ public class Constants {
         String INSERT_LEAD = "lead_insert";
         String CUSTOMER_LIST = "customer_list";
         String CONTACT_LIST = "contact_list";
+        String CUSTOMER_PROJECT_LIST="customer_project_list";
         String CONTACT_EDIT = "contact_edit";
         String LEADS_CONVERT_CHECK = "leads_convert_check";
         String CONTACT_INSERT = "contact_insert";
