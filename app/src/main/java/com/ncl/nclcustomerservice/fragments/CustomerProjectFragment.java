@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.activity.CreateCustomerProjectActivity;
-import com.ncl.nclcustomerservice.activity.CreateNewContactActivity;
 import com.ncl.nclcustomerservice.activity.MainActivity;
 
 public class CustomerProjectFragment extends BaseFragment{
