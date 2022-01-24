@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.DataBindingUtil
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.*
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
@@ -19,30 +17,29 @@ import com.ncl.nclcustomerservice.commonutils.Constants
 import com.ncl.nclcustomerservice.database.DatabaseHandler
 import com.ncl.nclcustomerservice.databinding.ActivityCreateCustomerprojectBinding
 import com.ncl.nclcustomerservice.databinding.AssociateContactsRowBindingBinding
+import com.ncl.nclcustomerservice.databinding.ContractorDetailsRowBinding
+import com.ncl.nclcustomerservice.databinding.ContractorTeamMemberDetailsRow1Binding
 import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 import java.util.*
 
 class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitResponseListener {
 
+    var projectHeadReqVoList: MutableList<ProjectHeadReqVo> = ArrayList()
     private var selectedHeadPosition = 0
     private var selectedAssociates = mutableListOf<Int>()
+    lateinit var contactContractorLists: MutableList<CustomerContactResponseVo.ContactContractorList>
     private var selectedContractors = mutableListOf<Int>()
+    private var arrTeamMembers: List<CustomerContactResponseVo.TeamMemberResVo> = mutableListOf()
+    private var selectTeamMembers = mutableListOf<Int>()
     private lateinit var binding: ActivityCreateCustomerprojectBinding
 
-    lateinit var contactContractorLists: MutableList<CustomerContactResponseVo.ContactContractorList>
 
     var form_type: String? = null
     var id = 0
 
     lateinit var db: DatabaseHandler
 
-    @BindView(R.id.ll_contractor_tm_details)
-    var ll_contractor_tm_details: LinearLayout? = null
-    var projectHeadReqVoList: MutableList<ProjectHeadReqVo> = ArrayList()
-    var teamMemberResVoList: MutableList<CustomerContactResponseVo.TeamMemberResVo>? = null
-    var newTeamMemberResVoList: MutableList<CustomerContactResponseVo.TeamMemberResVo> =
-        ArrayList<CustomerContactResponseVo.TeamMemberResVo>()
     lateinit var statesLists: MutableList<StatesList>
     var stateId: String? = null
 
@@ -73,26 +70,119 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             bindingAssociate
         )
         contactContractorLists = db.commonDao().allCustomerContactList
-        val contactContractorList = CustomerContactResponseVo.ContactContractorList().apply {
-            contactContractorId = "0"
-            contactId = 0
-            contractorName = "Select"
-        }
-        contactContractorLists.add(0, contactContractorList)
-        val contractorRowView = layoutInflater.inflate(R.layout.contractor_details_row, null)
-        binding.llContractorDetails.addView(contractorRowView)
-        addContractorDetails(binding.llContractorDetails, contractorRowView)
         val dropDownDataReqVo = DropDownDataReqVo().apply {
             usersList = "users_list"
             customerList = "customer_list"
             teamId = Common.getTeamUserIdFromSP(this@CreateCustomerProjectActivity)
         }
-
+        binding.btnContractAdd.setOnClickListener {
+            MultiSelectionDialog(
+                this,
+                contactContractorLists,
+                { it.contractorName },
+                selectedContractors
+            ) {
+                selectedContractors = it.toMutableList()
+                setContractorsUI(
+                    binding.llContractorDetails,
+                    contactContractorLists,
+                    selectedContractors
+                )
+                arrTeamMembers =
+                    selectedContractors.flatMap { contactContractorLists[it].teamMembers }
+                selectTeamMembers.clear()
+                (arrTeamMembers.indices).forEach { selectTeamMembers.add(it) }
+                setTeamMembersUI(
+                    binding.llContractorTmDetails,
+                    arrTeamMembers,
+                    selectTeamMembers
+                )
+            }.show()
+        }
+        binding.btnContractTeamMemberAdd.setOnClickListener {
+            showTeamMembers()
+        }
         RetrofitRequestController(this).sendRequest(
             Constants.RequestNames.DROP_DOWN_LIST,
             dropDownDataReqVo,
             true
         )
+        binding.save.setOnClickListener {
+            getRequest()
+        }
+    }
+
+    private fun showTeamMembers() {
+        MultiSelectionDialog(
+            this,
+            arrTeamMembers,
+            { it.teamMemberName },
+            selectTeamMembers
+        ) {
+            selectTeamMembers = it.toMutableList()
+            setTeamMembersUI(
+                binding.llContractorTmDetails,
+                arrTeamMembers,
+                selectTeamMembers
+            );
+        }.show()
+    }
+
+    private fun setTeamMembersUI(
+        llContractorTmDetails: LinearLayout,
+        teamMembers: List<CustomerContactResponseVo.TeamMemberResVo>,
+        selectTeamMembers: MutableList<Int>
+    ) {
+        llContractorTmDetails.removeAllViews()
+        selectTeamMembers.forEach {
+            val obj = teamMembers[it]
+            var binding: ContractorTeamMemberDetailsRow1Binding = DataBindingUtil.inflate(
+                layoutInflater,
+                R.layout.contractor_team_member_details_row1,
+                null,
+                false
+            )
+            binding.apply {
+                tvTeamMemberName.text =
+                    Common.setSppanableText("* Name")
+                tvTeamMemberMobileNo.text =
+                    Common.setSppanableText("* Mobile")
+                tvCoAadharNo.text =
+                    Common.setSppanableText("* Aadhar Number")
+                etTeamMemberName.setText(obj.teamMemberName)
+                etTeamMemberMobileNo.setText(obj.teamMemberMobileNo)
+                etCoAadharNo.setText(obj.teammemberAadharNumber)
+                removelayoutCtm.visibility = View.GONE
+            }
+            llContractorTmDetails.addView(binding.root)
+        }
+    }
+
+
+    private fun setContractorsUI(
+        viewGroup: ViewGroup,
+        arrContractors: MutableList<CustomerContactResponseVo.ContactContractorList>,
+        selectedContractors: MutableList<Int>
+    ) {
+        viewGroup.removeAllViews()
+        selectedContractors.forEach {
+            var obj = arrContractors[it]
+            val binding: ContractorDetailsRowBinding = DataBindingUtil.inflate(
+                layoutInflater,
+                R.layout.contractor_details_row,
+                null,
+                false
+            )
+            binding.apply {
+                tvACName.text = Common.setSppanableText("* Name")
+                tvACMobile.text = Common.setSppanableText("* Mobile")
+                removelayoutCc.visibility = View.GONE
+                addlayoutCc.visibility = View.GONE
+                etACName.setText(obj.contractorName)
+                etContractorMobile.setText(obj.contractorName)
+            }
+            viewGroup.addView(binding.root)
+        }
     }
 
     private fun setEmptyContact(projectHeadReqVoList: MutableList<ProjectHeadReqVo>) {
@@ -108,88 +198,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                 View.VISIBLE
         }
         binding.llAssociateContacts.addView(rowView)
-    }
-
-    private fun addContractorTMDetails() {
-        for (i in 0 until ll_contractor_tm_details!!.childCount) {
-            val ll_contractor_details_view = ll_contractor_tm_details!!.getChildAt(i)
-            val contractorTMViewHolder = ContractorTMViewHolder(ll_contractor_details_view)
-            contractorTMViewHolder.apply {
-                tvTeamMemberName!!.text =
-                    Common.setSppanableText("* Team Member Name")
-                tvTeamMemberMobileNo!!.text =
-                    Common.setSppanableText("* Team Member Mobile")
-                tvCoAadharNo!!.text =
-                    Common.setSppanableText("* Team Member Aadhar Number")
-                etTeamMemberName.setText(newTeamMemberResVoList[i].teamMemberName)
-                etTeamMemberMobileNo.setText(newTeamMemberResVoList[i].teamMemberMobileNo)
-                etCoAadharNo.setText(newTeamMemberResVoList[i].teammemberAadharNumber)
-                removelayout_ctm!!.setOnClickListener {
-                    ll_contractor_tm_details!!.removeViewAt(i)
-                    newTeamMemberResVoList.removeAt(i)
-                    addContractorTMDetails()
-                }
-            }
-        }
-    }
-
-    private fun addContractorDetails(ll_contractor_details: LinearLayout?, view: View?) {
-        if (view != null) {
-            val contractorContactViewHolder = ContractorContactViewHolder(view)
-            contractorContactViewHolder.tvACName!!.text = Common.setSppanableText("* Name")
-            contractorContactViewHolder.tvACMobile!!.text = Common.setSppanableText("* Mobile")
-            if (ll_contractor_details!!.childCount > 1) {
-                contractorContactViewHolder.removelayout_cc!!.visibility = View.VISIBLE
-            } else {
-                contractorContactViewHolder.removelayout_cc!!.visibility = View.GONE
-            }
-            //         int finalI = i;
-            contractorContactViewHolder.removelayout_cc!!.setOnClickListener { v ->
-                ll_contractor_details.removeView(v)
-                //                 ll_contractor_details.removeViewAt(finalI);
-                addContractorDetails(ll_contractor_details, null)
-            }
-            contractorContactViewHolder.addlayout_cc!!.setOnClickListener {
-                val rowView1 = layoutInflater.inflate(R.layout.contractor_details_row, null)
-                ll_contractor_details.addView(rowView1)
-                addContractorDetails(ll_contractor_details, rowView1)
-            }
-            val contractorDetailsAdapter =
-                ContractorDetailsAdapter(application, 0, contactContractorLists)
-            contractorContactViewHolder.contractor_name_spinner!!.setAdapter(
-                contractorDetailsAdapter
-            )
-            contractorContactViewHolder.contractor_name_spinner!!.setOnItemSelectedListener(object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (position != 0) {
-                        contractorContactViewHolder.etContractorMobile?.setText(
-                            contactContractorLists!![position].contractorMobileNo
-                        )
-                        if (contactContractorLists!!.size > 0) {
-                            teamMemberResVoList = contactContractorLists!![position].teamMembers
-                            newTeamMemberResVoList.addAll(teamMemberResVoList!!)
-                            ll_contractor_tm_details!!.removeAllViewsInLayout()
-                            for (i in newTeamMemberResVoList.indices) {
-                                val contractorTMRowView = layoutInflater.inflate(
-                                    R.layout.contractor_team_member_details_row1,
-                                    null
-                                )
-                                ll_contractor_tm_details!!.addView(contractorTMRowView)
-                            }
-                            addContractorTMDetails()
-                        }
-                    }
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            })
-        }
     }
 
     private fun setProjectHeadSpinner(
@@ -236,7 +244,7 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         list: List<ProjectHeadReqVo.AssociateContact>?,
         selectedAssociates: MutableList<Int>,
     ) {
-        CustomDialog(
+        MultiSelectionDialog(
             this,
             list ?: mutableListOf(),
             { obj -> obj.contactProjectHeadAssociateContactName },
@@ -281,110 +289,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         }
     }
 
-
-    class ContractorTMViewHolder(rowView: View) {
-        @BindView(R.id.tvTeamMemberName)
-        lateinit var tvTeamMemberName: TextView
-
-        @BindView(R.id.etTeamMemberName)
-        lateinit var etTeamMemberName: EditText
-
-        @BindView(R.id.tvTeamMemberMobileNo)
-        lateinit var tvTeamMemberMobileNo: TextView
-
-        @BindView(R.id.etTeamMemberMobileNo)
-        lateinit var etTeamMemberMobileNo: EditText
-
-        @BindView(R.id.tvCoAadharNo)
-        lateinit var tvCoAadharNo: TextView
-
-        @BindView(R.id.etCoAadharNo)
-        lateinit var etCoAadharNo: EditText
-
-        @BindView(R.id.removelayout_ctm)
-        lateinit var removelayout_ctm: LinearLayout
-
-        init {
-            ButterKnife.bind(this, rowView)
-            etTeamMemberName!!.isEnabled = false
-            etTeamMemberMobileNo!!.isEnabled = false
-            etCoAadharNo!!.isEnabled = false
-        }
-    }
-
-    class ContractorContactViewHolder(var rowView: View?) {
-        //        @BindView(R.id.tvACName)
-        var tvACName: TextView? = null
-
-        //        @BindView(R.id.contractor_name_spinner)
-        var contractor_name_spinner: Spinner? = null
-
-        //        @BindView(R.id.tvACMobile)
-        var tvACMobile: TextView? = null
-
-        //        @BindView(R.id.etContractorMobile)
-        var etContractorMobile: EditText? = null
-
-        //        @BindView(R.id.addlayout_cc)
-        var addlayout_cc: LinearLayout? = null
-
-        //        @BindView(R.id.removelayout_cc)
-        var removelayout_cc: LinearLayout? = null
-
-        init {
-//            ButterKnife.bind(this, rowView!!)
-            tvACName = rowView?.findViewById(R.id.tvACName)
-            tvACMobile = rowView?.findViewById(R.id.tvACMobile)
-            etContractorMobile = rowView?.findViewById(R.id.etContractorMobile)
-            addlayout_cc = rowView?.findViewById(R.id.addlayout_cc)
-            removelayout_cc = rowView?.findViewById(R.id.removelayout_cc)
-            contractor_name_spinner = rowView?.findViewById(R.id.contractor_name_spinner)
-            etContractorMobile?.isEnabled = false
-        }
-    }
-
-    inner class AssociateContactViewHolder(var rowView: View) {
-        //        @BindView(R.id.tvACName)
-        var tvACName: TextView? = null
-
-        //        @BindView(R.id.ph_name_spinner)
-        var ph_name_spinner: Spinner? = null
-
-        //        @BindView(R.id.tvACDesignation)
-        var tvACDesignation: TextView? = null
-
-        //        @BindView(R.id.etACDesignation)
-        var etACDesignation: EditText? = null
-
-        //        @BindView(R.id.etACName)
-        var etACName: EditText? = null
-
-        //        @BindView(R.id.tvACMobile)
-        var tvACMobile: TextView? = null
-
-        //        @BindView(R.id.etACMobile)
-        var etACMobile: EditText? = null
-
-        //        @BindView(R.id.addlayout_ac)
-        var addLayout_ac: LinearLayout? = null
-
-        //        @BindView(R.id.removelayout_ac)
-        var removeLayout_ac: LinearLayout? = null
-
-        init {
-            tvACName = rowView.findViewById<TextView>(R.id.tvACName)
-            tvACMobile = rowView.findViewById<TextView>(R.id.tvACMobile)
-            tvACDesignation = rowView.findViewById<TextView>(R.id.tvACDesignation)
-            etACDesignation = rowView.findViewById<EditText>(R.id.etACDesignation)
-            etACName = rowView.findViewById<EditText>(R.id.etACName)
-            etACMobile = rowView.findViewById<EditText>(R.id.etACMobile)
-            addLayout_ac = rowView.findViewById<LinearLayout>(R.id.addlayout_ac)
-            removeLayout_ac = rowView.findViewById<LinearLayout>(R.id.removelayout_ac)
-            ph_name_spinner = rowView.findViewById<Spinner>(R.id.ph_name_spinner)
-            etACDesignation!!.isEnabled = false
-            etACMobile!!.isEnabled = false
-        }
-    }
 
     override fun onResponseSuccess(
         objectResponse: ApiResponseController,
@@ -441,75 +345,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         }
     }
 
-    private inner class AssociateContactAdapter(
-        context: Context,
-        textViewResourceId: Int,
-        associateContactList: List<ProjectHeadReqVo.AssociateContact>
-    ) : ArrayAdapter<ProjectHeadReqVo.AssociateContact>(
-        context, textViewResourceId, associateContactList
-    ) {
-        var associateContactList: List<ProjectHeadReqVo.AssociateContact> = associateContactList
-        var inflater: LayoutInflater
-        var tempValues: ProjectHeadReqVo.AssociateContact? = null
-        override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-            return getCustomView(position, convertView, parent)
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            return getCustomView(position, convertView, parent)
-        }
-
-        fun getCustomView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val row: View = inflater.inflate(R.layout.spinner_rows, parent, false)
-            /***** Get each Model object from Arraylist  */
-            tempValues = associateContactList[position]
-            val label = row.findViewById<View>(R.id.spinnertitle) as TextView
-
-            // Set values for spinner each row
-            label.text = tempValues!!.contactProjectHeadAssociateContactName
-            label.tag = tempValues!!.contactProjectheadAssociatecontactId
-            return row
-        }
-
-        init {
-            inflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        }
-    }
-
-    class ContractorDetailsAdapter(
-        context: Context,
-        var textViewResourceId: Int,
-        var contractorDetailsList: MutableList<CustomerContactResponseVo.ContactContractorList>
-    ) : ArrayAdapter<CustomerContactResponseVo.ContactContractorList>(
-        context, textViewResourceId, contractorDetailsList
-    ) {
-        var inflater: LayoutInflater
-        override fun getDropDownView(position: Int, convertView: View, parent: ViewGroup): View {
-            return getCustomView(position, convertView, parent)
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            return getCustomView(position, convertView, parent)
-        }
-
-        fun getCustomView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val row: View = inflater.inflate(R.layout.spinner_rows, parent, false)
-
-            /***** Get each Model object from Arraylist  */
-            var tempValues =
-                contractorDetailsList!![position] as CustomerContactResponseVo.ContactContractorList
-            val label = row.findViewById<View>(R.id.spinnertitle) as TextView
-            // Set values for spinner each row
-            label.setText(tempValues.contractorName)
-            label.tag = tempValues.contactContractorId
-            return row
-        }
-
-        init {
-            inflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        }
-    }
-
     private inner class ProjectContactAdapter(
         context: Context,
         textViewResourceId: Int,
@@ -541,6 +376,18 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         init {
             inflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         }
+    }
+
+    fun getRequest() {
+        var header = projectHeadReqVoList[selectedHeadPosition]
+        var ac =
+            selectedContractors.map { header.associateContacts[it].contactProjectheadAssociatecontactId }
+        var contractors = selectedContractors.map { contactContractorLists[it].contactContractorId }
+        var teamMembersId = selectTeamMembers.map { arrTeamMembers[it].contactContractorTeamId }
+        println(" header : " + header.contactProjectHeadId)
+        println(" assocaiteContacts : " + ac)
+        println(" contractors : " + contractors)
+        println(" teamMembersId : " + teamMembersId)
     }
 
 }

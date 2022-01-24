@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_16sdp"
         android:orientation="horizontal">
 
         <com.ncl.nclcustomerservice.customviews.CustomTextView
@@ -20,9 +21,10 @@
 
         <ImageView
             android:id="@+id/ivChecked"
+            android:padding="@dimen/_4sdp"
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/accepted" />
 
     </LinearLayout>
 </layout>

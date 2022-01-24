@@ -11,13 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <com.ncl.nclcustomerservice.customviews.CustomTextView
-            android:id="@+id/tv"
+        <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
-            android:text="Select Options" />
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/grey"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:text="Select Options"
+            android:textAllCaps="true" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"

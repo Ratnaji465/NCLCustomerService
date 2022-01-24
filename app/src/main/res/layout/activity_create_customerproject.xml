@@ -20,8 +20,8 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
             android:layout_above="@+id/bottom_layout"
+            android:layout_below="@+id/toolbar"
             android:layout_marginBottom="@dimen/_10sdp"
             android:fillViewport="true"
             android:scrollbars="none">
@@ -253,6 +253,12 @@
                     android:text="CONTRACTOR DETAILS"
                     android:textAllCaps="true" />
 
+                <com.ncl.nclcustomerservice.customviews.CustomButton
+                    android:id="@+id/btnContractAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add/Delete" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -297,12 +303,19 @@
                     android:text="CONTRACTOR TEAM MEMBER DETAILS"
                     android:textAllCaps="true" />
 
+                <com.ncl.nclcustomerservice.customviews.CustomButton
+                    android:id="@+id/btnContractTeamMemberAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add/Delete" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:nestedScrollingEnabled="false"
                     android:scrollbarSize="@dimen/_2sdp">
+
 
                     <LinearLayout
                         android:id="@+id/ll_contractor_tm_details"

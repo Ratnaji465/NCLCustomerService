@@ -12,7 +12,7 @@ import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.databinding.DialogMultiSelectionContactBinding
 import com.ncl.nclcustomerservice.databinding.ItemMultiSelectionContactBinding
 
-class CustomDialog<T>(
+class MultiSelectionDialog<T>(
     context: Context,
     var list: List<T>,
     var mapper: (T) -> String,
