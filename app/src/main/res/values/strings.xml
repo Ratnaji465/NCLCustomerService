@@ -7,7 +7,7 @@
     <string name="copied">Copied.</string>
     <string name="font_semibold">fonts/Montserrat-SemiBold.ttf</string>
     <string name="pick_image_intent_text">Please Choose Image</string>
-    <string name = "required_asterisk"><![CDATA[<font color=\'#ff0000\'>&nbsp*</font>]]></string>
+    <string name="required_asterisk"><![CDATA[<font color=\'#ff0000\'>&nbsp*</font>]]></string>
 
 
     <string-array name="menuOptions">
@@ -27,7 +27,7 @@
     </string-array>
 
 
-  <!--  <string-array name="menuOptions">
+    <!--  <string-array name="menuOptions">
         <item>Dashboard</item>
         <item>Leads</item>
         <item>Contacts</item>

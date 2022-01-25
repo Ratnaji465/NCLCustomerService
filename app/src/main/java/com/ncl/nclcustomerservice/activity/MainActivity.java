@@ -598,10 +598,6 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
     public void settexts() {
         profileName.setText(Common.getUserNameFromSP(this));
         designationName.setText(Common.getRolenameFromSP(this));
-//        if (Common.getUserRoleFromSP(this) == Constants.Roles.CUSTOMER_ROLE)
-//            profileName.setText(Common.getFirstNameFromSP(this));
-//        else profileName.setText(Common.getUserNameFromSP(this));
-
         if (Common.getImageFromSP(this) != null /*&& Common.getImageFromSP(this).length() > 5*/) {
             Picasso.with(this).load(Common.getImageFromSP(this)).into(profileImage);
         }
@@ -620,33 +616,8 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
         duoDrawerToggle.syncState();
     }
 
-   /* private void goToMethod(Fragment fragment, boolean b) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Bundle bundle = new Bundle();
-//        bundle.putInt("leftPanelPostion", leftPanelPostion);
-//        bundle.putString("list", String.valueOf(listReqVo));
-        bundle.putSerializable("list", listReqVo);
-//        bundle.putInt("type",type);
-        fragment.setArguments(bundle);
-        if (b) {
-            transaction.replace(R.id.content_frame, fragment);
-//            transaction.addToBackStack(null);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.commit();
-        } else {
-            transaction.replace(R.id.content_frame, fragment);
-//            transaction.addToBackStack(null);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.commit();
-        }
-    }*/
-
-
     private void goToFragment(Fragment fragment, boolean b) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("notiffication_type_id",notiffication_type_id);
-//        bundle.putSerializable(AppUtils.DASHBOARD, getIntent().getSerializableExtra(AppUtils.DASHBOARD));
         fragment.setArguments(bundle);
         if (b) {
             transaction.replace(R.id.content_frame, fragment);
@@ -659,15 +630,6 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             transaction.commit();
         }
-//        if (fragment instanceof DashboardFragment && searchIv!=null){
-//            searchIv.setVisibility(View.GONE);
-//            searchView.setVisibility(View.GONE);
-//            mainLinearLayout.setVisibility(View.VISIBLE);
-//        }else if (searchIv!=null){
-//            searchIv.setVisibility(View.VISIBLE);
-//            searchView.setVisibility(View.GONE);
-//            mainLinearLayout.setVisibility(View.VISIBLE);
-//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -681,16 +643,6 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
 
         methodName = leftNavs.get(position).methodName;
         switch (methodName) {
-
-//            case Constants.MethodNames.DASHBOARD:
-//                DashboardFragment dashboardFragment = new DashboardFragment();
-//                goToFragment(dashboardFragment, false);
-//                break;
-//            case Constants.MethodNames.LEAD_LIST:
-//                LeadsFragment leadsFragment = new LeadsFragment();
-//                bundle.putSerializable("leads", leftNavs.get(position));
-//                goToFragment(leadsFragment, true);
-//                break;
             case Constants.New_MethodNames.LOGOUT:
                 logoutpopup();
                 break;
@@ -703,83 +655,6 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
                 bundle.putSerializable("contacts", leftNavs.get(position));
                 goToFragment(contactsFragment, true);
                 break;
-//            case Constants.MethodNames.CUSTOMER_LIST:
-//                CustomersFragment customersFragment = new CustomersFragment();
-//                bundle.putSerializable("customers", leftNavs.get(position));
-//                bundle.putString("from", Constants.MethodNames.CUSTOMER_LIST);
-//                goToFragment(customersFragment, true);
-//                break;
-//                case Constants.MethodNames.CUSTOMER_LIST_THIRDPARTY:
-//                CustomersFragment customersFragmentThrdP = new CustomersFragment();
-//                bundle.putSerializable("customers", leftNavs.get(position));
-//                bundle.putString("from", Constants.MethodNames.CUSTOMER_LIST_THIRDPARTY);
-//                goToFragment(customersFragmentThrdP, true);
-//                break;
-//            case Constants.MethodNames.OPPORTUNITY_LIST:
-//                OpportunitiesFragment opportunitiesFragment = new OpportunitiesFragment();
-//                bundle.putSerializable("opportunities", leftNavs.get(position));
-//                goToFragment(opportunitiesFragment, true);
-//                break;
-//            case Constants.MethodNames.CONTRACT_LIST:
-//                ContractsFragment contractsFragment = new ContractsFragment();
-//                bundle.putSerializable("contracts", leftNavs.get(position));
-//                goToFragment(contractsFragment, true);
-//                break;
-//            case Constants.MethodNames.SALES_ORDER_LIST:
-//                SalesOrderFragment salesOrderFragment = new SalesOrderFragment();
-//                bundle.putSerializable("salesorder", leftNavs.get(position));
-//                bundle.putString("from", Constants.MethodNames.SALES_ORDER_LIST);
-//                goToFragment(salesOrderFragment, true);
-//                break;
-//                case Constants.MethodNames.SALES_ODERS_THIRDPARTY:
-//                SalesOrderFragment salesOrderThirdPartyFragment = new SalesOrderFragment();
-//                bundle.putSerializable("salesorder", leftNavs.get(position));
-//                bundle.putString("from", Constants.MethodNames.SALES_ODERS_THIRDPARTY);
-//                goToFragment(salesOrderThirdPartyFragment, true);
-//                break;
-//            case Constants.MethodNames.SALES_CALLS_LIST:
-//                SalesFragment salesFragment = new SalesFragment();
-//                bundle.putSerializable("sales", leftNavs.get(position));
-//                goToFragment(salesFragment, true);
-//                break;
-//            case Constants.MethodNames.COMPLAINT_LIST:
-//                ComplaintsFragment complaintsFragment = new ComplaintsFragment();
-//                bundle.putSerializable("complaint", leftNavs.get(position));
-//                goToFragment(complaintsFragment, true);
-//                break;
-//            case Constants.MethodNames.EXPENSES_LIST:
-//                TAandDAFragment tAandDAFragment = new TAandDAFragment();
-//                bundle.putSerializable("tada", leftNavs.get(position));
-//                goToFragment(tAandDAFragment, true);
-//                break;
-//            case Constants.MethodNames.PAYMENT_COLLECTIONS:
-//                PaymentFragment paymentFragment = new PaymentFragment();
-//                bundle.putSerializable("payment", leftNavs.get(position));
-//                goToFragment(paymentFragment, true);
-//                break;
-//            case Constants.MethodNames.NOTIFICATION:
-//                NotificationFragment notificationFragment = new NotificationFragment();
-//                bundle.putSerializable("notification", leftNavs.get(position));
-//                goToFragment(notificationFragment, true);
-//                break;
-//                case Constants.MethodNames.QUOTATION_LIST:
-              /*  NotificationFragment quotationlistfragment = new QuotationListActivity();
-                bundle.putSerializable("notification", leftNavs.get(position));
-                goToFragment(quotationlistfragment, true);*/
-//                break;
-//            case Constants.MethodNames.ROUTE_MAP:
-//                Intent map = new Intent(this, PostRouteMapActivity.class);
-//                startActivity(map);
-////                goToFragment(new RoutMapFragment(),true);
-//                break;
-//            default:
-//                if (Common.getDefaultSP(this).getString("checkin", "").equalsIgnoreCase("true")) {
-//                    checkoutPopup();
-//                }
-//                else {
-//                    logoutpopup();
-//                }
-//                break;
         }
         mViewHolder.mDuoDrawerLayout.closeDrawer();
     }

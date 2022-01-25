@@ -50,8 +50,8 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_customerproject)
         Common.setupUI(binding.root, this)
-        form_type = "new" //intent.extras!!.getString("form_key", "")
-        id = 0//intent.extras!!.getInt("id", 0)
+        form_type = intent.extras!!.getString("form_key", "")
+        id =  intent.extras!!.getInt("id", 0)
         db = DatabaseHandler.getDatabase(this)
         binding.toolbar.titleText.text = "CUSTOMER PROJECT INFORMATION"
 // Associate Contact Details
