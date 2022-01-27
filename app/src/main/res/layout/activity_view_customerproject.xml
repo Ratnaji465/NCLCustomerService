@@ -330,6 +330,16 @@
                         android:orientation="vertical" />
                 </HorizontalScrollView>
 
+                <TextView
+                    android:id="@+id/tv_add_client_project"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD CLIENT PROJECT"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:background="@color/different_green"/>
                 <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
