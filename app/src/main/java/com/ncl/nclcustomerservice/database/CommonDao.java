@@ -24,6 +24,7 @@ import com.ncl.nclcustomerservice.object.ContractList;
 import com.ncl.nclcustomerservice.object.Customer;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.CustomerList;
+import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
 import com.ncl.nclcustomerservice.object.CustomerUserList;
 import com.ncl.nclcustomerservice.object.Geo_Tracking_POJO;
 import com.ncl.nclcustomerservice.object.LeadInsertReqVo;
@@ -205,6 +206,17 @@ public interface CommonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertContactInsert(ContactList contactList);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertCustomerProject(CustomerProjectResVO customerProjectResVO);
+
+    @Insert(onConflict =  OnConflictStrategy.REPLACE)
+    void insertCustomerProjectList(List<CustomerProjectResVO> customerProjectResVOList);
+
+    @Query("DELETE FROM CustomerProjectResVO")
+    void deleteCustomerProjectList();
+
+    @Query("SELECT * FROM CustomerProjectResVO where projectName like :queryString ORDER BY customerProjectId DESC LIMIT :limit OFFSET :offset")
+    List<CustomerProjectResVO> getCustomerProjectList(int limit, int offset, String queryString);
 
     @Query("SELECT * FROM ContactList where firstName like :queryString ORDER BY contactId DESC LIMIT :limit OFFSET :offset")
     List<ContactList> getContactList(int limit, int offset, String queryString);

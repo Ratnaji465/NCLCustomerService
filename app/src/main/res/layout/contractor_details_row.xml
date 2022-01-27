@@ -34,7 +34,8 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
+                    android:inputType="text"
+                    android:enabled="false"
                     android:maxLength="10"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -68,6 +69,7 @@
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:inputType="number"
+                    android:enabled="false"
                     android:maxLength="10"
                     android:textColor="@color/black"
                     android:textSize="12sp" />

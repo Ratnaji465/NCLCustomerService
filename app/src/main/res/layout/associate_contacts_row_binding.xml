@@ -35,6 +35,7 @@
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:inputType="textCapWords"
+                    android:enabled="false"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
@@ -66,6 +67,7 @@
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
+                    android:enabled="false"
                     android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:textColor="@color/black"
@@ -91,6 +93,7 @@
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
+                    android:enabled="false"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="10"

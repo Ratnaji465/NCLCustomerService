@@ -24,6 +24,7 @@ import com.ncl.nclcustomerservice.object.ContractList;
 import com.ncl.nclcustomerservice.object.Customer;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.CustomerList;
+import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
 import com.ncl.nclcustomerservice.object.CustomerUserList;
 import com.ncl.nclcustomerservice.object.Geo_Tracking_POJO;
 import com.ncl.nclcustomerservice.object.Lead;
@@ -43,6 +44,10 @@ import com.ncl.nclcustomerservice.object.SalesOrderList;
 import com.ncl.nclcustomerservice.object.SalesPersonLineItem;
 import com.ncl.nclcustomerservice.object.TadaList;
 import com.ncl.nclcustomerservice.typeconverter.ContractorTeamMemberTC;
+import com.ncl.nclcustomerservice.typeconverter.CusAssociateContactTC;
+import com.ncl.nclcustomerservice.typeconverter.CusContractorTC;
+import com.ncl.nclcustomerservice.typeconverter.CusProjectHeadTC;
+import com.ncl.nclcustomerservice.typeconverter.CusTeamMemberTC;
 import com.ncl.nclcustomerservice.typeconverter.LeadActionTOTC;
 import com.ncl.nclcustomerservice.typeconverter.LeadAssociatedTC;
 import com.ncl.nclcustomerservice.typeconverter.ProjectHeadAssociateContactTC;
@@ -51,8 +56,8 @@ import com.ncl.nclcustomerservice.typeconverter.ProjectHeadAssociateContactTC;
 /**
  * Created by User on 8/23/2018.
  */
-@Database(entities = {LoginDb.class, Customer.class, PriceList.class, EmpActivityPojo.class, EmpActivityLogsPojo.class, ComplaintsTable.class, Contact.class, ContactList.class, Lead.class, CustomerList.class, CustomerUserList.class, SalesCallList.class, ContractList.class, OpportunitiesList.class, SalesOrderList.class, TadaList.class, ContractLineItem.class, Geo_Tracking_POJO.class, OpportunityProductLineItem.class, OpportunityCompetitionLineItem.class, OpportunityBrandsLineItem.class, SalesOrderLineItem.class, SalesPersonLineItem.class, QuotationList.class, QuotationProductList.class, AssociateContact.class, PaymentCollectionList.class, LeadInsertReqVo.class, CustomerContactResponseVo.ContactContractorList.class, ProjectHeadReqVo.class}, version = 18, exportSchema = false)
-@TypeConverters({ LeadAssociatedTC.class, LeadActionTOTC.class, ContractorTeamMemberTC.class, ProjectHeadAssociateContactTC.class})
+@Database(entities = {LoginDb.class, Customer.class, PriceList.class, EmpActivityPojo.class, EmpActivityLogsPojo.class, ComplaintsTable.class, Contact.class, ContactList.class, Lead.class, CustomerList.class, CustomerUserList.class, SalesCallList.class, ContractList.class, OpportunitiesList.class, SalesOrderList.class, TadaList.class, ContractLineItem.class, Geo_Tracking_POJO.class, OpportunityProductLineItem.class, OpportunityCompetitionLineItem.class, OpportunityBrandsLineItem.class, SalesOrderLineItem.class, SalesPersonLineItem.class, QuotationList.class, QuotationProductList.class, AssociateContact.class, PaymentCollectionList.class, LeadInsertReqVo.class, CustomerContactResponseVo.ContactContractorList.class, ProjectHeadReqVo.class, CustomerProjectResVO.class}, version = 18, exportSchema = false)
+@TypeConverters({ LeadAssociatedTC.class, LeadActionTOTC.class, ContractorTeamMemberTC.class, ProjectHeadAssociateContactTC.class, CusAssociateContactTC.class, CusContractorTC.class, CusProjectHeadTC.class, CusTeamMemberTC.class})
 public abstract class DatabaseHandler extends RoomDatabase {
     private static DatabaseHandler INSTANCE = null;
     private static Context context1;
