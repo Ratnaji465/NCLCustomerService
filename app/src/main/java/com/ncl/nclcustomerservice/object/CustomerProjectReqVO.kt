@@ -1,122 +1,125 @@
-package com.ncl.nclcustomerservice.object;
+package com.ncl.nclcustomerservice.`object`
 
-import androidx.room.Entity;
+import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose
+import org.apache.commons.lang3.builder.ToStringBuilder
+import java.io.Serializable
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import java.io.Serializable;
-import java.util.List;
-
-public class CustomerProjectReqVO implements Serializable {
-
+class CustomerProjectReqVO : Serializable {
     @SerializedName("project_name")
     @Expose
-    public String projectName;
+    var projectName: String? = null
+
     @SerializedName("project_address")
     @Expose
-    public String projectAddress;
+    var projectAddress: String? = null
+
     @SerializedName("state")
     @Expose
-    public String state;
+    var state: String? = null
+
     @SerializedName("country")
     @Expose
-    public String country;
+    var country: String? = null
+
     @SerializedName("pincode")
     @Expose
-    public String pincode;
+    var pincode: String? = null
+
     @SerializedName("contractor_team_size")
     @Expose
-    public String contractorTeamSize;
+    var contractorTeamSize: String? = null
+
     @SerializedName("created_by")
     @Expose
-    public String createdBy;
+    var createdBy: String? = null
+
     @SerializedName("modified_by")
     @Expose
-    public String modifiedBy;
+    var modifiedBy: String? = null
+
     @SerializedName("created_datetime")
     @Expose
-    public String createdDatetime;
+    var createdDatetime: String? = null
+
     @SerializedName("modified_datetime")
     @Expose
-    public String modifiedDatetime;
+    var modifiedDatetime: String? = null
+
     @SerializedName("contractors")
     @Expose
-    public List<Contractor> contractors = null;
+    var contractors: List<Contractor>? = null
+
     @SerializedName("project_heads")
     @Expose
-    public List<ProjectHead> projectHeads = null;
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("projectName", projectName)
-                .append("projectAddress", projectAddress)
-                .append("state", state)
-                .append("country", country)
-                .append("pincode", pincode)
-                .append("contractorTeamSize", contractorTeamSize)
-                .append("createdBy", createdBy)
-                .append("modifiedBy", modifiedBy)
-                .append("createdDatetime", createdDatetime)
-                .append("modifiedDatetime", modifiedDatetime)
-                .append("contractors", contractors)
-                .append("projectHeads",projectHeads).toString();
+    var projectHeads: List<ProjectHead>? = null
+    override fun toString(): String {
+        return ToStringBuilder(this)
+            .append("projectName", projectName)
+            .append("projectAddress", projectAddress)
+            .append("state", state)
+            .append("country", country)
+            .append("pincode", pincode)
+            .append("contractorTeamSize", contractorTeamSize)
+            .append("createdBy", createdBy)
+            .append("modifiedBy", modifiedBy)
+            .append("createdDatetime", createdDatetime)
+            .append("modifiedDatetime", modifiedDatetime)
+            .append("contractors", contractors)
+            .append("projectHeads", projectHeads).toString()
     }
-    public class ProjectHead implements Serializable{
 
+    inner class ProjectHead : Serializable {
         @SerializedName("contact_project_head_id")
         @Expose
-        public Integer contactProjectHeadId;
+        var contactProjectHeadId: Int? = null
+
         @SerializedName("associate_contacts")
         @Expose
-        public List<AssociateContact> associateContacts = null;
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this)
-                    .append("contactProjectHeadId", contactProjectHeadId)
-                    .append("associateContacts",associateContacts)
-                    .toString();
+        var associateContacts: List<AssociateContact>? = null
+        override fun toString(): String {
+            return ToStringBuilder(this)
+                .append("contactProjectHeadId", contactProjectHeadId)
+                .append("associateContacts", associateContacts)
+                .toString()
         }
     }
-    public class AssociateContact implements Serializable{
 
+    inner class AssociateContact : Serializable {
         @SerializedName("contact_projecthead_associatecontact_id")
         @Expose
-        public String contactProjectheadAssociatecontactId;
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this)
-                    .append("contactProjectheadAssociatecontactId", contactProjectheadAssociatecontactId).toString();
+        var contactProjectheadAssociatecontactId: String? = null
+        override fun toString(): String {
+            return ToStringBuilder(this)
+                .append(
+                    "contactProjectheadAssociatecontactId",
+                    contactProjectheadAssociatecontactId
+                ).toString()
         }
     }
-    public class Contractor implements Serializable{
 
+    class Contractor : Serializable {
         @SerializedName("contact_contractor_id")
         @Expose
-        public Integer contactContractorId;
+        var contactContractorId: String? = null
+
         @SerializedName("team")
         @Expose
-        public List<Team> team = null;
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this)
-                    .append("contactContractorId", contactContractorId)
-                    .append("team",team).toString();
+        var team: List<Team>? = null
+        override fun toString(): String {
+            return ToStringBuilder(this)
+                .append("contactContractorId", contactContractorId)
+                .append("team", team).toString()
         }
     }
-    public class Team implements Serializable{
 
+    class Team : Serializable {
         @SerializedName("contact_contractor_team_id")
         @Expose
-        public Integer contactContractorTeamId;
-
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this)
-                    .append("contactContractorTeamId", contactContractorTeamId).toString();
+        var contactContractorTeamId: String? = null
+        override fun toString(): String {
+            return ToStringBuilder(this)
+                .append("contactContractorTeamId", contactContractorTeamId).toString()
         }
     }
 }

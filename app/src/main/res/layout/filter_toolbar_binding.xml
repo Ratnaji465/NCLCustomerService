@@ -7,6 +7,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:background="@drawable/background_toolbar_multi"
