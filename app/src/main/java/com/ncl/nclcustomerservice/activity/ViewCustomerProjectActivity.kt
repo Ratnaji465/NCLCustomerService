@@ -13,6 +13,8 @@ import com.ncl.nclcustomerservice.databinding.ActivityViewCustomerprojectBinding
 import com.ncl.nclcustomerservice.databinding.AssociateContactsRowBindingBinding
 import com.ncl.nclcustomerservice.databinding.ContractorDetailsRowBinding
 import com.ncl.nclcustomerservice.databinding.ContractorTeamMemberDetailsRow1Binding
+import java.io.Serializable
+
 
 class ViewCustomerProjectActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewCustomerprojectBinding
@@ -42,14 +44,23 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
             }
             setClientProjectUI()
         }
+        binding.btnEdit.setOnClickListener {
+            val intent = Intent(this, CreateCustomerProjectActivity::class.java)
+            intent.putExtra("CustomerProjectList", contactContractorList) as Serializable
+            startActivity(intent)
+        }
+        binding.tvAddClientProject.setOnClickListener{
+            val intent = Intent(this, CreateClientProjectActivity::class.java)
+            startActivity(intent)
+        }
     }
-
 
     private fun setContactUI() {
         binding.etProjectName.setText(contactContractorList.projectName)
         binding.etProjectAddress.setText(contactContractorList.projectAddress)
         binding.etState.setText(contactContractorList.state)
         binding.etPincode.setText(contactContractorList.pincode)
+        binding.etTeamSizeNo.setText(contactContractorList.contractorTeamSize)
     }
 
     private fun setProjectUI(projectHead: CustomerProjectResVO.ProjectHead) {

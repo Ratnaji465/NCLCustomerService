@@ -2,9 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
+    <data></data>
 
     <RelativeLayout
         android:id="@+id/parent"
@@ -137,8 +135,8 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
-                    android:gravity="left|center"
                     android:enabled="false"
+                    android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:maxLength="6"
                     android:textColor="@color/black"
@@ -296,10 +294,10 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:enabled="false"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:inputType="number"
-                    android:enabled="false"
                     android:maxLength="3"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -330,16 +328,17 @@
                         android:orientation="vertical" />
                 </HorizontalScrollView>
 
-                <TextView
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tv_add_client_project"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ADD CLIENT PROJECT"
-                    android:padding="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:gravity="end"
                     android:layout_gravity="end"
-                    android:background="@color/different_green"/>
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/different_green"
+                    android:gravity="end"
+                    android:padding="@dimen/_5sdp"
+                    android:text="ADD CLIENT PROJECT" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

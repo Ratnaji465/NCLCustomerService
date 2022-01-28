@@ -34,7 +34,8 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     private var arrTeamMembers: List<CustomerContactResponseVo.TeamMemberResVo> = mutableListOf()
     private var selectTeamMembers = mutableListOf<Int>()
     var hmTeamMembers = mutableMapOf<String, List<CustomerContactResponseVo.TeamMemberResVo>>()
-
+    private var arrAssociate: List<ProjectHeadReqVo.AssociateContact> = mutableListOf()
+    var hmAssociate = mutableMapOf<String, List<ProjectHeadReqVo.AssociateContact>>()
     private lateinit var binding: ActivityCreateCustomerprojectBinding
 
 
@@ -84,6 +85,9 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             projectHeadReqVoList,
             bindingAssociate
         )
+//        arrAssociate =
+//                projectHeadReqVoList.flatMap { projectHeadReqVoList[it].contactProjectHeadId }
+//        hmTeamMembers = arrTeamMembers.groupBy { it.contactContractorTeamId }.toMutableMap()
         contactContractorLists = db.commonDao().allCustomerContactList
         val dropDownDataReqVo = DropDownDataReqVo().apply {
             usersList = "users_list"
@@ -393,8 +397,7 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                         )
                     if (customerProjectResVO != null) {
                         db.commonDao().insertCustomerProject(customerProjectResVO)
-                        val intent = Intent(
-                            this@CreateCustomerProjectActivity,
+                        val intent = Intent(this@CreateCustomerProjectActivity,
                             NewContactViewActivity::class.java
                         )
                         intent.putExtra("CustomerProjectList", customerProjectResVO)
@@ -459,6 +462,23 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         }
         var hmContacts =
             hmTeamMembers.keys.groupBy { hmTeamMembers[it]?.get(0)?.contactId }.toMutableMap()
+        var alProjectHead = mutableListOf<CustomerProjectReqVO.ProjectHead>()
+
+        hmAssociate.forEach{
+            val projectHeadList = CustomerProjectReqVO.ProjectHead().apply {
+                contactProjectHeadId = Integer.parseInt(header.contactProjectHeadId) //contractor ID
+                var associateContactsList = mutableListOf<CustomerProjectReqVO.AssociateContact>()
+                it.value.map {
+                    var associate = CustomerProjectReqVO.AssociateContact()
+                    associate.contactProjectheadAssociatecontactId = it.contactProjectheadAssociatecontactId
+                    println("teamid :$it") // team Ids
+                    associateContactsList.add(associate)
+                }.toMutableList()
+                associateContacts = associateContactsList
+            }
+            alProjectHead.add(projectHeadList)
+        }
+
 
         var alContractors = mutableListOf<CustomerProjectReqVO.Contractor>()
         hmContacts.forEach {
@@ -478,7 +498,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         }
         println("final : ${alContractors.toString()}")
 
-
         val customerProjectReqVO = CustomerProjectReqVO().apply {
             projectName = binding.etProjectName.text.toString()
             projectAddress = binding.etProjectAddress.text.toString()
@@ -487,13 +506,14 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             pincode = binding.etPincode.text.toString()
             contractorTeamSize = binding.etTeamSizeNo.text.toString()
             contractors=alContractors
+            projectHeads=alProjectHead
         }
-//
-//        RetrofitRequestController(this).sendRequest(
-//            Constants.RequestNames.ADD_CUSTOMER_PROJECT,
-//            customerProjectReqVO,
-//            true
-//        )
+
+        RetrofitRequestController(this).sendRequest(
+            Constants.RequestNames.ADD_CUSTOMER_PROJECT,
+            customerProjectReqVO,
+            true
+        )
 
     }
 

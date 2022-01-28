@@ -115,7 +115,7 @@
             android:name="com.ncl.nclcustomerservice.activity.NewSignUpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.SignUp"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
+        <activity android:name=".activity.CreateClientProjectActivity"/>
         <service android:name="com.ncl.nclcustomerservice.fcm.MyFirebaseMessagingService1">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

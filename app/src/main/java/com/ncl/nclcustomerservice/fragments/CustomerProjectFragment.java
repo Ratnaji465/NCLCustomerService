@@ -94,7 +94,6 @@ public class CustomerProjectFragment extends BaseFragment implements RetrofitRes
             public void OnItemClick(View view, View viewItem, int position) {
                 Intent intent = new Intent(getActivity(), ViewCustomerProjectActivity.class);
                 intent.putExtra("CustomerProjectList", (Serializable) customerProjectResVOS.get(position));
-//                intent.putExtra("type","Contractor" );
                 startActivity(intent);
             }
         });

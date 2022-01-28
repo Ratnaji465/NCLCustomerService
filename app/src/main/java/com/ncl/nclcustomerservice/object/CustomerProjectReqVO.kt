@@ -69,7 +69,7 @@ class CustomerProjectReqVO : Serializable {
             .append("projectHeads", projectHeads).toString()
     }
 
-    inner class ProjectHead : Serializable {
+     class ProjectHead : Serializable {
         @SerializedName("contact_project_head_id")
         @Expose
         var contactProjectHeadId: Int? = null
@@ -85,7 +85,7 @@ class CustomerProjectReqVO : Serializable {
         }
     }
 
-    inner class AssociateContact : Serializable {
+     class AssociateContact : Serializable {
         @SerializedName("contact_projecthead_associatecontact_id")
         @Expose
         var contactProjectheadAssociatecontactId: String? = null
