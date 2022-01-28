@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.ncl.nclcustomerservice.activity.CreateClientProjectActivity">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/filter_toolbar_binding" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_layout"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:layout_margin="@dimen/_10sdp"
+                android:orientation="vertical">
+
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/grey"
+                    android:padding="@dimen/_5sdp"
+                    android:text="CLIENT PROJECT INFORMATION"
+                    android:textAllCaps="true" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvProjectName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="OA Number" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etOANumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvMaterialDispatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Date of Material dispatch from factory" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etMaterialDispatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvAnyShortages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Any shortages" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etAnyShortages"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvWorkStartDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Work start date" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etWorkStartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:scrollbarSize="@dimen/_2sdp">
+
+                    <LinearLayout
+                        android:id="@+id/ll_products"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="vertical" />
+                </HorizontalScrollView>
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvTotalSFT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Total SFT" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etTotalSFT"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvInstalledSFT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Installed SFT" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etInstalledSFT"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvBalanceTobeInstall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Balance to be installed" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etBalanceTobeInstall"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvInstallCompDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Installation completed date " />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etInstallCompDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvNoOfDaysInstall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="No of days for the installation completion" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etNoOfDaysInstall"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvHandingOver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Handing over done" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etHandingOver"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvBalanceHandingOver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Balance handing over" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etBalanceHandingOver"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvWorkCompletionCertif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Work Completion certificate" />
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etWorkCompletionCertif"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="12"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:gravity="left|center"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/btn_wc_certificate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:text="Choose File"
+                        android:textAllCaps="false"
+                        android:gravity="center"
+                        android:textColor="@color/toolbar"/>
+                    <TextView
+                        android:id="@+id/wc_certif_FileName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/gray"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:gravity="center_vertical"
+                        android:hint="No file chosen"
+                        />
+                </LinearLayout>
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvWCC_receive_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Work Completion certificate received date" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etWCC_receive_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvNoOfDaysHandingOver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="No of days for the handing over" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etNoOfDaysHandingOver"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvWorkStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Work Status" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etWorkStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvInstallAndHandingOver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="No of days for the installation &amp; handing over" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etInstallAndHandingOver"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Date" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvRemarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Remarks" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etRemarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:elevation="2px"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.ncl.nclcustomerservice.customviews.CustomButton
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg_green"
+            android:text="save"
+            android:textColor="@android:color/white" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:background="@drawable/button_bg_red"
+            android:text="cancel"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</RelativeLayout></layout>
