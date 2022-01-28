@@ -22,6 +22,7 @@ import com.ncl.nclcustomerservice.databinding.ContractorDetailsRowBinding
 import com.ncl.nclcustomerservice.databinding.ContractorTeamMemberDetailsRow1Binding
 import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
+import java.io.Serializable
 import java.util.*
 
 class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitResponseListener {
@@ -34,13 +35,8 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     private var arrTeamMembers: List<CustomerContactResponseVo.TeamMemberResVo> = mutableListOf()
     private var selectTeamMembers = mutableListOf<Int>()
     var hmTeamMembers = mutableMapOf<String, List<CustomerContactResponseVo.TeamMemberResVo>>()
-    private var arrAssociate: List<ProjectHeadReqVo.AssociateContact> = mutableListOf()
-    var hmAssociate = mutableMapOf<String, List<ProjectHeadReqVo.AssociateContact>>()
+
     private lateinit var binding: ActivityCreateCustomerprojectBinding
-
-
-    var form_type: String? = null
-    var id = 0
 
     lateinit var db: DatabaseHandler
 
@@ -54,21 +50,23 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_customerproject)
         Common.setupUI(binding.root, this)
-        form_type = intent.extras!!.getString("form_key", "")
-        id = intent.extras!!.getInt("id", 0)
-
+        intent.extras?.get("args")?.let {
+            ((it as Args).customerProjectResVO)
+        }
+        binding.apply {
+            toolbar.titleText.text = "CUSTOMER PROJECT INFORMATION"
+            tvProjectName.text = Common.setSppanableText("* Project Name")
+            tvProjectAddress.text = Common.setSppanableText("* Project Address")
+            tvState.text = Common.setSppanableText("* State")
+            tvCountry.text = Common.setSppanableText("* Country")
+            tvPinCode.text = Common.setSppanableText("* Pincode")
+            tvProjectHeadName.text = Common.setSppanableText("* Project Head Name")
+            tvPHMobile.text = Common.setSppanableText("* Mobile")
+            tvPHDepartment.text = Common.setSppanableText("* Department")
+            tvPHCompanyName.text = Common.setSppanableText("* Company/Client Name")
+            tvTeamSizeNo.text = Common.setSppanableText("* Team Size")
+        }
         db = DatabaseHandler.getDatabase(this)
-        binding.toolbar.titleText.text = "CUSTOMER PROJECT INFORMATION"
-        binding.tvProjectName.text = Common.setSppanableText("* Project Name")
-        binding.tvProjectAddress.text = Common.setSppanableText("* Project Address")
-        binding.tvState.text = Common.setSppanableText("* State")
-        binding.tvCountry.text = Common.setSppanableText("* Country")
-        binding.tvPinCode.text = Common.setSppanableText("* Pincode")
-        binding.tvProjectHeadName.text = Common.setSppanableText("* Project Head Name")
-        binding.tvPHMobile.text = Common.setSppanableText("* Mobile")
-        binding.tvPHDepartment.text = Common.setSppanableText("* Department")
-        binding.tvPHCompanyName.text = Common.setSppanableText("* Company/Client Name")
-        binding.tvTeamSizeNo.text = Common.setSppanableText("* Team Size")
 
 // Associate Contact Details
         projectHeadReqVoList = db.commonDao().allProjectHeadContactList
@@ -397,8 +395,9 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                         )
                     if (customerProjectResVO != null) {
                         db.commonDao().insertCustomerProject(customerProjectResVO)
-                        val intent = Intent(this@CreateCustomerProjectActivity,
-                            NewContactViewActivity::class.java
+                        val intent = Intent(
+                            this@CreateCustomerProjectActivity,
+                            ViewCustomerProjectActivity::class.java
                         )
                         intent.putExtra("CustomerProjectList", customerProjectResVO)
                         startActivity(intent)
@@ -464,20 +463,29 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             hmTeamMembers.keys.groupBy { hmTeamMembers[it]?.get(0)?.contactId }.toMutableMap()
         var alProjectHead = mutableListOf<CustomerProjectReqVO.ProjectHead>()
 
-        hmAssociate.forEach{
-            val projectHeadList = CustomerProjectReqVO.ProjectHead().apply {
-                contactProjectHeadId = Integer.parseInt(header.contactProjectHeadId) //contractor ID
-                var associateContactsList = mutableListOf<CustomerProjectReqVO.AssociateContact>()
-                it.value.map {
-                    var associate = CustomerProjectReqVO.AssociateContact()
-                    associate.contactProjectheadAssociatecontactId = it.contactProjectheadAssociatecontactId
-                    println("teamid :$it") // team Ids
-                    associateContactsList.add(associate)
-                }.toMutableList()
-                associateContacts = associateContactsList
+//        hmAssociate.forEach {
+//            val projectHeadList = CustomerProjectReqVO.ProjectHead().apply {
+//                contactProjectHeadId =  header.contactProjectHeadId) //contractor ID
+//                var associateContactsList = mutableListOf<CustomerProjectReqVO.AssociateContact>()
+//                it.value.map {
+//                    var associate = CustomerProjectReqVO.AssociateContact()
+//                    associate.contactProjectheadAssociatecontactId =
+//                        it.contactProjectheadAssociatecontactId
+//                    println("teamid :$it") // team Ids
+//                    associateContactsList.add(associate)
+//                }.toMutableList()
+//                associateContacts = associateContactsList
+//            }
+//            alProjectHead.add(projectHeadList)
+//        }
+        val projectHeadList = CustomerProjectReqVO.ProjectHead().apply {
+            contactProjectHeadId = header.contactProjectHeadId
+            associateContacts = ac.map { id ->
+                CustomerProjectReqVO.AssociateContact()
+                    .apply { contactProjectheadAssociatecontactId = id }
             }
-            alProjectHead.add(projectHeadList)
         }
+        alProjectHead.add(projectHeadList)
 
 
         var alContractors = mutableListOf<CustomerProjectReqVO.Contractor>()
@@ -505,9 +513,10 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             country = binding.etCountry.text.toString()
             pincode = binding.etPincode.text.toString()
             contractorTeamSize = binding.etTeamSizeNo.text.toString()
-            contractors=alContractors
-            projectHeads=alProjectHead
+            contractors = alContractors
+            projectHeads = alProjectHead
         }
+        println(customerProjectReqVO)
 
         RetrofitRequestController(this).sendRequest(
             Constants.RequestNames.ADD_CUSTOMER_PROJECT,
@@ -516,5 +525,17 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         )
 
     }
+
+    companion object {
+        fun open(context: Context, args: Args) {
+            context.startActivity(
+                Intent(context, CreateCustomerProjectActivity::class.java).apply {
+                    putExtra("args", args)
+                }
+            )
+        }
+    }
+
+    data class Args(var customerProjectResVO: CustomerProjectResVO) : Serializable
 
 }

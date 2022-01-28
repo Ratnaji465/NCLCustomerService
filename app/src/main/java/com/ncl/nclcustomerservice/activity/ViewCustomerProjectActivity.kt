@@ -45,11 +45,12 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
             setClientProjectUI()
         }
         binding.btnEdit.setOnClickListener {
-            val intent = Intent(this, CreateCustomerProjectActivity::class.java)
-            intent.putExtra("CustomerProjectList", contactContractorList) as Serializable
-            startActivity(intent)
+            CreateCustomerProjectActivity.open(
+                this,
+                CreateCustomerProjectActivity.Args(contactContractorList)
+            )
         }
-        binding.tvAddClientProject.setOnClickListener{
+        binding.tvAddClientProject.setOnClickListener {
             val intent = Intent(this, CreateClientProjectActivity::class.java)
             startActivity(intent)
         }
