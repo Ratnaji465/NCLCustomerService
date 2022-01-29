@@ -17,6 +17,7 @@ class MultiSelectionDialog<T>(
     var list: List<T>,
     var mapper: (T) -> String,
     var selectedPosition: MutableList<Int>? = null,
+    var isSingleSelection: Boolean = false,
     var receivedData: (List<Int>) -> Unit
 ) :
     Dialog(context) {
@@ -31,7 +32,7 @@ class MultiSelectionDialog<T>(
             R.layout.dialog_multi_selection_contact, null, false
         )
         setContentView(binding.root)
-        adapter = MultiSelectionAdapter(list, mapper)
+        adapter = MultiSelectionAdapter(list, mapper, isSingleSelection)
         adapter.selectedPosition = HashSet<Int>(selectedPosition ?: mutableListOf()).toMutableSet()
         binding.rv.adapter = adapter
         binding.apply {
@@ -48,7 +49,11 @@ class MultiSelectionDialog<T>(
 
 }
 
-class MultiSelectionAdapter<T>(var list: List<T>, var mapper: (T) -> String) :
+class MultiSelectionAdapter<T>(
+    var list: List<T>,
+    var mapper: (T) -> String,
+    var isSingleSelection: Boolean
+) :
     RecyclerView.Adapter<MultiSelectionAdapter<T>.ViewHolder>() {
     var selectedPosition = mutableSetOf<Int>()
 
@@ -59,11 +64,14 @@ class MultiSelectionAdapter<T>(var list: List<T>, var mapper: (T) -> String) :
             binding.ivChecked.visibility =
                 if (selectedPosition.contains(position)) View.VISIBLE else View.GONE
             binding.root.setOnClickListener {
-                notifyDataSetChanged()
+                if (isSingleSelection)
+                    selectedPosition.clear()
                 if (selectedPosition.contains(position))
                     selectedPosition.remove(position)
                 else
                     selectedPosition.add(position)
+                notifyDataSetChanged()
+
             }
         }
     }

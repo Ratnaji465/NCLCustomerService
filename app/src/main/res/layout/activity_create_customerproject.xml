@@ -92,7 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:background="@drawable/custom_spinner"></com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner>
+                    android:background="@drawable/custom_spinner"
+                    android:text="State"></com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner>
 
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
@@ -152,13 +153,26 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Project Head Name" />
 
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/etProjectHeadName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/button_bg_white"
+                    android:drawableEnd="@drawable/arrow1"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
                 <Spinner
                     android:id="@+id/ProjectHeadName_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:background="@drawable/custom_spinner" />
+                    android:background="@drawable/custom_spinner"
+                    android:visibility="gone" />
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvPHMobile"
@@ -173,6 +187,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:drawableEnd="@drawable/above_shadow"
                     android:enabled="false"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
@@ -229,6 +244,12 @@
                     android:padding="@dimen/_5sdp"
                     android:text="ASSOCIATE CONTACT DETAILS"
                     android:textAllCaps="true" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomButton
+                    android:id="@+id/btnAssociateContractAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add/Delete" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
