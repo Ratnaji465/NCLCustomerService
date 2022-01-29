@@ -22,15 +22,14 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_layout"
             android:layout_below="@+id/toolbar"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:fillViewport="true"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/toolbar"
                 android:layout_margin="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:orientation="vertical">
 
 
@@ -44,7 +43,7 @@
                     android:textAllCaps="true" />
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
-                    android:id="@+id/tvProjectName"
+                    android:id="@+id/tvOANumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
@@ -61,6 +60,7 @@
                     android:inputType="textCapSentences"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvMaterialDispatch"
                     android:layout_width="wrap_content"
@@ -74,11 +74,16 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:focusable="false"
                     android:gravity="left|center"
+                    android:hint="Date of Material dispatch from factory"
                     android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvAnyShortages"
                     android:layout_width="wrap_content"
@@ -86,17 +91,14 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Any shortages" />
 
-                <com.ncl.nclcustomerservice.customviews.CustomEditText
-                    android:id="@+id/etAnyShortages"
+                <Spinner
+                    android:id="@+id/spAnyShortages"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:background="@drawable/button_bg_white"
-                    android:gravity="left|center"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:background="@drawable/custom_spinner"
+                    android:entries="@array/Client_shortages" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvWorkStartDate"
                     android:layout_width="wrap_content"
@@ -110,11 +112,16 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:focusable="false"
                     android:gravity="left|center"
+                    android:hint="Work start date"
                     android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -126,9 +133,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
                         android:orientation="vertical" />
                 </HorizontalScrollView>
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvTotalSFT"
                     android:layout_width="wrap_content"
@@ -144,9 +151,10 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvInstalledSFT"
                     android:layout_width="wrap_content"
@@ -162,9 +170,10 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvBalanceTobeInstall"
                     android:layout_width="wrap_content"
@@ -180,15 +189,16 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvInstallCompDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Installation completed date " />
+                    android:text="Installation completed date" />
 
                 <com.ncl.nclcustomerservice.customviews.CustomEditText
                     android:id="@+id/etInstallCompDate"
@@ -196,11 +206,16 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:focusable="false"
                     android:gravity="left|center"
+                    android:hint="Installation completed date"
                     android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvNoOfDaysInstall"
                     android:layout_width="wrap_content"
@@ -216,9 +231,10 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvHandingOver"
                     android:layout_width="wrap_content"
@@ -234,9 +250,10 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvBalanceHandingOver"
                     android:layout_width="wrap_content"
@@ -252,7 +269,7 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
@@ -262,44 +279,43 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Work Completion certificate" />
-                <com.ncl.nclcustomerservice.customviews.CustomEditText
-                    android:id="@+id/etWorkCompletionCertif"
+
+                <Spinner
+                    android:id="@+id/spWorkCompletionCertif"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:background="@drawable/button_bg_white"
-                    android:gravity="left|center"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:maxLength="12"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:entries="@array/Work_completion"
+                    android:background="@drawable/custom_spinner" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:gravity="left|center"
+                    android:orientation="horizontal"
                     android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:orientation="horizontal">
+                    android:paddingBottom="3dp">
+
                     <Button
                         android:id="@+id/btn_wc_certificate"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_28sdp"
+                        android:gravity="center"
                         android:text="Choose File"
                         android:textAllCaps="false"
-                        android:gravity="center"
-                        android:textColor="@color/toolbar"/>
+                        android:textColor="@color/toolbar" />
+
                     <TextView
                         android:id="@+id/wc_certif_FileName"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textColor="@color/gray"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:gravity="center_vertical"
                         android:hint="No file chosen"
-                        />
+                        android:textColor="@color/gray" />
                 </LinearLayout>
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvWCC_receive_date"
                     android:layout_width="wrap_content"
@@ -313,11 +329,16 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:focusable="false"
                     android:gravity="left|center"
+                    android:hint="Work Completion certificate received date"
                     android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvNoOfDaysHandingOver"
                     android:layout_width="wrap_content"
@@ -333,9 +354,10 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvWorkStatus"
                     android:layout_width="wrap_content"
@@ -343,17 +365,14 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Work Status" />
 
-                <com.ncl.nclcustomerservice.customviews.CustomEditText
-                    android:id="@+id/etWorkStatus"
+                <Spinner
+                    android:id="@+id/spWorkStatus"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:background="@drawable/button_bg_white"
-                    android:gravity="left|center"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:entries="@array/Work_status"
+                    android:background="@drawable/custom_spinner" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvInstallAndHandingOver"
                     android:layout_width="wrap_content"
@@ -369,9 +388,10 @@
                     android:background="@drawable/button_bg_white"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
@@ -385,7 +405,11 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:focusable="false"
                     android:gravity="left|center"
+                    android:hint="Select Date"
                     android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:textColor="@color/black"
@@ -412,8 +436,7 @@
             </LinearLayout>
 
 
-
-    </ScrollView>
+        </ScrollView>
 
     <LinearLayout
         android:id="@+id/bottom_layout"

@@ -25,8 +25,23 @@
         <item>Notifications</item>
         <item>LOGOUT</item>
     </string-array>
-
-
+    <string-array name="Client_shortages">
+        <item>Select</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="Work_completion">
+        <item>Select</item>
+        <item>Collected</item>
+        <item>Not Collected</item>
+    </string-array>
+    <string-array name="Work_status">
+        <item>Select</item>
+        <item>On going project</item>
+        <item>Project on hold</item>
+        <item>Completed</item>
+        <item>No work front</item>
+    </string-array>
     <!--  <string-array name="menuOptions">
         <item>Dashboard</item>
         <item>Leads</item>

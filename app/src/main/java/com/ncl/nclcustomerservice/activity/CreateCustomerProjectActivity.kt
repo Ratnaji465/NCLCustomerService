@@ -83,9 +83,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             projectHeadReqVoList,
             bindingAssociate
         )
-//        arrAssociate =
-//                projectHeadReqVoList.flatMap { projectHeadReqVoList[it].contactProjectHeadId }
-//        hmTeamMembers = arrTeamMembers.groupBy { it.contactContractorTeamId }.toMutableMap()
         contactContractorLists = db.commonDao().allCustomerContactList
         val dropDownDataReqVo = DropDownDataReqVo().apply {
             usersList = "users_list"
@@ -126,16 +123,19 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             true
         )
         binding.save.setOnClickListener {
-//            if(isValidate()){
-//                if(binding.stateSpinner.selectedItemPosition==0){
-//                    Toast.makeText(this, "Please Select State", Toast.LENGTH_SHORT).show()
-//                }else if(binding.ProjectHeadNameSpinner.selectedItemPosition==0){
-//                    Toast.makeText(this, "Please Select Project Head Name", Toast.LENGTH_SHORT).show()
-//                }else if(selectedContractors.size==0){
-//                    Toast.makeText(this, "Please Select Contractor Details", Toast.LENGTH_SHORT).show()
-//                }
-            getRequest()
-//            }
+            if(isValidate()){
+                if(binding.stateSpinner.selectedItemPosition==0){
+                    Toast.makeText(this, "Please Select State", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }else if(binding.ProjectHeadNameSpinner.selectedItemPosition==0){
+                    Toast.makeText(this, "Please Select Project Head Name", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }else if(selectedContractors.size==0){
+                    Toast.makeText(this, "Please Select Contractor Details", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                getRequest()
+            }
         }
     }
 
@@ -462,22 +462,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         var hmContacts =
             hmTeamMembers.keys.groupBy { hmTeamMembers[it]?.get(0)?.contactId }.toMutableMap()
         var alProjectHead = mutableListOf<CustomerProjectReqVO.ProjectHead>()
-
-//        hmAssociate.forEach {
-//            val projectHeadList = CustomerProjectReqVO.ProjectHead().apply {
-//                contactProjectHeadId =  header.contactProjectHeadId) //contractor ID
-//                var associateContactsList = mutableListOf<CustomerProjectReqVO.AssociateContact>()
-//                it.value.map {
-//                    var associate = CustomerProjectReqVO.AssociateContact()
-//                    associate.contactProjectheadAssociatecontactId =
-//                        it.contactProjectheadAssociatecontactId
-//                    println("teamid :$it") // team Ids
-//                    associateContactsList.add(associate)
-//                }.toMutableList()
-//                associateContacts = associateContactsList
-//            }
-//            alProjectHead.add(projectHeadList)
-//        }
         val projectHeadList = CustomerProjectReqVO.ProjectHead().apply {
             contactProjectHeadId = header.contactProjectHeadId
             associateContacts = ac.map { id ->
@@ -523,7 +507,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             customerProjectReqVO,
             true
         )
-
     }
 
     companion object {
@@ -535,7 +518,5 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             )
         }
     }
-
     data class Args(var customerProjectResVO: CustomerProjectResVO) : Serializable
-
 }

@@ -34,6 +34,8 @@ import com.ncl.nclcustomerservice.object.NewCustomerResVo;
 import com.ncl.nclcustomerservice.object.Team;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class CustomerProjectFragment extends BaseFragment implements RetrofitResponseListener {
@@ -109,6 +111,7 @@ public class CustomerProjectFragment extends BaseFragment implements RetrofitRes
                         if(customerProjectResListVO!=null && customerProjectResListVO.customerProjectResVOList!=null){
                             db.commonDao().deleteCustomerProjectList();
                             db.commonDao().insertCustomerProjectList(customerProjectResListVO.customerProjectResVOList);
+                            Collections.reverse(customerProjectResListVO.customerProjectResVOList);
                             setOnAdapter(rvList, customerProjectResListVO.customerProjectResVOList);
                         }
                     } else {
