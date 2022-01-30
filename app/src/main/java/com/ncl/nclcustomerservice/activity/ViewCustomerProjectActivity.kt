@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.CustomerProjectResVO
 import com.ncl.nclcustomerservice.commonutils.Common
+import com.ncl.nclcustomerservice.commonutils.getArguments
 import com.ncl.nclcustomerservice.databinding.ActivityViewCustomerprojectBinding
 import com.ncl.nclcustomerservice.databinding.AssociateContactsRowBindingBinding
 import com.ncl.nclcustomerservice.databinding.ContractorDetailsRowBinding
@@ -26,8 +27,11 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
         binding.toolbar.backButton.setOnClickListener {
             finish()
         }
-        contactContractorList =
-            (intent.getSerializableExtra("CustomerProjectList") as CustomerProjectResVO?)!!
+        getArguments<Args>()?.customerProjectResVO?.let {
+            contactContractorList = it
+        }
+//        contactContractorList =
+//            (intent.getSerializableExtra("CustomerProjectList") as CustomerProjectResVO?)!!
         if (contactContractorList != null) {
             setContactUI()
             if (contactContractorList.projectHead != null && contactContractorList.projectHead.size > 0) {
@@ -182,10 +186,14 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
 
     }
 
+    data class Args(var customerProjectResVO: CustomerProjectResVO) : Serializable
 
     companion object {
-        fun open(context: Context) {
-            context.startActivity(Intent(context, ViewCustomerProjectActivity::class.java))
+        @JvmStatic
+        fun open(context: Context, customerProjectResVO: CustomerProjectResVO) {
+            context.startActivity(Intent(context, ViewCustomerProjectActivity::class.java).apply {
+                putExtra("args", Args(customerProjectResVO))
+            })
         }
     }
 }

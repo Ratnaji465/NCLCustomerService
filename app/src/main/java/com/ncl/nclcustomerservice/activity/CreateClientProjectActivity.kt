@@ -278,7 +278,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 list.addAll(subseries.toMutableList())
             }
             var arrProduct = list.map { ProductAndSubseries(it.first, it.second) }.toList()
-            val request = ClientProjectRequest(
+            val request = ClientProject(
                 requestName = "",
                 products = arrProduct
             )

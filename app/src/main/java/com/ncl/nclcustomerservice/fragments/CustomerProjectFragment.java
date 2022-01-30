@@ -94,9 +94,10 @@ public class CustomerProjectFragment extends BaseFragment implements RetrofitRes
         customerProjectAdapter.setOnItemClickListener(new CustomerProjectAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, View viewItem, int position) {
-                Intent intent = new Intent(getActivity(), ViewCustomerProjectActivity.class);
-                intent.putExtra("CustomerProjectList", (Serializable) customerProjectResVOS.get(position));
-                startActivity(intent);
+                ViewCustomerProjectActivity.open(
+                        requireActivity(),
+                        customerProjectResVOS.get(position)
+                );
             }
         });
     }
@@ -108,7 +109,7 @@ public class CustomerProjectFragment extends BaseFragment implements RetrofitRes
                 case Constants.RequestNames.CUSTOMER_PROJECT_LIST:
                     if (objectResponse.result != null) {
                         CustomerProjectResListVO customerProjectResListVO = Common.getSpecificDataObject(objectResponse.result, CustomerProjectResListVO.class);
-                        if(customerProjectResListVO!=null && customerProjectResListVO.customerProjectResVOList!=null){
+                        if (customerProjectResListVO != null && customerProjectResListVO.customerProjectResVOList != null) {
                             db.commonDao().deleteCustomerProjectList();
                             db.commonDao().insertCustomerProjectList(customerProjectResListVO.customerProjectResVOList);
                             Collections.reverse(customerProjectResListVO.customerProjectResVOList);

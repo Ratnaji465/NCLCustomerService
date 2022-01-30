@@ -15,6 +15,7 @@ import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
 import com.ncl.nclcustomerservice.adapter.CustomSpinnerAdapter
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.Constants
+import com.ncl.nclcustomerservice.commonutils.getArguments
 import com.ncl.nclcustomerservice.database.DatabaseHandler
 import com.ncl.nclcustomerservice.databinding.ActivityCreateCustomerprojectBinding
 import com.ncl.nclcustomerservice.databinding.AssociateContactsRowBindingBinding
@@ -84,13 +85,13 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             teamId = Common.getTeamUserIdFromSP(this@CreateCustomerProjectActivity)
         }
         RetrofitRequestController(this).sendRequest(
-                Constants.RequestNames.DROP_DOWN_LIST,
-                dropDownDataReqVo,
-                true
+            Constants.RequestNames.DROP_DOWN_LIST,
+            dropDownDataReqVo,
+            true
         )
-        intent.extras?.get("args")?.let {
+        getArguments<Args>()?.let {
             isEdit = true
-            val head = ((it as Args).customerProjectResVO)
+            val head = it.customerProjectResVO
             customerProjectId = head.customerProjectId
             selectedHeadPosition =
                 projectHeadReqVoList.indexOfFirst { it.contactProjectHeadId == head.projectHead[0].contactProjectHeadId }
@@ -441,12 +442,10 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                         )
                     if (customerProjectResVO != null) {
                         db.commonDao().insertCustomerProject(customerProjectResVO)
-                        val intent = Intent(
+                        ViewCustomerProjectActivity.open(
                             this@CreateCustomerProjectActivity,
-                            ViewCustomerProjectActivity::class.java
+                            customerProjectResVO
                         )
-                        intent.putExtra("CustomerProjectList", customerProjectResVO)
-                        startActivity(intent)
                         finish()
 
                     }
