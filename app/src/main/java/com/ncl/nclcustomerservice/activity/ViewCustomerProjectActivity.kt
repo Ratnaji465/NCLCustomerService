@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.ncl.nclcustomerservice.R
+import com.ncl.nclcustomerservice.`object`.ClientProject
 import com.ncl.nclcustomerservice.`object`.CustomerProjectResVO
+import com.ncl.nclcustomerservice.`object`.ProductAndSubseries
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.getArguments
 import com.ncl.nclcustomerservice.databinding.ActivityViewCustomerprojectBinding
@@ -55,10 +57,29 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
             )
         }
         binding.tvAddClientProject.setOnClickListener {
-            val intent = Intent(this, CreateClientProjectActivity::class.java)
-            startActivity(intent)
+            CreateClientProjectActivity.open(this, getClientProject())
         }
     }
+
+    private fun getClientProject(): CreateClientProjectActivity.Args {
+        return CreateClientProjectActivity.Args(
+            ClientProject().apply {
+                products = listOf<ProductAndSubseries>(
+                    ProductAndSubseries(
+                        customerProjectClientProjectProductsId = "114",
+                        divisionMasterId = "3",
+                        divisionName = "Blocks",
+                        divisionSapCode = "30",
+                        productId = "6812",
+                        productName = "santej",
+                        productCode = "P90"
+                    )
+                )
+            }
+        )
+
+    }
+
 
     private fun setContactUI() {
         binding.etProjectName.setText(contactContractorList.projectName)

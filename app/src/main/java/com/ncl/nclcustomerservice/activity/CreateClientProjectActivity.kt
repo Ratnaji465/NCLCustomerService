@@ -3,6 +3,7 @@ package com.ncl.nclcustomerservice.activity
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -14,24 +15,27 @@ import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
 import com.ncl.nclcustomerservice.adapter.CustomSpinnerAdapter
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.Constants
+import com.ncl.nclcustomerservice.commonutils.getArguments
 import com.ncl.nclcustomerservice.databinding.ActivityCreateClientprojectBinding
 import com.ncl.nclcustomerservice.databinding.ClientprojectProductRowBinding
 import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 import java.io.File
+import java.io.Serializable
 import java.util.*
+import kotlin.collections.LinkedHashSet
 
 class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitResponseListener {
     private var selectedProducts: LinkedHashSet<Int> = linkedSetOf<Int>()
     private var selectedSubseries: MutableMap<String, MutableList<Int>> = mutableMapOf()
     private var hmProducts: MutableMap<String, List<ProductList>> = mutableMapOf()
     private var products: MutableList<DivisionList> = mutableListOf()
+
     private lateinit var binding: ActivityCreateClientprojectBinding
     override fun onInternetConnected() {}
     override fun onInternetDisconnected() {}
     private var wc_certificate_file: File? = null
-    lateinit var divisionList: MutableList<DivisionList>
-    lateinit var divisionSpinnerAdater: CustomSpinnerAdapter;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_clientproject)
@@ -433,13 +437,45 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                     products = dropDownData.divisionList
                 }
             }
+            var arrProjectId = LinkedHashSet<String>()
             products.forEach {
+                arrProjectId.add(it.divisionMasterId)
                 hmProducts.put(it.divisionMasterId, it.productList ?: listOf())
+            }
+
+            getArguments<Args>()?.let {
+                it.clientProject.products.forEachIndexed { pos, client ->
+                    val key = client.divisionMasterId
+                    if (arrProjectId.contains(key)) {
+                        var productPosition = products.indexOfFirst { it.divisionMasterId == key }
+                        if (productPosition >= 0)
+                            selectedProducts.add(productPosition)
+
+                        var list = selectedSubseries[key]
+                        if (list == null)
+                            list = mutableListOf()
+                        selectedSubseries[key] = list
+                        var subSeriesPosition =
+                            hmProducts[key]?.indexOfFirst { it.productId == client.productId }
+                        subSeriesPosition?.let { list.add(it) }
+                    }
+                }
+                setProducts(selectedProducts, selectedSubseries)
             }
             Common.dismissProgressDialog(progressDialog)
         } catch (exception: Exception) {
             exception.printStackTrace()
             Common.disPlayExpection(exception, progressDialog)
+        }
+    }
+
+    data class Args(var clientProject: ClientProject) : Serializable
+
+    companion object {
+        fun open(context: Context, args: Args? = null) {
+            context.startActivity(Intent(context, CreateClientProjectActivity::class.java).apply {
+                putExtra("args", args)
+            })
         }
     }
 
