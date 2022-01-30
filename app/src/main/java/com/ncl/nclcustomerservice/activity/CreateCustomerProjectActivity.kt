@@ -26,6 +26,7 @@ import java.io.Serializable
 
 class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitResponseListener {
 
+    private lateinit var customerProjectId: String
     var projectHeadReqVoList: MutableList<ProjectHeadReqVo> = ArrayList()
     private var selectedHeadPosition = -1
     private var selectedAssociates = mutableListOf<Int>()
@@ -42,7 +43,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
 
     lateinit var statesLists: MutableList<StatesList>
     var stateId: String? = null
-    lateinit var customerProjectId: String
 
     override fun onInternetConnected() {}
     override fun onInternetDisconnected() {}
@@ -91,13 +91,13 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         intent.extras?.get("args")?.let {
             isEdit = true
             val head = ((it as Args).customerProjectResVO)
-            customerProjectId = head.customerProjectId;
+            customerProjectId = head.customerProjectId
             selectedHeadPosition =
-                    projectHeadReqVoList.indexOfFirst { it.contactProjectHeadId == head.projectHead[0].contactProjectHeadId }
+                projectHeadReqVoList.indexOfFirst { it.contactProjectHeadId == head.projectHead[0].contactProjectHeadId }
             selectedAssociates.clear()
             projectHeadReqVoList[selectedHeadPosition].associateContacts.forEachIndexed { index, associateContact ->
                 var position =
-                        head.projectHead[0].associateContacts.indexOfFirst { it.contactProjectheadAssociatecontactId == associateContact.contactProjectheadAssociatecontactId }
+                    head.projectHead[0].associateContacts.indexOfFirst { it.contactProjectheadAssociatecontactId == associateContact.contactProjectheadAssociatecontactId }
                 if (position >= 0) {
                     selectedAssociates.add(index)
                 }
@@ -108,8 +108,8 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             binding.etCountry.setText(head.country)
             binding.etPincode.setText(head.pincode)
             setAssociateContact(
-                    selectedAssociates,
-                    projectHeadReqVoList[selectedHeadPosition].associateContacts
+                selectedAssociates,
+                projectHeadReqVoList[selectedHeadPosition].associateContacts
             )
 //            binding.ProjectHeadNameSpinner.setSelection(selectedHeadPosition)
             contactContractorLists.forEachIndexed { index, contactContractorList ->
@@ -121,16 +121,16 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                 }
             }
             setContractorsUI(
-                    binding.llContractorDetails,
-                    contactContractorLists,
-                    selectedContractors
+                binding.llContractorDetails,
+                contactContractorLists,
+                selectedContractors
             )
             arrTeamMembers =
-                    selectedContractors.flatMap { contactContractorLists[it].teamMembers }
+                selectedContractors.flatMap { contactContractorLists[it].teamMembers }
             hmTeamMembers = arrTeamMembers.groupBy { it.contactContractorTeamId }.toMutableMap()
 
             var listTM = head.contractors.flatMap { it.teamMembers }
-                    .map { it.teammemberAadharNumber }
+                .map { it.teammemberAadharNumber }
 
             arrTeamMembers.forEachIndexed { index, teamMemberResVo ->
                 if (listTM.contains(teamMemberResVo.teammemberAadharNumber)) {
@@ -139,9 +139,9 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             }
             binding.etTeamSizeNo.setText(head.contractorTeamSize)
             setTeamMembersUI(
-                    binding.llContractorTmDetails,
-                    arrTeamMembers,
-                    selectTeamMembers
+                binding.llContractorTmDetails,
+                arrTeamMembers,
+                selectTeamMembers
             )
         }
         setListeners()
@@ -150,26 +150,26 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     private fun setListeners() {
         binding.btnContractAdd.setOnClickListener {
             MultiSelectionDialog(
-                    this,
-                    contactContractorLists,
-                    { it.contractorName },
-                    selectedContractors
+                this,
+                contactContractorLists,
+                { it.contractorName },
+                selectedContractors
             ) {
                 selectedContractors = it.toMutableList()
                 setContractorsUI(
-                        binding.llContractorDetails,
-                        contactContractorLists,
-                        selectedContractors
+                    binding.llContractorDetails,
+                    contactContractorLists,
+                    selectedContractors
                 )
                 arrTeamMembers =
-                        selectedContractors.flatMap { contactContractorLists[it].teamMembers }
+                    selectedContractors.flatMap { contactContractorLists[it].teamMembers }
                 hmTeamMembers = arrTeamMembers.groupBy { it.contactContractorTeamId }.toMutableMap()
                 selectTeamMembers.clear()
                 (arrTeamMembers.indices).forEach { selectTeamMembers.add(it) }
                 setTeamMembersUI(
-                        binding.llContractorTmDetails,
-                        arrTeamMembers,
-                        selectTeamMembers
+                    binding.llContractorTmDetails,
+                    arrTeamMembers,
+                    selectTeamMembers
                 )
             }.show()
         }
@@ -183,11 +183,11 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                     return@setOnClickListener
                 } else if (binding.ProjectHeadNameSpinner.selectedItemPosition == 0) {
                     Toast.makeText(this, "Please Select Project Head Name", Toast.LENGTH_SHORT)
-                            .show()
+                        .show()
                     return@setOnClickListener
                 } else if (selectedContractors.size == 0) {
                     Toast.makeText(this, "Please Select Contractor Details", Toast.LENGTH_SHORT)
-                            .show()
+                        .show()
                     return@setOnClickListener
                 }
                 getRequest()
@@ -199,8 +199,8 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         binding.btnAssociateContractAdd.setOnClickListener {
             if (selectedHeadPosition >= 0) {
                 showAssociatedContactDialog(
-                        projectHeadReqVoList[selectedHeadPosition].associateContacts,
-                        selectedAssociates
+                    projectHeadReqVoList[selectedHeadPosition].associateContacts,
+                    selectedAssociates
                 )
             } else {
                 Toast.makeText(this, "Please select Project Head name", Toast.LENGTH_SHORT).show()
@@ -233,41 +233,41 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
 
     private fun showTeamMembers() {
         MultiSelectionDialog(
-                this,
-                arrTeamMembers,
-                { it.teamMemberName },
-                selectTeamMembers
+            this,
+            arrTeamMembers,
+            { it.teamMemberName },
+            selectTeamMembers
         ) {
             selectTeamMembers = it.toMutableList()
             setTeamMembersUI(
-                    binding.llContractorTmDetails,
-                    arrTeamMembers,
-                    selectTeamMembers
+                binding.llContractorTmDetails,
+                arrTeamMembers,
+                selectTeamMembers
             );
         }.show()
     }
 
     fun setTeamMembersUI(
-            llContractorTmDetails: LinearLayout,
-            teamMembers: List<CustomerContactResponseVo.TeamMemberResVo>,
-            selectTeamMembers: MutableList<Int>
+        llContractorTmDetails: LinearLayout,
+        teamMembers: List<CustomerContactResponseVo.TeamMemberResVo>,
+        selectTeamMembers: MutableList<Int>
     ) {
         llContractorTmDetails.removeAllViews()
         selectTeamMembers.forEach {
             val obj = teamMembers[it]
             var binding: ContractorTeamMemberDetailsRow1Binding = DataBindingUtil.inflate(
-                    layoutInflater,
-                    R.layout.contractor_team_member_details_row1,
-                    null,
-                    false
+                layoutInflater,
+                R.layout.contractor_team_member_details_row1,
+                null,
+                false
             )
             binding.apply {
                 tvTeamMemberName.text =
-                        Common.setSppanableText("* Name")
+                    Common.setSppanableText("* Name")
                 tvTeamMemberMobileNo.text =
-                        Common.setSppanableText("* Mobile")
+                    Common.setSppanableText("* Mobile")
                 tvCoAadharNo.text =
-                        Common.setSppanableText("* Aadhar Number")
+                    Common.setSppanableText("* Aadhar Number")
                 etTeamMemberName.setText(obj.teamMemberName)
                 etTeamMemberMobileNo.setText(obj.teamMemberMobileNo)
                 etCoAadharNo.setText(obj.teammemberAadharNumber)
@@ -279,18 +279,18 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
 
 
     private fun setContractorsUI(
-            viewGroup: ViewGroup,
-            arrContractors: MutableList<CustomerContactResponseVo.ContactContractorList>,
-            selectedContractors: MutableList<Int>
+        viewGroup: ViewGroup,
+        arrContractors: MutableList<CustomerContactResponseVo.ContactContractorList>,
+        selectedContractors: MutableList<Int>
     ) {
         viewGroup.removeAllViews()
         selectedContractors.forEach {
             var obj = arrContractors[it]
             val binding: ContractorDetailsRowBinding = DataBindingUtil.inflate(
-                    layoutInflater,
-                    R.layout.contractor_details_row,
-                    null,
-                    false
+                layoutInflater,
+                R.layout.contractor_details_row,
+                null,
+                false
             )
             binding.apply {
                 tvACName.text = Common.setSppanableText("* Name")
@@ -304,73 +304,27 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         }
     }
 
-    private fun setEmptyContact(projectHeadReqVoList: MutableList<ProjectHeadReqVo>) {
-        val projectHeadReqVo = ProjectHeadReqVo().apply {
-            contactProjectHeadId = "0"
-            contactId = "0"
-            projectHeadName = "Select"
-        }
-        projectHeadReqVoList.add(0, projectHeadReqVo)
-        val rowView = layoutInflater.inflate(R.layout.associate_contacts_row, null).apply {
-            findViewById<View>(R.id.etACName).visibility = View.GONE
-            findViewById<View>(R.id.ph_name_spinner).visibility =
-                    View.VISIBLE
-        }
-        binding.llAssociateContacts.addView(rowView)
-    }
-
     private fun showProjectHeadList() {
         MultiSelectionDialog(
-                this,
-                projectHeadReqVoList,
-                { it.projectHeadName },
-                mutableListOf(selectedHeadPosition),
-                true
+            this,
+            projectHeadReqVoList,
+            { it.projectHeadName },
+            mutableListOf(selectedHeadPosition),
+            true
         ) { arrPositions ->
             selectedHeadPosition = arrPositions[0]
             selectedAssociates.clear()
             setProjectHeadUI(projectHeadReqVoList[selectedHeadPosition])
             showAssociatedContactDialog(
-                    projectHeadReqVoList[selectedHeadPosition].associateContacts ?: mutableListOf(),
-                    selectedAssociates
+                projectHeadReqVoList[selectedHeadPosition].associateContacts ?: mutableListOf(),
+                selectedAssociates
             )
         }.show()
     }
 
 
-    private fun setProjectHeadSpinner(
-            spinner: Spinner,
-            projectHeadReqVoList: List<ProjectHeadReqVo>,
-            viewHolder: AssociateContactsRowBindingBinding
-    ) {
-//        val projectContactAdapter = ProjectContactAdapter(application, 0, projectHeadReqVoList)
-//        spinner.adapter = projectContactAdapter
-//        spinner.setOnItemSelectedListener(object :
-//            AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View,
-//                position: Int,
-//                id: Long
-//            ) {
-//                if (position != 0) {
-//                    selectedHeadPosition = position
-//                    selectedAssociates.clear()
-//                    setProjectHeadUI(projectHeadReqVoList[position])
-//                    showAssociatedContactDialog(
-//                        projectHeadReqVoList[position].associateContacts ?: mutableListOf(),
-//                        selectedAssociates
-//                    )
-//                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {}
-//        })
-    }
-
-
     private fun setProjectHeadUI(
-            projectHead: ProjectHeadReqVo,
+        projectHead: ProjectHeadReqVo,
     ) {
         binding.etProjectHeadName.setText(projectHead.projectHeadName)
         binding.etPHMobile.setText(projectHead.projectHeadMobile)
@@ -379,14 +333,14 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     }
 
     private fun showAssociatedContactDialog(
-            list: List<ProjectHeadReqVo.AssociateContact>?,
-            selectedAssociates: MutableList<Int>,
+        list: List<ProjectHeadReqVo.AssociateContact>?,
+        selectedAssociates: MutableList<Int>,
     ) {
         MultiSelectionDialog(
-                this,
-                list ?: mutableListOf(),
-                { obj -> obj.contactProjectHeadAssociateContactName },
-                selectedAssociates
+            this,
+            list ?: mutableListOf(),
+            { obj -> obj.contactProjectHeadAssociateContactName },
+            selectedAssociates
         ) {
             this.selectedAssociates = it.toMutableList()
             setAssociateContact(it, list ?: mutableListOf())
@@ -394,27 +348,28 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     }
 
     private fun setAssociateContact(
-            list: List<Int>,
-            associateContacts: List<ProjectHeadReqVo.AssociateContact>
+        list: List<Int>,
+        associateContacts: List<ProjectHeadReqVo.AssociateContact>
     ) {
         binding.llAssociateContacts.removeAllViews()
         list.forEach {
             var obj = associateContacts[it]
             val viewHolder: AssociateContactsRowBindingBinding =
-                    DataBindingUtil.inflate(
-                            layoutInflater,
-                            R.layout.associate_contacts_row_binding,
-                            null,
-                            false
-                    )
+                DataBindingUtil.inflate(
+                    layoutInflater,
+                    R.layout.associate_contacts_row_binding,
+                    null,
+                    false
+                )
             viewHolder.tvACName.text = Common.setSppanableText("* Name")
             viewHolder.tvACDesignation.text = Common.setSppanableText("* Designation")
             viewHolder.tvACMobile.text = Common.setSppanableText("* Mobile")
-            viewHolder.removelayoutAc.visibility = View.VISIBLE
+            viewHolder.removelayoutAc.visibility = View.GONE
+            viewHolder.addlayoutAc.visibility = View.GONE
             viewHolder.etACDesignation.setText(obj.contactProjectHeadAssociateContactDesignation)
             viewHolder.etACMobile.setText(obj.contactProjectHeadAssociateContactMobile)
             viewHolder.phNameSpinner.visibility = View.GONE
-            viewHolder.etACName.visibility = View.VISIBLE
+            viewHolder.etACName.visibility = View.GONE
             viewHolder.etACName.setText(obj.contactProjectHeadAssociateContactName)
             viewHolder.removelayoutAc.setOnClickListener {
                 showAssociatedContactDialog(associateContacts, selectedAssociates)
@@ -429,16 +384,16 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
 
 
     override fun onResponseSuccess(
-            objectResponse: ApiResponseController,
-            objectRequest: ApiRequestController,
-            progressDialog: ProgressDialog
+        objectResponse: ApiResponseController,
+        objectRequest: ApiRequestController,
+        progressDialog: ProgressDialog
     ) {
         try {
             when (objectResponse.requestname) {
                 Constants.RequestNames.DROP_DOWN_LIST -> {
                     val dropDownData: DropDownData = Common.getSpecificDataObject<DropDownData>(
-                            objectResponse.result,
-                            DropDownData::class.java
+                        objectResponse.result,
+                        DropDownData::class.java
                     )
                     if (dropDownData != null) {
                         statesLists = dropDownData.statesList
@@ -459,12 +414,12 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                             val customSpinnerAdapter = CustomSpinnerAdapter(this, 0, states)
                             binding.stateSpinner.adapter = customSpinnerAdapter
                             binding.stateSpinner.setOnItemSelectedListener(object :
-                                    AdapterView.OnItemSelectedListener {
+                                AdapterView.OnItemSelectedListener {
                                 override fun onItemSelected(
-                                        adapterView: AdapterView<*>?,
-                                        view: View,
-                                        i: Int,
-                                        l: Long
+                                    adapterView: AdapterView<*>?,
+                                    view: View,
+                                    i: Int,
+                                    l: Long
                                 ) {
                                     stateId = if (i > 0) statesLists!![i].stateName else ""
                                 }
@@ -480,15 +435,15 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                 Constants.RequestNames.EDIT_CUSTOMER_PROJECT -> {
 
                     val customerProjectResVO: CustomerProjectResVO =
-                            Common.getSpecificDataObject<CustomerProjectResVO>(
-                                    objectResponse.result,
-                                    CustomerProjectResVO::class.java
-                            )
+                        Common.getSpecificDataObject<CustomerProjectResVO>(
+                            objectResponse.result,
+                            CustomerProjectResVO::class.java
+                        )
                     if (customerProjectResVO != null) {
                         db.commonDao().insertCustomerProject(customerProjectResVO)
                         val intent = Intent(
-                                this@CreateCustomerProjectActivity,
-                                ViewCustomerProjectActivity::class.java
+                            this@CreateCustomerProjectActivity,
+                            ViewCustomerProjectActivity::class.java
                         )
                         intent.putExtra("CustomerProjectList", customerProjectResVO)
                         startActivity(intent)
@@ -504,11 +459,11 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     }
 
     private inner class ProjectContactAdapter(
-            context: Context,
-            textViewResourceId: Int,
-            var projectHeadReqVoList: List<ProjectHeadReqVo>
+        context: Context,
+        textViewResourceId: Int,
+        var projectHeadReqVoList: List<ProjectHeadReqVo>
     ) : ArrayAdapter<ProjectHeadReqVo>(
-            context, textViewResourceId, projectHeadReqVoList
+        context, textViewResourceId, projectHeadReqVoList
     ) {
         var inflater: LayoutInflater
         override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View? {
@@ -539,9 +494,9 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     fun getRequest() {
         val header = projectHeadReqVoList[selectedHeadPosition]
         val ac =
-                selectedAssociates.map { header.associateContacts[it].contactProjectheadAssociatecontactId }
+            selectedAssociates.map { header.associateContacts[it].contactProjectheadAssociatecontactId }
         val contractorsLst =
-                selectedContractors.map { contactContractorLists[it].contactContractorId }
+            selectedContractors.map { contactContractorLists[it].contactContractorId }
         val teamMembersId = selectTeamMembers.map { arrTeamMembers[it].contactContractorTeamId }
         println(" header : " + header.contactProjectHeadId)
         println(" assocaiteContacts : $ac")
@@ -551,13 +506,13 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             println(" team member id : $it :  contactsid: ${hmTeamMembers[it]?.get(0)?.contactId}")
         }
         var hmContacts =
-                hmTeamMembers.keys.groupBy { hmTeamMembers[it]?.get(0)?.contactId }.toMutableMap()
+            hmTeamMembers.keys.groupBy { hmTeamMembers[it]?.get(0)?.contactId }.toMutableMap()
         var alProjectHead = mutableListOf<CustomerProjectReqVO.ProjectHead>()
         val projectHeadList = CustomerProjectReqVO.ProjectHead().apply {
             contactProjectHeadId = header.contactProjectHeadId
             associateContacts = ac.map { id ->
                 CustomerProjectReqVO.AssociateContact()
-                        .apply { contactProjectheadAssociatecontactId = id }
+                    .apply { contactProjectheadAssociatecontactId = id }
             }
         }
         alProjectHead.add(projectHeadList)
@@ -593,17 +548,18 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         }
         println(customerProjectReqVO)
         if (isEdit) {
-            customerProjectReqVO.customerProjectId = customerProjectId;
+            customerProjectReqVO.customerProjectId = customerProjectId
             RetrofitRequestController(this).sendRequest(
-                    Constants.RequestNames.EDIT_CUSTOMER_PROJECT,
-                    customerProjectReqVO,
-                    true
+                Constants.RequestNames.EDIT_CUSTOMER_PROJECT,
+                customerProjectReqVO,
+                true
             )
+            //edit
         } else {
             RetrofitRequestController(this).sendRequest(
-                    Constants.RequestNames.ADD_CUSTOMER_PROJECT,
-                    customerProjectReqVO,
-                    true
+                Constants.RequestNames.ADD_CUSTOMER_PROJECT,
+                customerProjectReqVO,
+                true
             )
         }
     }
@@ -611,9 +567,9 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     companion object {
         fun open(context: Context, args: Args) {
             context.startActivity(
-                    Intent(context, CreateCustomerProjectActivity::class.java).apply {
-                        putExtra("args", args)
-                    }
+                Intent(context, CreateCustomerProjectActivity::class.java).apply {
+                    putExtra("args", args)
+                }
             )
         }
     }

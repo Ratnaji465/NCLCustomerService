@@ -8,7 +8,8 @@ import java.io.Serializable
 class CustomerProjectReqVO : Serializable {
     @SerializedName("customer_project_id")
     @Expose
-    var customerProjectId:String?=null
+    var customerProjectId: String? = null
+
     @SerializedName("project_name")
     @Expose
     var projectName: String? = null

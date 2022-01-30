@@ -91,13 +91,30 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Any shortages" />
 
-                <Spinner
-                    android:id="@+id/spAnyShortages"
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvShortage"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:background="@drawable/custom_spinner"
-                    android:entries="@array/Client_shortages" />
+                    android:background="@drawable/button_bg_white"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawableEnd="@drawable/arrow1"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:focusable="false"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
+                    android:text="Select"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <!--                <Spinner-->
+                <!--                    android:id="@+id/spAnyShortages"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="@dimen/_30sdp"-->
+                <!--                    android:layout_marginTop="@dimen/_2sdp"-->
+                <!--                    android:background="@drawable/custom_spinner"-->
+                <!--                    android:entries="@array/Client_shortages" />-->
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvWorkStartDate"
@@ -122,6 +139,12 @@
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
+                <com.ncl.nclcustomerservice.customviews.CustomButton
+                    android:id="@+id/btnProducts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add/Delete Projects" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -129,7 +152,7 @@
                     android:scrollbarSize="@dimen/_2sdp">
 
                     <LinearLayout
-                        android:id="@+id/ll_products"
+                        android:id="@+id/llProducts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
@@ -280,14 +303,18 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Work Completion certificate" />
 
-                <Spinner
-                    android:id="@+id/spWorkCompletionCertif"
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvWorkCompletion"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:entries="@array/Work_completion"
-                    android:background="@drawable/custom_spinner" />
-
+                    android:background="@drawable/button_bg_white"
+                    android:drawableEnd="@drawable/arrow1"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:text="Select"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -365,13 +392,26 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Work Status" />
 
-                <Spinner
-                    android:id="@+id/spWorkStatus"
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvWorkStatusSelect"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:entries="@array/Work_status"
-                    android:background="@drawable/custom_spinner" />
+                    android:background="@drawable/button_bg_white"
+                    android:drawableEnd="@drawable/arrow1"
+                    android:gravity="left|center"
+                    android:imeOptions="actionNext"
+                    android:text="Select"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <!--                <Spinner-->
+                <!--                    android:id="@+id/spWorkStatus"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="@dimen/_30sdp"-->
+                <!--                    android:layout_marginTop="@dimen/_2sdp"-->
+                <!--                    android:background="@drawable/custom_spinner"-->
+                <!--                    android:entries="@array/Work_status" />-->
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvInstallAndHandingOver"
@@ -438,32 +478,33 @@
 
         </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/bottom_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:elevation="2px"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <com.ncl.nclcustomerservice.customviews.CustomButton
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_bg_green"
-            android:text="save"
-            android:textColor="@android:color/white" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:elevation="2px"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <com.ncl.nclcustomerservice.customviews.CustomButton
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:background="@drawable/button_bg_red"
-            android:text="cancel"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-</RelativeLayout></layout>
+            <com.ncl.nclcustomerservice.customviews.CustomButton
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg_green"
+                android:text="save"
+                android:textColor="@android:color/white" />
+
+            <com.ncl.nclcustomerservice.customviews.CustomButton
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:background="@drawable/button_bg_red"
+                android:text="cancel"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
