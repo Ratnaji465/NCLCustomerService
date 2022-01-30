@@ -2,26 +2,30 @@ package com.ncl.nclcustomerservice.activity
 
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import android.os.Parcel
+import android.os.Parcelable
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import com.github.dhaval2404.imagepicker.ImagePicker.Companion.getFile
 import com.github.dhaval2404.imagepicker.ImagePicker.Companion.with
 import com.ncl.nclcustomerservice.R
-import com.ncl.nclcustomerservice.`object`.ApiRequestController
-import com.ncl.nclcustomerservice.`object`.ApiResponseController
+import com.ncl.nclcustomerservice.`object`.*
+import com.ncl.nclcustomerservice.adapter.CustomSpinnerAdapter
 import com.ncl.nclcustomerservice.commonutils.Common
+import com.ncl.nclcustomerservice.commonutils.Constants
 import com.ncl.nclcustomerservice.databinding.ActivityCreateClientprojectBinding
-import com.ncl.nclcustomerservice.databinding.AssociateContactsRowBindingBinding
 import com.ncl.nclcustomerservice.databinding.ClientprojectProductRowBinding
+import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import java.io.File
 import java.lang.Exception
 import java.util.*
@@ -30,33 +34,42 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     private lateinit var binding: ActivityCreateClientprojectBinding
     override fun onInternetConnected() {}
     override fun onInternetDisconnected() {}
-    private var wc_certificate_file : File? = null
-
+    private var wc_certificate_file: File? = null
+    lateinit var divisionList: MutableList<DivisionList>
+    lateinit var divisionSpinnerAdater: CustomSpinnerAdapter;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_clientproject)
 
         binding.apply {
             toolbar.titleText.setText("Add Client Project")
-            toolbar.backButton.setOnClickListener{
+            toolbar.backButton.setOnClickListener {
                 finish()
             }
-            tvOANumber.text= Common.setSppanableText("* Project Name")
-            tvMaterialDispatch.text= Common.setSppanableText("* Date of Material dispatch from factory")
-            tvAnyShortages.text=Common.setSppanableText("* Any shortages")
-            tvWorkStartDate.text=Common.setSppanableText("* Work start date")
-            tvTotalSFT.text=Common.setSppanableText("* Total SFT")
-            tvInstalledSFT.text=Common.setSppanableText("* Installed SFT")
-            tvBalanceTobeInstall.text=Common.setSppanableText("* Balance to be installed")
-            tvInstallCompDate.text=Common.setSppanableText("* Installation completed date")
-            tvNoOfDaysInstall.text=Common.setSppanableText("* No of days for the installation completion")
-            tvHandingOver.text=Common.setSppanableText("* Handing over done")
-            tvBalanceHandingOver.text=Common.setSppanableText("* Balance handing over")
-            tvWorkCompletionCertif.text=Common.setSppanableText("* Work Completion certificate")
-            tvWCCReceiveDate.text=Common.setSppanableText("* Work Completion certificate received date")
-            tvNoOfDaysHandingOver.text=Common.setSppanableText("* No of days for the handing over")
-            tvWorkStatus.text=Common.setSppanableText("* Work Status")
-            tvInstallAndHandingOver.text=Common.setSppanableText("* No of days for the installation & handing over")
+            tvOANumber.text = Common.setSppanableText("* Project Name")
+            tvMaterialDispatch.text = Common.setSppanableText("* Date of Material dispatch from factory")
+            tvAnyShortages.text = Common.setSppanableText("* Any shortages")
+            tvWorkStartDate.text = Common.setSppanableText("* Work start date")
+            tvTotalSFT.text = Common.setSppanableText("* Total SFT")
+            tvInstalledSFT.text = Common.setSppanableText("* Installed SFT")
+            tvBalanceTobeInstall.text = Common.setSppanableText("* Balance to be installed")
+            tvInstallCompDate.text = Common.setSppanableText("* Installation completed date")
+            tvNoOfDaysInstall.text = Common.setSppanableText("* No of days for the installation completion")
+            tvHandingOver.text = Common.setSppanableText("* Handing over done")
+            tvBalanceHandingOver.text = Common.setSppanableText("* Balance handing over")
+            tvWorkCompletionCertif.text = Common.setSppanableText("* Work Completion certificate")
+            tvWCCReceiveDate.text = Common.setSppanableText("* Work Completion certificate received date")
+            tvNoOfDaysHandingOver.text = Common.setSppanableText("* No of days for the handing over")
+            tvWorkStatus.text = Common.setSppanableText("* Work Status")
+            tvInstallAndHandingOver.text = Common.setSppanableText("* No of days for the installation & handing over")
+            val dropDownDataReqVo = DropDownDataReqVo().apply {
+                teamId = Common.getTeamUserIdFromSP(this@CreateClientProjectActivity)
+            }
+            RetrofitRequestController(this@CreateClientProjectActivity).sendRequest(
+                    Constants.RequestNames.DROP_DOWN_LIST,
+                    dropDownDataReqVo,
+                    true
+            )
             etMaterialDispatch.setOnClickListener {
                 val mcurrentDate = Calendar.getInstance()
                 val mYear = mcurrentDate[Calendar.YEAR]
@@ -150,19 +163,13 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             }
 //            etTotalSFT.addTextChangedListener(textWatcher)
             save.setOnClickListener {
-                if(isValidate()){
+                if (isValidate()) {
 
                 }
             }
         }
-        var clientprojectBinding: ClientprojectProductRowBinding =
-                DataBindingUtil.inflate(
-                        layoutInflater,
-                        R.layout.clientproject_product_row,
-                        null,
-                        false
-                )
     }
+
 
     private fun isValidate(): Boolean {
         var isFilled = true
@@ -175,7 +182,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 etMaterialDispatch.requestFocus()
                 etMaterialDispatch.setError("Please add Project Address")
                 isFilled = false
-            }else if (etWorkStartDate.text?.length == 0) {
+            } else if (etWorkStartDate.text?.length == 0) {
                 etWorkStartDate.requestFocus()
                 etWorkStartDate.setError("Please add Project Name")
                 isFilled = false
@@ -183,7 +190,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 etTotalSFT.requestFocus()
                 etTotalSFT.setError("Please add Project Address")
                 isFilled = false
-            }else if (etInstalledSFT.text?.length == 0) {
+            } else if (etInstalledSFT.text?.length == 0) {
                 etInstalledSFT.requestFocus()
                 etInstalledSFT.setError("Please add Project Name")
                 isFilled = false
@@ -191,7 +198,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 etBalanceTobeInstall.requestFocus()
                 etBalanceTobeInstall.setError("Please add Project Address")
                 isFilled = false
-            }else if (etInstallCompDate.text?.length == 0) {
+            } else if (etInstallCompDate.text?.length == 0) {
                 etInstallCompDate.requestFocus()
                 etInstallCompDate.setError("Please add Project Name")
                 isFilled = false
@@ -199,11 +206,11 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 etNoOfDaysInstall.requestFocus()
                 etNoOfDaysInstall.setError("Please add Project Address")
                 isFilled = false
-            }else if (etHandingOver.text?.length == 0) {
+            } else if (etHandingOver.text?.length == 0) {
                 etHandingOver.requestFocus()
                 etHandingOver.setError("Please add Project Address")
                 isFilled = false
-            }else if (etBalanceHandingOver.text?.length == 0) {
+            } else if (etBalanceHandingOver.text?.length == 0) {
                 etBalanceHandingOver.requestFocus()
                 etBalanceHandingOver.setError("Please add Project Name")
                 isFilled = false
@@ -211,7 +218,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 etWCCReceiveDate.requestFocus()
                 etWCCReceiveDate.setError("Please add Project Address")
                 isFilled = false
-            }else if (etNoOfDaysHandingOver.text?.length == 0) {
+            } else if (etNoOfDaysHandingOver.text?.length == 0) {
                 etNoOfDaysHandingOver.requestFocus()
                 etNoOfDaysHandingOver.setError("Please add Project Name")
                 isFilled = false
@@ -242,10 +249,100 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
         if (resultCode == Activity.RESULT_OK && data != null) {
             val file = getFile(data)
             val firstlink1 = file!!.absolutePath.subSequence(0, file.absolutePath.lastIndexOf('/')).toString()
-             wc_certificate_file = File(file.absolutePath) // Assuming it is in Internal Storage
+            wc_certificate_file = File(file.absolutePath) // Assuming it is in Internal Storage
             println("## firstlink:$firstlink1")
             binding.wcCertifFileName.setText(file.name)
         }
     }
-    override fun onResponseSuccess(objectResponse: ApiResponseController, objectRequest: ApiRequestController, progressDialog: ProgressDialog) {}
+
+    override fun onResponseSuccess(objectResponse: ApiResponseController, objectRequest: ApiRequestController, progressDialog: ProgressDialog) {
+        try {
+            when (objectResponse.requestname) {
+                Constants.RequestNames.DROP_DOWN_LIST -> {
+                    val dropDownData: DropDownData = Common.getSpecificDataObject<DropDownData>(
+                            objectResponse.result,
+                            DropDownData::class.java
+                    )
+                    divisionList = dropDownData.divisionList
+                    val dl = DivisionList()
+                    dl.divisionMasterId = "0"
+                    dl.divisionName = "Select"
+                    divisionList.add(0, dl)
+                    val states: MutableList<SpinnerModel> = ArrayList()
+                    var i = 0
+                    while (i < divisionList.size) {
+                        val spinnerModel = SpinnerModel()
+                        spinnerModel.id = divisionList[i].divisionMasterId
+                        spinnerModel.title = divisionList[i].divisionName
+                        states.add(spinnerModel)
+                        i++
+                    }
+
+
+
+                    val rowView = layoutInflater.inflate(R.layout.clientproject_product_row, null)
+                    binding.llProducts.addView(rowView)
+                    val clientprojectBinding: ClientprojectProductRowBinding =
+                            DataBindingUtil.inflate(
+                                    layoutInflater,
+                                    R.layout.clientproject_product_row,
+                                    null,
+                                    false
+                            )
+                    setProductSpinner(clientprojectBinding.productSpinner,divisionList,states,clientprojectBinding)
+                    clientprojectBinding.productSpinner.adapter = divisionSpinnerAdater
+                    clientprojectBinding.productSpinner.setOnItemSelectedListener(object :
+                            AdapterView.OnItemSelectedListener{
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            divisionList.get(position).divisionName
+                            Toast.makeText(this@CreateClientProjectActivity, divisionList.get(position).divisionName, Toast.LENGTH_LONG).show()
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                        }
+                    })
+                }
+            }
+            Common.dismissProgressDialog(progressDialog)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+            Common.disPlayExpection(exception, progressDialog)
+        }
+    }
+
+    private fun setProductSpinner(spinner: Spinner,divisionList: List<DivisionList>,states :List<SpinnerModel>,clientprojectBinding: ClientprojectProductRowBinding) {
+        divisionSpinnerAdater = CustomSpinnerAdapter(this, 0, states)
+        spinner.adapter=divisionSpinnerAdater
+    }
 }
+//class DivisionSpinnerAdater(
+//        private val activity: Context,
+//        textViewResourceId: Int,
+//        data: MutableList<SpinnerModel>
+//) : ArrayAdapter<String?>(activity, textViewResourceId, data) {
+//    private val data: MutableList<SpinnerModel>
+//    var res: Resources? = null
+//    var tempValues: SpinnerModel? = null
+//    var inflater: LayoutInflater
+//
+//    override fun getDropDownView(position: Int, convertView: View, parent: ViewGroup): View {
+//        return getCustomView(position, convertView, parent)
+//    }
+//
+//    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+//        return getCustomView(position, convertView, parent)
+//    }
+//    fun getCustomView(position: Int, convertView: View?, parent: ViewGroup?): View {
+//        val row = inflater.inflate(R.layout.spinner_rows, parent, false)
+//        tempValues = null
+//        tempValues = data[position]
+//        val label = row.findViewById<View>(R.id.spinnertitle) as TextView
+//        label.text = tempValues!!.title
+//        label.tag = tempValues!!.id
+//        return row
+//    }
+//    init {
+//        this.data = data
+//        inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//    }
+//}

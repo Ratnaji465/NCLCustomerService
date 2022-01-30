@@ -123,6 +123,7 @@ public class Constants {
         String EDIT_CONTACT_PROJECT_HEAD="edit_contact_project_head";
         String MASTERS_LIST = "masters_list";
         String ADD_CUSTOMER_PROJECT="add_customer_project";
+        String EDIT_CUSTOMER_PROJECT="edit_customer_project";
 
         String DASHBOARD = "dashboard";
         String GET_RECORDS_BY_TABLE = "get_records_by_table";
