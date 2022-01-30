@@ -23,7 +23,6 @@ import com.ncl.nclcustomerservice.databinding.ContractorTeamMemberDetailsRow1Bin
 import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 import java.io.Serializable
-import java.util.*
 
 class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitResponseListener {
 
@@ -35,6 +34,7 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     private var arrTeamMembers: List<CustomerContactResponseVo.TeamMemberResVo> = mutableListOf()
     private var selectTeamMembers = mutableListOf<Int>()
     var hmTeamMembers = mutableMapOf<String, List<CustomerContactResponseVo.TeamMemberResVo>>()
+    var isEdit = false
 
     private lateinit var binding: ActivityCreateCustomerprojectBinding
 
@@ -88,6 +88,7 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             true
         )
         intent.extras?.get("args")?.let {
+            isEdit = true
             val head = ((it as Args).customerProjectResVO)
             selectedHeadPosition =
                 projectHeadReqVoList.indexOfFirst { it.contactProjectHeadId == head.projectHead[0].contactProjectHeadId }
@@ -539,9 +540,9 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             selectedContractors.map { contactContractorLists[it].contactContractorId }
         val teamMembersId = selectTeamMembers.map { arrTeamMembers[it].contactContractorTeamId }
         println(" header : " + header.contactProjectHeadId)
-        println(" assocaiteContacts : " + ac)
-        println(" contractors : " + contractorsLst)
-        println(" teamMembersId : " + teamMembersId)
+        println(" assocaiteContacts : $ac")
+        println(" contractors : $contractorsLst")
+        println(" teamMembersId : $teamMembersId")
         hmTeamMembers.keys.forEach {
             println(" team member id : $it :  contactsid: ${hmTeamMembers[it]?.get(0)?.contactId}")
         }
@@ -587,13 +588,15 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             projectHeads = alProjectHead
         }
         println(customerProjectReqVO)
-
-        RetrofitRequestController(this).sendRequest(
-            Constants.RequestNames.ADD_CUSTOMER_PROJECT,
-            customerProjectReqVO,
-            true
-        )
-
+        if(isEdit){
+            //edit
+        }else{
+            RetrofitRequestController(this).sendRequest(
+                Constants.RequestNames.ADD_CUSTOMER_PROJECT,
+                customerProjectReqVO,
+                true
+            )
+        }
     }
 
     companion object {
