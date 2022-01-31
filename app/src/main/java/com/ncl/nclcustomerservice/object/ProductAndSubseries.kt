@@ -2,6 +2,7 @@ package com.ncl.nclcustomerservice.`object`
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class ProductAndSubseries(
@@ -38,7 +39,7 @@ data class ProductAndSubseries(
     @Expose
     var productCode: String = "",
 
-    )
+    ):Serializable
 
 /*  "customerproject_clientproject_products_id": "114",
   "division_master_id": "3",
@@ -53,7 +54,7 @@ data class ProductAndSubseries(
 data class ClientProject(
     @SerializedName("requestname") var requestName: String = "",
     @SerializedName("products") var products: List<ProductAndSubseries> = listOf(),
-)
+):Serializable
 
 //below on response
 data class ClientProjectResponse(
