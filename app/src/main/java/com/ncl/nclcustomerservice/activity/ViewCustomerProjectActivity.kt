@@ -1,15 +1,17 @@
 package com.ncl.nclcustomerservice.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.ClientProject
 import com.ncl.nclcustomerservice.`object`.CustomerProjectResVO
-import com.ncl.nclcustomerservice.`object`.ProductAndSubseries
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.getArguments
 import com.ncl.nclcustomerservice.databinding.ActivityViewCustomerprojectBinding
@@ -32,8 +34,6 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
         getArguments<Args>()?.customerProjectResVO?.let {
             contactContractorList = it
         }
-//        contactContractorList =
-//            (intent.getSerializableExtra("CustomerProjectList") as CustomerProjectResVO?)!!
         if (contactContractorList != null) {
             setContactUI()
             if (contactContractorList.projectHead != null && contactContractorList.projectHead.size > 0) {
@@ -51,56 +51,61 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
             setClientProjectUI()
         }
         binding.btnEdit.setOnClickListener {
-            CreateCustomerProjectActivity.open(
+            CreateClientProjectActivity.launch(
+                startForResult,
                 this,
-                CreateCustomerProjectActivity.Args(contactContractorList)
+                CreateClientProjectActivity.Args(
+                    null,
+                    customerProjectId = contactContractorList.customerProjectId
+                )
             )
         }
         binding.tvAddClientProject.setOnClickListener {
-            CreateClientProjectActivity.open(this, getClientProject())
+            CreateClientProjectActivity.open(this)
         }
     }
 
-    private fun getClientProject(): CreateClientProjectActivity.Args {
-        return CreateClientProjectActivity.Args(
-            ClientProject().apply {
-                products = listOf<ProductAndSubseries>(
-                    ProductAndSubseries(
-//                        customerProjectClientProjectProductsId = "114",
-//                        divisionMasterId = "3",
-//                        divisionName = "Blocks",
-//                        divisionSapCode = "30",
-                        productId = "6812",
-//                        productName = "santej",
-//                        productCode = "P90"
-                    )
-                )
-            },contactContractorList.customerProjectId
-
-        )
-
-    }
-
+//    private fun getClientProject(): CreateClientProjectActivity.Args {
+//        return CreateClientProjectActivity.Args(
+//            ClientProject().apply {
+//                products = listOf<ProductAndSubseries>(
+//                    ProductAndSubseries(
+////                        customerProjectClientProjectProductsId = "114",
+////                        divisionMasterId = "3",
+////                        divisionName = "Blocks",
+////                        divisionSapCode = "30",
+////                        productId = "6812",
+////                        productName = "santej",
+////                        productCode = "P90"
+//                    )
+//                )
+//            }, contactContractorList.customerProjectId
+//        )
+//    }
 
     private fun setContactUI() {
-        binding.etProjectName.setText(contactContractorList.projectName)
-        binding.etProjectAddress.setText(contactContractorList.projectAddress)
-        binding.etState.setText(contactContractorList.state)
-        binding.etPincode.setText(contactContractorList.pincode)
-        binding.etTeamSizeNo.setText(contactContractorList.contractorTeamSize)
+        binding.apply {
+            etProjectName.setText(contactContractorList.projectName)
+            etProjectAddress.setText(contactContractorList.projectAddress)
+            etState.setText(contactContractorList.state)
+            etPincode.setText(contactContractorList.pincode)
+            etTeamSizeNo.setText(contactContractorList.contractorTeamSize)
+        }
     }
 
     private fun setProjectUI(projectHead: CustomerProjectResVO.ProjectHead) {
-        binding.etHeadName.setText(projectHead.projectHeadName)
-        binding.etPHMobile.setText(projectHead.projectHeadMobile)
-        binding.etPHDepartment.setText(projectHead.projectHeadDepartment)
-        binding.etPHCompanyName.setText(projectHead.projectHeadEmail)
+        binding.apply {
+            etPHMobile.setText(projectHead.projectHeadMobile)
+            etPHDepartment.setText(projectHead.projectHeadDepartment)
+            etHeadName.setText(projectHead.projectHeadName)
+            etPHCompanyName.setText(projectHead.projectHeadEmail)
+        }
     }
 
     private fun setAssociateContactUI(associateContact: List<CustomerProjectResVO.AssociateContact>) {
         binding.apply {
             llAssociateContacts.removeAllViews()
-            (0..associateContact.size - 1).forEach {
+            (associateContact.indices).forEach {
                 var obj = associateContact[it]
                 val binding: AssociateContactsRowBindingBinding = DataBindingUtil.inflate(
                     layoutInflater,
@@ -127,7 +132,7 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
 
     private fun setContractorUI(contractors: List<CustomerProjectResVO.Contractor>) {
         binding.llContractorDetails.removeAllViews()
-        (0..contractors.size - 1).forEach {
+        (contractors.indices).forEach {
             var obj = contractors[it]
             val bindingRow: ContractorDetailsRowBinding = DataBindingUtil.inflate(
                 layoutInflater,
@@ -152,7 +157,7 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
     private fun setTeamMemberUI(teamMembers: List<CustomerProjectResVO.TeamMember>) {
         binding.apply {
             llContractorTmDetails.removeAllViews()
-            (0..teamMembers.size - 1).forEach {
+            (teamMembers.indices).forEach {
                 var obj = teamMembers[it]
                 var binding: ContractorTeamMemberDetailsRow1Binding = DataBindingUtil.inflate(
                     layoutInflater,
@@ -179,8 +184,9 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
 
     private fun setClientProjectUI() {
         binding.apply {
+            contactContractorList.clientProjects
             llClientProject.removeAllViews()
-            (0..2).forEach {
+            (contactContractorList.clientProjects).forEach { clientProject ->
                 var binding: ContractorTeamMemberDetailsRow1Binding = DataBindingUtil.inflate(
                     layoutInflater,
                     R.layout.contractor_team_member_details_row1,
@@ -188,25 +194,54 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
                     false
                 )
                 binding.apply {
-                    tvTeamMemberName.text =
-                        Common.setSppanableText("* SNo")
+                    llTeamMember.visibility = View.GONE
                     tvTeamMemberMobileNo.text =
-                        Common.setSppanableText("* QA Number")
+                        Common.setSppanableText("* OA Number")
                     tvCoAadharNo.text =
                         Common.setSppanableText("* Date")
-                    etTeamMemberName.setText("obj.teamMemberName")
+                    etTeamMemberName.setText("clientProject.oaNumber")
                     etTeamMemberName.isEnabled = false
-                    etTeamMemberMobileNo.setText("obj.teamMemberMobileNo")
+                    etTeamMemberMobileNo.setText(clientProject.oaNumber)
                     etTeamMemberMobileNo.isEnabled = false
-                    etCoAadharNo.setText("obj.teammemberAadharNumber")
+                    etCoAadharNo.setText(clientProject.createdDatetime)
                     etCoAadharNo.isEnabled = false
-                    removelayoutCtm.visibility = View.GONE
+                    removelayoutCtm.visibility = View.VISIBLE
+                }
+                binding.removelayoutCtm.setOnClickListener {
+                    CreateClientProjectActivity.launch(
+                        launcher = startForResult,
+                        this@ViewCustomerProjectActivity,
+                        CreateClientProjectActivity.Args(
+                            clientProject,
+                            clientProject.customerProjectId
+                        )
+                    )
                 }
                 llClientProject.addView(binding.root)
             }
         }
-
     }
+
+    val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intent = result.data
+                intent?.extras?.get("args")?.let {
+                    contactContractorList.clientProjects =
+                        contactContractorList.clientProjects ?: listOf()
+                    var x = it as ClientProject
+                    var index =
+                        contactContractorList.clientProjects.indexOfFirst { it.csCustomerprojectClientProjectDetailsId == x.csCustomerprojectClientProjectDetailsId }
+                    if (index == -1) {
+                        contactContractorList.clientProjects.add(x)
+                    } else {
+                        contactContractorList.clientProjects[index] = x
+                        setClientProjectUI()
+                    }
+                }
+                // Handle the Intent
+            }
+        }
 
     data class Args(var customerProjectResVO: CustomerProjectResVO) : Serializable
 
@@ -217,5 +252,6 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
                 putExtra("args", Args(customerProjectResVO))
             })
         }
+
     }
 }

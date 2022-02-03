@@ -16,6 +16,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/llTeamMember"
                 android:layout_width="@dimen/_130sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_5sdp"

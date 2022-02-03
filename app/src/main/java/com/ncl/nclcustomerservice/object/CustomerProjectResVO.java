@@ -63,9 +63,11 @@ public class CustomerProjectResVO implements Serializable {
     @Expose
     @TypeConverters(CusContractorTC.class)
     public List<Contractor> contractors = null;
-//    @SerializedName("client_projects")
-//    @Expose
-//    public List<Object> clientProjects = null;
+
+    @SerializedName("client_projects")
+    @Expose
+    @TypeConverters(ClientProjectTC.class)
+    public List<ClientProject> clientProjects = null;
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -209,4 +211,5 @@ public class CustomerProjectResVO implements Serializable {
                     .toString();
         }
     }
+
 }
