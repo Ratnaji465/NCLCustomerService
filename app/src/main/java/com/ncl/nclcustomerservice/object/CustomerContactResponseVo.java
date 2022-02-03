@@ -137,6 +137,9 @@ public class CustomerContactResponseVo implements Serializable
         @SerializedName("contact_contractor_team_id")
         @Expose
         public String contactContractorTeamId;
+        @SerializedName("contact_contractor_id")
+        @Expose
+        public String contactContractorId;
         @SerializedName("contact_id")
         @Expose
         public String contactId;
@@ -157,6 +160,7 @@ public class CustomerContactResponseVo implements Serializable
         public String toString() {
             return new ToStringBuilder(this)
                     .append("contactContractorTeamId", contactContractorTeamId)
+                    .append("contactContractorId",contactContractorId)
                     .append("contactId",contactId)
                     .append("teamMemberName",teamMemberName)
                     .append("teamMemberMobileNo",teamMemberMobileNo)

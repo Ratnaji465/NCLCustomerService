@@ -66,16 +66,17 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
             ClientProject().apply {
                 products = listOf<ProductAndSubseries>(
                     ProductAndSubseries(
-                        customerProjectClientProjectProductsId = "114",
-                        divisionMasterId = "3",
-                        divisionName = "Blocks",
-                        divisionSapCode = "30",
+//                        customerProjectClientProjectProductsId = "114",
+//                        divisionMasterId = "3",
+//                        divisionName = "Blocks",
+//                        divisionSapCode = "30",
                         productId = "6812",
-                        productName = "santej",
-                        productCode = "P90"
+//                        productName = "santej",
+//                        productCode = "P90"
                     )
                 )
-            }
+            },contactContractorList.customerProjectId
+
         )
 
     }

@@ -502,10 +502,10 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         println(" contractors : $contractorsLst")
         println(" teamMembersId : $teamMembersId")
         hmTeamMembers.keys.forEach {
-            println(" team member id : $it :  contactsid: ${hmTeamMembers[it]?.get(0)?.contactId}")
+            println(" team member id : $it :  contactsid: ${hmTeamMembers[it]?.get(0)?.contactContractorId}")
         }
         var hmContacts =
-            hmTeamMembers.keys.groupBy { hmTeamMembers[it]?.get(0)?.contactId }.toMutableMap()
+            hmTeamMembers.keys.groupBy { hmTeamMembers[it]?.get(0)?.contactContractorId }.toMutableMap()
         var alProjectHead = mutableListOf<CustomerProjectReqVO.ProjectHead>()
         val projectHeadList = CustomerProjectReqVO.ProjectHead().apply {
             contactProjectHeadId = header.contactProjectHeadId
