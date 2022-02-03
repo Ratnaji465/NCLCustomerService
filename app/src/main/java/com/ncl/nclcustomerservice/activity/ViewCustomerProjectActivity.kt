@@ -213,7 +213,8 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
                         this@ViewCustomerProjectActivity,
                         CreateClientProjectActivity.Args(
                             clientProject,
-                            clientProject.customerProjectId
+                            clientProject.customerProjectId,
+                            true
                         )
                     )
                 }

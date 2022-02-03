@@ -53,6 +53,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     private var wc_certificate_file: File? = null
 
     private var progressD: ProgressDialog? = null
+    private var isEdit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             }
             getArguments<Args>()?.let {
                 customerProjectIdValue = it.customerProjectId
+                isEdit = it.isEdit
             }
             tvOANumber.text = Common.setSppanableText("* OA Number")
             tvMaterialDispatch.text =
@@ -354,6 +356,9 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 Remarks = binding.etRemarks.text.toString(),
                 products = arrProduct
             )
+            if(isEdit){
+
+            }
             uploadImage(request)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -621,6 +626,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             }
 
             getArguments<Args>()?.let {
+                isEdit = it.isEdit
                 customerProjectIdValue = it.customerProjectId
                 it.clientProject?.products?.forEachIndexed { pos, client ->
                     val key = client.divisionMasterId
@@ -670,7 +676,11 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
 
     }
 
-    data class Args(var clientProject: ClientProject?, var customerProjectId: String) : Serializable
+    data class Args(
+        var clientProject: ClientProject?,
+        var customerProjectId: String,
+        var isEdit: Boolean = false
+    ) : Serializable
 
     companion object {
         fun open(context: Context, args: Args? = null) {
