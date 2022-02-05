@@ -8,6 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.util.Log.d
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -22,6 +24,7 @@ import com.ncl.nclcustomerservice.application.MyApplication
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.Constants
 import com.ncl.nclcustomerservice.commonutils.Constants.RequestNames.ADD_CLIENT_PROJECT
+import com.ncl.nclcustomerservice.commonutils.Constants.RequestNames.EDIT_CLIENT_PROJECT
 import com.ncl.nclcustomerservice.commonutils.getArguments
 import com.ncl.nclcustomerservice.databinding.ActivityCreateClientprojectBinding
 import com.ncl.nclcustomerservice.databinding.ClientprojectProductRowBinding
@@ -46,6 +49,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     private var hmProducts: MutableMap<String, List<ProductList>> = mutableMapOf()
     private var products: MutableList<DivisionList> = mutableListOf()
     private var customerProjectIdValue: String = ""
+    private var customerprojectClientProjectDetailsId: String = ""
 
     private lateinit var binding: ActivityCreateClientprojectBinding
     override fun onInternetConnected() {}
@@ -66,6 +70,10 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             getArguments<Args>()?.let {
                 customerProjectIdValue = it.customerProjectId
                 isEdit = it.isEdit
+                Log.d("customerProjectIdValue",customerProjectIdValue);
+            }
+            if(isEdit){
+                toolbar.titleText.setText("Edit Client Project")
             }
             tvOANumber.text = Common.setSppanableText("* OA Number")
             tvMaterialDispatch.text =
@@ -357,7 +365,8 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 products = arrProduct
             )
             if(isEdit){
-
+                request.requestName=EDIT_CLIENT_PROJECT
+                request.csCustomerprojectClientProjectDetailsId=customerprojectClientProjectDetailsId
             }
             uploadImage(request)
         } catch (e: Exception) {
@@ -628,6 +637,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             getArguments<Args>()?.let {
                 isEdit = it.isEdit
                 customerProjectIdValue = it.customerProjectId
+                customerprojectClientProjectDetailsId = it.clientProject!!.csCustomerprojectClientProjectDetailsId
                 it.clientProject?.products?.forEachIndexed { pos, client ->
                     val key = client.divisionMasterId
                     if (arrProjectId.contains(key)) {

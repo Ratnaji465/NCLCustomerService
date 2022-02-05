@@ -110,7 +110,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar.SignUp"
         android:windowSoftInputMode="adjustResize"
         -->
-
+    <activity android:name=".activity.CreateDailyReportsActivity"/>
         <activity
             android:name="com.ncl.nclcustomerservice.activity.NewSignUpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.SignUp"

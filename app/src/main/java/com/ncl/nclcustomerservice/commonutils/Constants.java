@@ -125,6 +125,11 @@ public class Constants {
         String ADD_CUSTOMER_PROJECT="add_customer_project";
         String EDIT_CUSTOMER_PROJECT="edit_customer_project";
         String ADD_CLIENT_PROJECT="add_client_project";
+        String EDIT_CLIENT_PROJECT="edit_client_project";
+        String DAILY_REPORTS_LIST="daily_report_list";
+        String ADD_DAILY_REPORTS="daily_report_add";
+        String EDIT_DAILY_REPORTS="daily_report_edit";
+        String DAILY_REPORTS_CHECKIN_CHECKOUT="daily_report_checkin_checkout";
 
         String DASHBOARD = "dashboard";
         String GET_RECORDS_BY_TABLE = "get_records_by_table";

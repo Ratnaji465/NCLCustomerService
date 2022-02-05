@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.ClientProject
+import com.ncl.nclcustomerservice.`object`.ClientProjectResponse
 import com.ncl.nclcustomerservice.`object`.CustomerProjectResVO
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.getArguments
@@ -51,17 +52,22 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
             setClientProjectUI()
         }
         binding.btnEdit.setOnClickListener {
-            CreateClientProjectActivity.launch(
-                startForResult,
+            CreateCustomerProjectActivity.open(
                 this,
-                CreateClientProjectActivity.Args(
-                    null,
-                    customerProjectId = contactContractorList.customerProjectId
-                )
+                CreateCustomerProjectActivity.Args(contactContractorList)
             )
         }
         binding.tvAddClientProject.setOnClickListener {
-            CreateClientProjectActivity.open(this)
+//            CreateClientProjectActivity.open(this)
+            CreateClientProjectActivity.launch(
+                    startForResult,
+                    this,
+                    CreateClientProjectActivity.Args(
+                            null,
+                            customerProjectId = contactContractorList.customerProjectId,
+                            false
+                    )
+            )
         }
     }
 
@@ -195,19 +201,22 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
                 )
                 binding.apply {
                     llTeamMember.visibility = View.GONE
+                    llAadhar.visibility=View.GONE
+                    llDate.visibility=View.VISIBLE
+                    llEditCl.visibility=View.VISIBLE
+                    removelayoutCtm.visibility=View.GONE
                     tvTeamMemberMobileNo.text =
                         Common.setSppanableText("* OA Number")
-                    tvCoAadharNo.text =
+                    tvDate.text =
                         Common.setSppanableText("* Date")
                     etTeamMemberName.setText("clientProject.oaNumber")
                     etTeamMemberName.isEnabled = false
                     etTeamMemberMobileNo.setText(clientProject.oaNumber)
                     etTeamMemberMobileNo.isEnabled = false
-                    etCoAadharNo.setText(clientProject.createdDatetime)
-                    etCoAadharNo.isEnabled = false
-                    removelayoutCtm.visibility = View.VISIBLE
+                    etDate.setText(clientProject.createdDatetime)
+                    etDate.isEnabled = false
                 }
-                binding.removelayoutCtm.setOnClickListener {
+                binding.llEditCl.setOnClickListener {
                     CreateClientProjectActivity.launch(
                         launcher = startForResult,
                         this@ViewCustomerProjectActivity,
@@ -230,15 +239,17 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
                 intent?.extras?.get("args")?.let {
                     contactContractorList.clientProjects =
                         contactContractorList.clientProjects ?: listOf()
-                    var x = it as ClientProject
-                    var index =
-                        contactContractorList.clientProjects.indexOfFirst { it.csCustomerprojectClientProjectDetailsId == x.csCustomerprojectClientProjectDetailsId }
-                    if (index == -1) {
-                        contactContractorList.clientProjects.add(x)
-                    } else {
-                        contactContractorList.clientProjects[index] = x
-                        setClientProjectUI()
-                    }
+                    var x = it as ClientProjectResponse
+                    contactContractorList.clientProjects= x.clientProjects
+                    setClientProjectUI()
+//                    var index =
+//                        contactContractorList.clientProjects.indexOfFirst { it.csCustomerprojectClientProjectDetailsId == x.csCustomerprojectClientProjectDetailsId }
+//                    if (index == -1) {
+//                        contactContractorList.clientProjects.add(x)
+//                    } else {
+//                        contactContractorList.clientProjects[index] = x
+//                        setClientProjectUI()
+//                    }
                 }
                 // Handle the Intent
             }

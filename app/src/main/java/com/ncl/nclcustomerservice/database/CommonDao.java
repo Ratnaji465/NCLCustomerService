@@ -191,8 +191,8 @@ public interface CommonDao {
     @Insert(onConflict =  OnConflictStrategy.REPLACE)
     void insertContractorContact(List<CustomerContactResponseVo.ContactContractorList> contactContractorList);
 
-    @Query("SELECT * FROM ContactContractorList where contractorName like :queryString ORDER BY contactId DESC LIMIT :limit OFFSET :offset")
-    List<CustomerContactResponseVo.ContactContractorList> getContractorContactList(int limit, int offset, String queryString);
+    @Query("SELECT * FROM ContactContractorList where contractorName ORDER BY contactId DESC LIMIT :limit OFFSET :offset")
+    List<CustomerContactResponseVo.ContactContractorList> getContractorContactList(int limit, int offset);
 
     @Query("SELECT * FROM ContactContractorList")
     List<CustomerContactResponseVo.ContactContractorList> getAllCustomerContactList();
@@ -215,8 +215,11 @@ public interface CommonDao {
     @Query("DELETE FROM CustomerProjectResVO")
     void deleteCustomerProjectList();
 
-    @Query("SELECT * FROM CustomerProjectResVO where projectName like :queryString ORDER BY customerProjectId DESC LIMIT :limit OFFSET :offset")
-    List<CustomerProjectResVO> getCustomerProjectList(int limit, int offset, String queryString);
+    @Query("SELECT * FROM CustomerProjectResVO where projectName ORDER BY customerProjectId DESC LIMIT :limit OFFSET :offset")
+    List<CustomerProjectResVO> getCustomerProjectList(int limit, int offset);
+
+    @Query("SELECT * FROM CustomerProjectResVO")
+    List<CustomerProjectResVO> getAllCustomerProjectList();
 
     @Query("SELECT * FROM ContactList where firstName like :queryString ORDER BY contactId DESC LIMIT :limit OFFSET :offset")
     List<ContactList> getContactList(int limit, int offset, String queryString);

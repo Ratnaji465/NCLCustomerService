@@ -770,32 +770,30 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (click_aadhar) {
-//                Uri selectedImageUri = data.getData();
-//                File file = new File(getPath(selectedImageUri));
-                File file = ImagePicker.Companion.getFile(data);
-                String firstlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
-                con_aadha_file = new File(file.getAbsolutePath()); // Assuming it is in Internal Storage
-                System.out.println("## firstlink:" + firstlink1);
-                adhar_cc_FileName.setText(file.getName());
+        try {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                if (click_aadhar) {
+                    File file = ImagePicker.Companion.getFile(data);
+                    String firstlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
+                    con_aadha_file = new File(file.getAbsolutePath()); // Assuming it is in Internal Storage
+                    System.out.println("## firstlink:" + firstlink1);
+                    adhar_cc_FileName.setText(file.getName());
+                }
+                if (click_pan) {
+                    File file = ImagePicker.Companion.getFile(data);
+                    String firstlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
+                    con_pan_file = new File(file.getAbsolutePath()); // Assuming it is in Internal Storage
+                    System.out.println("## firstlink:" + firstlink1);
+                    pan_cc_FileName.setText(file.getName());
+                }
+                if (tm_click_aadhar) {
+                    File file = ImagePicker.Companion.getFile(data);
+                    File tm_aadhar_file = new File(file.getAbsolutePath());
+                    setTMAadharFileName(tm_aadhar_file);
+                }
             }
-            if (click_pan) {
-//                Uri selectedImageUri = data.getData();
-//                File file = new File(getPath(selectedImageUri));
-                File file = ImagePicker.Companion.getFile(data);
-                String firstlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
-                con_pan_file = new File(file.getAbsolutePath()); // Assuming it is in Internal Storage
-                System.out.println("## firstlink:" + firstlink1);
-                pan_cc_FileName.setText(file.getName());
-            }
-            if (tm_click_aadhar) {
-//                Uri selectedImageUri = data.getData();
-//                File file = new File(getPath(selectedImageUri));
-                File file = ImagePicker.Companion.getFile(data);
-                File tm_aadhar_file = new File(file.getAbsolutePath());
-                setTMAadharFileName(tm_aadhar_file);
-            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -895,14 +893,14 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                     click_pan = false;
                     tm_click_aadhar = true;
                     tm_file_pos = finalI;
-//                    Intent intent = new Intent();
-//                    intent.setType("application/*|image/*");
-//                    intent.setAction(Intent.ACTION_GET_CONTENT);
-//                    startActivityForResult(intent, 200);
-                    ImagePicker.Companion.with(CreateNewContactActivity.this)
-                            .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
-                            .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
-                            .start();
+                    try {
+                        ImagePicker.Companion.with(CreateNewContactActivity.this)
+                                .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
+                                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                                .start();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
             });
             viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {

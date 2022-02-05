@@ -42,6 +42,7 @@ import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.commonutils.Constants;
 import com.ncl.nclcustomerservice.database.DatabaseHandler;
 import com.ncl.nclcustomerservice.fragments.CustomerProjectFragment;
+import com.ncl.nclcustomerservice.fragments.DailyReportsFragment;
 import com.ncl.nclcustomerservice.fragments.NewContactsFragment;
 import com.ncl.nclcustomerservice.fragments.NotificationFragment;
 import com.ncl.nclcustomerservice.object.ContactList;
@@ -193,11 +194,11 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
         LeftNav daily_report = new LeftNav();
         daily_report.methodName =Constants.New_MethodNames.DAILY_REPORT;
         daily_report.name = Constants.New_MethodNames.DAILY_REPORT;
-        daily_report.id = "0";
-        daily_report.read = "0";
-        daily_report.create = "0";
+        daily_report.id = "3";
+        daily_report.read = "3";
+        daily_report.create = "3";
         daily_report.drawable = R.drawable.contracts;
-//        leftNavs.add(daily_report);
+        leftNavs.add(daily_report);
 
         LeftNav final_report = new LeftNav();
         final_report.methodName =Constants.New_MethodNames.FINAL_REPORT;
@@ -654,6 +655,10 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
                 NewContactsFragment contactsFragment = new NewContactsFragment();
                 bundle.putSerializable("contacts", leftNavs.get(position));
                 goToFragment(contactsFragment, true);
+                break;
+            case Constants.New_MethodNames.DAILY_REPORT:
+                DailyReportsFragment dailyReportsFragment = new DailyReportsFragment();
+                goToFragment(dailyReportsFragment, true);
                 break;
         }
         mViewHolder.mDuoDrawerLayout.closeDrawer();

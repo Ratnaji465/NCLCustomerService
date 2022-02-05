@@ -47,7 +47,7 @@ public class TabbedContractorListFragment extends BaseFragment implements Retrof
             contactTeam.teamId = userId;
             new RetrofitRequestController(this).sendRequest(Constants.RequestNames.CONTACT_LIST, contactTeam, false);
         } else {
-            List<CustomerContactResponseVo.ContactContractorList> contact = db.commonDao().getContractorContactList(100,0, queryString);
+            List<CustomerContactResponseVo.ContactContractorList> contact = db.commonDao().getContractorContactList(100,0);
             if (contact != null)
                 setOnAdapter(contact_recycler, contact);
         }
