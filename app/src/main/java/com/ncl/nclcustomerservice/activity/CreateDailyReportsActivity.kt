@@ -3,22 +3,26 @@ package com.ncl.nclcustomerservice.activity
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.google.gson.Gson
 import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.*
+import com.ncl.nclcustomerservice.`object`.DailyReportsAddVO.CustomerprojectClientprojectDetails
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.Constants
+import com.ncl.nclcustomerservice.commonutils.toast
 import com.ncl.nclcustomerservice.customviews.CustomEditText
 import com.ncl.nclcustomerservice.database.DatabaseHandler
-import com.ncl.nclcustomerservice.databinding.ActivityCreateClientprojectBinding
 import com.ncl.nclcustomerservice.databinding.ActivityCreateDailyreportsBinding
+import com.ncl.nclcustomerservice.databinding.ItemDescriptionWorkBinding
 import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 import java.text.SimpleDateFormat
@@ -31,13 +35,14 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
     override fun onInternetDisconnected() {
     }
 
+    private var nextTag = 0
     private lateinit var binding: ActivityCreateDailyreportsBinding
     private lateinit var db: DatabaseHandler
     private lateinit var customerProjectList: List<CustomerProjectResVO>
     private lateinit var contractorContactList: List<CustomerContactResponseVo.ContactContractorList>
     lateinit var selectedCCId: String
     lateinit var selectedCPId: String
-    private var clientProjectList:MutableList<ClientProject> = mutableListOf()
+    private var clientProjectList: MutableList<ClientProject> = mutableListOf()
     private var selectedSubseries: MutableList<String> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +60,7 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             tvCallDate.text = Common.setSppanableText("* Call Date")
             tvCallTime.text = Common.setSppanableText("* Call Time")
             tvOANo.text = Common.setSppanableText("* OA No")
-            for (i in 0..customerProjectList.size-1) {
+            for (i in 0..customerProjectList.size - 1) {
                 clientProjectList.addAll(customerProjectList.get(i).clientProjects)
             }
             Log.d("clientProjectList", clientProjectList.size.toString())
@@ -68,11 +73,11 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             etRelatedTo.setOnClickListener {
                 var list = listOf<String>("Contractor", "Client Project")
                 MultiSelectionDialog(
-                        context = this@CreateDailyReportsActivity,
-                        list = list,
-                        mapper = { it },
-                        selectedPosition = null,
-                        isSingleSelection = true
+                    context = this@CreateDailyReportsActivity,
+                    list = list,
+                    mapper = { it },
+                    selectedPosition = null,
+                    isSingleSelection = true
                 ) {
                     etRelatedTo.setText(list[it.first()])
                     if (list[it.first()].equals("Contractor")) {
@@ -91,28 +96,28 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             etCallType.setOnClickListener {
                 var list = listOf<String>("Visit", "Call")
                 MultiSelectionDialog(
-                        context = this@CreateDailyReportsActivity,
-                        list = list,
-                        mapper = { it },
-                        selectedPosition = null,
-                        isSingleSelection = true
+                    context = this@CreateDailyReportsActivity,
+                    list = list,
+                    mapper = { it },
+                    selectedPosition = null,
+                    isSingleSelection = true
                 ) {
                     etCallType.setText(list[it.first()])
                 }.show()
             }
             etOANo.setOnClickListener {
                 MultiSelectionDialog(
-                        context = this@CreateDailyReportsActivity,
-                        list = clientProjectList,
-                        mapper = { it.oaNumber },
-                        selectedPosition = null,
-                        isSingleSelection = false
+                    context = this@CreateDailyReportsActivity,
+                    list = clientProjectList,
+                    mapper = { it.oaNumber },
+                    selectedPosition = null,
+                    isSingleSelection = false
                 ) {
 
-                    selectedSubseries.add(clientProjectList.get(it.get(0)).csCustomerprojectClientProjectDetailsId)
+                    selectedSubseries.add(clientProjectList[it[0]].csCustomerprojectClientProjectDetailsId)
                     etOANo.setText(
-                            it.toMutableSet().map { clientProjectList.get(it).oaNumber }
-                                    .joinToString { it }
+                        it.toMutableSet().map { clientProjectList[it].oaNumber }
+                            .joinToString { it }
                     )
                 }.show()
             }
@@ -122,20 +127,20 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                 val mMonth = mcurrentDate[Calendar.MONTH]
                 val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
                 val mDatePicker = DatePickerDialog(
-                        this@CreateDailyReportsActivity,
-                        { datepicker, selectedyear, selectedmonth, selectedday ->
-                            // TODO Auto-generated method stub
-                            val sel_month = selectedmonth + 1
-                            var sday = selectedday.toString()
-                            var smonth: String? = null
-                            smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                            sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                            etCallDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                            etCallDate.setTag("$selectedyear-$smonth-$sday")
-                        },
-                        mYear,
-                        mMonth,
-                        mDay
+                    this@CreateDailyReportsActivity,
+                    { datepicker, selectedyear, selectedmonth, selectedday ->
+                        // TODO Auto-generated method stub
+                        val sel_month = selectedmonth + 1
+                        var sday = selectedday.toString()
+                        var smonth: String? = null
+                        smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
+                        sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
+                        etCallDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
+                        etCallDate.setTag("$selectedyear-$smonth-$sday")
+                    },
+                    mYear,
+                    mMonth,
+                    mDay
                 )
                 mDatePicker.show()
             }
@@ -148,34 +153,65 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             btnCheckOut.setOnClickListener {
 
             }
+            btnAdd.setOnClickListener {
+                callDescriptionItem()
+            }
             save.setOnClickListener {
                 if (isValidate()) {
                     if (etRelatedTo.text?.toString().equals("Select")) {
                         Toast.makeText(
-                                this@CreateDailyReportsActivity,
-                                "Please Select Related to",
-                                Toast.LENGTH_SHORT
+                            this@CreateDailyReportsActivity,
+                            "Please Select Related to",
+                            Toast.LENGTH_SHORT
                         ).show()
                         return@setOnClickListener
                     } else if (etCallType.text?.toString().equals("Select")) {
                         Toast.makeText(
-                                this@CreateDailyReportsActivity,
-                                "Please Select Call type",
-                                Toast.LENGTH_SHORT
+                            this@CreateDailyReportsActivity,
+                            "Please Select Call type",
+                            Toast.LENGTH_SHORT
                         ).show()
                         return@setOnClickListener
                     } else if (etOANo.text?.toString().equals("Select")) {
                         Toast.makeText(
-                                this@CreateDailyReportsActivity,
-                                "Please Select OA No",
-                                Toast.LENGTH_SHORT
+                            this@CreateDailyReportsActivity,
+                            "Please Select OA No",
+                            Toast.LENGTH_SHORT
                         ).show()
                         return@setOnClickListener
                     }
-                    callAddReportsApi()
+                    callAddReportsApi(getWorksData())
                 }
             }
 
+        }
+    }
+
+    private fun callDescriptionItem() {
+        binding.apply {
+            var view: ItemDescriptionWorkBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(this@CreateDailyReportsActivity),
+                R.layout.item_description_work,
+                null,
+                false
+            )
+            view.root.setTag(nextTag)
+            nextTag++
+            view.btnRemove.setOnClickListener {
+                var requiredTag = view.root.getTag() as Int
+                for (i in 0..llDesWork.childCount) {
+                    var attachedTag = llDesWork.getChildAt(i).getTag() as Int
+                    if (requiredTag == attachedTag) {
+                        llDesWork.removeViewAt(i)
+                        break
+                    }
+                }
+            }
+            llDesWork.addView(view.root)
+            view.root.layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
     }
 
@@ -185,30 +221,18 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 //    "call_time":"2022/01/17 17:00","cs_customerproject_clientproject_details":
 //    [{"cs_customerproject_clientproject_detailsid":"3"},{"cs_customerproject_clientproject_detailsid":"15"}],
 //    "description_of_works":[{"description_of_work":"test"},{"description_of_work":"test2"}]}}
-    private fun callAddReportsApi() {
+    private fun callAddReportsApi(worksData: MutableList<String>) {
         try {
-//            var list: MutableList<Pair<String, String>> = mutableListOf()
-//            selectedSubseries.forEach { hm ->
-//                var productCode = hm.key
-//                var ind = hm.value
-//                var subseries =
-//                        ind.map {
-//                            Pair(
-//                                    hm.key,
-//                                    hmProducts[productCode]?.get(it)?.productId ?: ""
-//                            )
-//                        }
-//                                .toMutableList()
-//                list.addAll(subseries.toMutableList())
-//            }
-//            var arrProduct = selectedSubseries.map {
-//                DailyReportsAddVO.CustomerprojectClientprojectDetails(
-//                        csCustomerprojectClientprojectDetailsid = it
-//                )
-//            }.toList()
-
             binding.apply {
                 val dailyReportsAddVO = DailyReportsAddVO().apply {
+                    csCustomerprojectClientprojectDetails = selectedSubseries.map {
+                        CustomerprojectClientprojectDetails(it)
+                    }
+                    descriptionOfWorks = worksData.map {
+                        DailyReportsAddVO.DescriptionOfWork().apply {
+                            descriptionOfWorks = it
+                        }
+                    }
                     relatedTo = etRelatedTo.text.toString()
                     callType = etCallType.text.toString()
                     callDate = etCallDate.text.toString()
@@ -216,45 +240,52 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                     if (etRelatedTo.text.toString().equals("Contractor")) {
                         contactContractorId = selectedCCId
                         customerProjectId = "0"
-                    } else if (etRelatedTo.text.toString().equals("Client Project")) {
+                    } else if (etRelatedTo.text.toString() == "Client Project") {
                         contactContractorId = "0"
                         customerProjectId = selectedCPId
                     }
-//                contractors = alContractors
-//                projectHeads = alProjectHead
                 }
-                RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
-                        Constants.RequestNames.ADD_DAILY_REPORTS,
-                        dailyReportsAddVO,
-                        true
-                )
+                println(Gson().toJson(dailyReportsAddVO))
+//                RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
+//                    Constants.RequestNames.ADD_DAILY_REPORTS,
+//                    dailyReportsAddVO,
+//                    true
+//                )
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
-
 
 
     }
 
     private fun isValidate(): Boolean {
-        var isFilled = true
+        var isFilled = false
         binding.apply {
             if (etCallDate.text?.length == 0) {
                 etCallDate.requestFocus()
                 etCallDate.setError("Please add Call Date")
-                isFilled = false
             } else if (etCallTime.text?.length == 0) {
                 etCallTime.requestFocus()
                 etCallTime.setError("Please add Call time")
-                isFilled = false
-            } else if (etDecWork.text?.length == 0) {
-                etDecWork.requestFocus()
-                etDecWork.setError("Please add Description of Works")
-                isFilled = false
-            }
+            } else if (getWorksData().size == 0) {
+                toast("Description of works are missed")
+            } else
+                isFilled = true
         }
         return isFilled
+    }
+
+    fun getWorksData(): MutableList<String> {
+        var list = mutableListOf<String>()
+        for (i in 0 until binding.llDesWork.childCount) {
+            var text = binding.llDesWork.getChildAt(i)
+                .findViewById<CustomEditText>(R.id.etText).text.toString().trim()
+            if (text.isNotEmpty()) {
+                list.add(text)
+            }
+        }
+        return list
     }
 
     fun getTime(textView: CustomEditText) {
@@ -265,7 +296,13 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             textView.setText(SimpleDateFormat("HH:mm").format(cal.time))
         }
         textView.setOnClickListener {
-            TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+            TimePickerDialog(
+                this,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
         }
     }
 
@@ -273,11 +310,11 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
         binding.apply {
             etClientProject.setOnClickListener {
                 MultiSelectionDialog(
-                        context = this@CreateDailyReportsActivity,
-                        list = customerProjectList,
-                        mapper = { it.projectName },
-                        selectedPosition = null,
-                        isSingleSelection = true
+                    context = this@CreateDailyReportsActivity,
+                    list = customerProjectList,
+                    mapper = { it.projectName },
+                    selectedPosition = null,
+                    isSingleSelection = true
                 ) {
                     selectedCPId = customerProjectList.get(it.get(0)).customerProjectId
                     etClientProject.setText(customerProjectList.get(it.get(0)).projectName)
@@ -292,11 +329,11 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             etClientProject.setOnClickListener {
 
                 MultiSelectionDialog(
-                        context = this@CreateDailyReportsActivity,
-                        list = contractorContactList,
-                        mapper = { it.contractorName },
-                        selectedPosition = null,
-                        isSingleSelection = true
+                    context = this@CreateDailyReportsActivity,
+                    list = contractorContactList,
+                    mapper = { it.contractorName },
+                    selectedPosition = null,
+                    isSingleSelection = true
                 ) {
                     selectedCCId = contractorContactList.get(it.get(0)).contactContractorId
                     etClientProject.setText(contractorContactList.get(it.get(0)).contractorName)
@@ -308,6 +345,10 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 
     }
 
-    override fun onResponseSuccess(objectResponse: ApiResponseController?, objectRequest: ApiRequestController?, progressDialog: ProgressDialog?) {
+    override fun onResponseSuccess(
+        objectResponse: ApiResponseController?,
+        objectRequest: ApiRequestController?,
+        progressDialog: ProgressDialog?
+    ) {
     }
 }

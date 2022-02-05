@@ -1,88 +1,103 @@
-package com.ncl.nclcustomerservice.object;
+package com.ncl.nclcustomerservice.`object`
 
-import static com.google.android.gms.common.util.CollectionUtils.listOf;
+import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose
+import java.io.Serializable
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
-import java.util.List;
-public class DailyReportsAddVO implements Serializable {
+class DailyReportsAddVO : Serializable {
     @SerializedName("cs_dailyreport_id")
     @Expose
-    public String csDailyreportId;
+    var csDailyreportId: String? = null
+
     @SerializedName("related_to")
     @Expose
-    public String relatedTo;
+    var relatedTo: String? = null
+
     @SerializedName("contact_contractor_id")
     @Expose
-    public String contactContractorId;
+    var contactContractorId: String? = null
+
     @SerializedName("contractor_name")
     @Expose
-    public String contractorName;
+    var contractorName: String? = null
+
     @SerializedName("contractor_mobile_no")
     @Expose
-    public String contractorMobileNo;
+    var contractorMobileNo: String? = null
+
     @SerializedName("customer_project_id")
     @Expose
-    public String customerProjectId;
+    var customerProjectId: String? = null
+
     @SerializedName("project_name")
     @Expose
-    public Object projectName;
+    var projectName: Any? = null
+
     @SerializedName("project_head_name")
     @Expose
-    public Object projectHeadName;
+    var projectHeadName: Any? = null
+
     @SerializedName("call_type")
     @Expose
-    public String callType;
+    var callType: String? = null
+
     @SerializedName("call_date")
     @Expose
-    public String callDate;
+    var callDate: String? = null
+
     @SerializedName("call_time")
     @Expose
-    public String callTime;
+    var callTime: String? = null
+
     @SerializedName("check_in_time")
     @Expose
-    public Object checkInTime;
+    var checkInTime: Any? = null
+
     @SerializedName("checkout_time")
     @Expose
-    public Object checkoutTime;
+    var checkoutTime: Any? = null
+
     @SerializedName("cs_customerproject_clientproject_detailsid")
     @Expose
-    public String csCustomerprojectClientprojectDetailsid;
+    var csCustomerprojectClientprojectDetailsid: String? = null
+
     @SerializedName("oa_numbers")
     @Expose
-    public String oaNumbers;
+    var oaNumbers: String? = null
+
     @SerializedName("user_id")
     @Expose
-    public String userId;
+    var userId: String? = null
+
     @SerializedName("userName")
     @Expose
-    public String userName;
+    var userName: String? = null
+
     @SerializedName("cs_customerproject_clientproject_details")
     @Expose
-    public List<CustomerprojectClientprojectDetails> csCustomerprojectClientprojectDetails=null;
+    var csCustomerprojectClientprojectDetails: List<CustomerprojectClientprojectDetails>? = null
+
     @SerializedName("description_of_works")
     @Expose
-    public List<DescriptionOfWork> descriptionOfWorks = null;
+    var descriptionOfWorks: List<DescriptionOfWork>? = null
 
-    public class DescriptionOfWork {
-
+    class DescriptionOfWork {
         @SerializedName("cs_dailyreport_description_of_works_id")
         @Expose
-        public String csDailyreportDescriptionOfWorksId;
+        var csDailyreportDescriptionOfWorksId: String? = null
+
         @SerializedName("cs_dailyreport_id")
         @Expose
-        public String csDailyreportId;
+        var csDailyreportId: String? = null
+
         @SerializedName("description_of_works")
         @Expose
-        public String descriptionOfWorks;
-
+        var descriptionOfWorks: String? = null
     }
-    public class CustomerprojectClientprojectDetails implements Serializable{
+
+    class CustomerprojectClientprojectDetails(
         @SerializedName("cs_customerproject_clientproject_detailsid")
         @Expose
-        public String csCustomerprojectClientprojectDetailsid;
-    }
-
+        var csCustomerprojectClientprojectDetailsid: String? = null
+    ) : Serializable
 }
