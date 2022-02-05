@@ -3,6 +3,7 @@ package com.ncl.nclcustomerservice.activity
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import com.ncl.nclcustomerservice.database.DatabaseHandler
 import com.ncl.nclcustomerservice.databinding.ActivityCreateDailyreportsBinding
 import com.ncl.nclcustomerservice.databinding.ItemDescriptionWorkBinding
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -357,6 +359,15 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
         }
 
 
+    }
+
+    data class Args(var dailyReport: DailyReportsAddVO? = null, var isEdit: Boolean = false) :
+        Serializable
+
+    companion object {
+        fun open(context: Context, args: Args) {
+
+        }
     }
 
     override fun onResponseSuccess(
