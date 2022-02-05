@@ -17,13 +17,11 @@ import com.ncl.nclcustomerservice.`object`.*
 import com.ncl.nclcustomerservice.`object`.DailyReportsAddVO.CustomerprojectClientprojectDetails
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
 import com.ncl.nclcustomerservice.commonutils.Common
-import com.ncl.nclcustomerservice.commonutils.Constants
 import com.ncl.nclcustomerservice.commonutils.toast
 import com.ncl.nclcustomerservice.customviews.CustomEditText
 import com.ncl.nclcustomerservice.database.DatabaseHandler
 import com.ncl.nclcustomerservice.databinding.ActivityCreateDailyreportsBinding
 import com.ncl.nclcustomerservice.databinding.ItemDescriptionWorkBinding
-import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 import java.text.SimpleDateFormat
 import java.util.*
@@ -65,6 +63,21 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             }
             Log.d("clientProjectList", clientProjectList.size.toString())
             setClickListeners()
+        }
+        setUI(DailyReportsAddVO())
+    }
+
+
+    private fun setUI(reportObj: DailyReportsAddVO) {
+        binding.apply {
+            etRelatedTo.setText(reportObj.relatedTo.orEmpty())
+            etCallType.setText(reportObj.callType.orEmpty())
+            etCallDate.setText(reportObj.callDate.orEmpty())
+            etCallTime.setText(reportObj.callTime.orEmpty())
+            etOANo.setText(reportObj.oaNumbers.orEmpty())
+            DailyReportsAddVO().descriptionOfWorks?.forEach {
+                addDescriptionItem(it)
+            }
         }
     }
 
@@ -154,7 +167,7 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 
             }
             btnAdd.setOnClickListener {
-                callDescriptionItem()
+                addDescriptionItem(null)
             }
             save.setOnClickListener {
                 if (isValidate()) {
@@ -187,7 +200,7 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
         }
     }
 
-    private fun callDescriptionItem() {
+    private fun addDescriptionItem(obj: DailyReportsAddVO.DescriptionOfWork?) {
         binding.apply {
             var view: ItemDescriptionWorkBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(this@CreateDailyReportsActivity),
@@ -195,6 +208,7 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                 null,
                 false
             )
+            view.etText.setText(obj?.descriptionOfWorks ?: "")
             view.root.setTag(nextTag)
             nextTag++
             view.btnRemove.setOnClickListener {

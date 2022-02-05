@@ -92,7 +92,7 @@ class DailyReportsAddVO : Serializable {
 
         @SerializedName("description_of_works")
         @Expose
-        var descriptionOfWorks: String? = null
+        var descriptionOfWorks: String? = ""
     }
 
     class CustomerprojectClientprojectDetails(
