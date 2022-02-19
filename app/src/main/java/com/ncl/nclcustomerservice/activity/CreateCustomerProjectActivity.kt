@@ -370,7 +370,6 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
             viewHolder.etACDesignation.setText(obj.contactProjectHeadAssociateContactDesignation)
             viewHolder.etACMobile.setText(obj.contactProjectHeadAssociateContactMobile)
             viewHolder.phNameSpinner.visibility = View.GONE
-            viewHolder.etACName.visibility = View.GONE
             viewHolder.etACName.setText(obj.contactProjectHeadAssociateContactName)
             viewHolder.removelayoutAc.setOnClickListener {
                 showAssociatedContactDialog(associateContacts, selectedAssociates)

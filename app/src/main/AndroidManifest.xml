@@ -10,12 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--<uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.SEND_SMS" />-->
-
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" tools:node="remove"/>
+    <uses-permission android:name="android.permission.CAMERA" tools:node="remove" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.location.gps" />
@@ -39,7 +35,7 @@
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@drawable/logo"
+        android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         <activity
@@ -52,7 +48,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CreateCustomerProjectActivity"/>
+        <activity android:name=".activity.CreateCustomerProjectActivity" />
+        <activity android:name=".activity.CreateClientProjectActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -67,6 +64,7 @@
 
         <activity android:name="com.ncl.nclcustomerservice.activity.MainActivity" />
         <activity android:name="com.ncl.nclcustomerservice.activity.LoginActivity" />
+        <activity android:name=".activity.ViewDailyReportsActivty" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -110,12 +108,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar.SignUp"
         android:windowSoftInputMode="adjustResize"
         -->
-    <activity android:name=".activity.CreateDailyReportsActivity"/>
-        <activity
-            android:name="com.ncl.nclcustomerservice.activity.NewSignUpActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.SignUp"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".activity.CreateClientProjectActivity"/>
+        <activity android:name=".activity.CreateDailyReportsActivity" />
+
         <service android:name="com.ncl.nclcustomerservice.fcm.MyFirebaseMessagingService1">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -182,11 +176,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.SignUp"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name="com.ncl.nclcustomerservice.activity.ContactViewActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity
             android:name="com.ncl.nclcustomerservice.activity.NewContactViewActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".activity.ViewImageActivity" />
 
         <service
             android:name="com.ncl.nclcustomerservice.uploadfiles.FileUploadService"

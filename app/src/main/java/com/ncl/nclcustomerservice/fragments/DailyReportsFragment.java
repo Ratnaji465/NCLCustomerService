@@ -19,6 +19,7 @@ import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.activity.CreateDailyReportsActivity;
 import com.ncl.nclcustomerservice.activity.MainActivity;
 import com.ncl.nclcustomerservice.activity.ViewCustomerProjectActivity;
+import com.ncl.nclcustomerservice.activity.ViewDailyReportsActivty;
 import com.ncl.nclcustomerservice.adapter.CustomerProjectAdapter;
 import com.ncl.nclcustomerservice.adapter.DailyReportsAdapter;
 import com.ncl.nclcustomerservice.commonutils.Common;
@@ -30,6 +31,7 @@ import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
 import com.ncl.nclcustomerservice.object.CustomerProjectResListVO;
 import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
+import com.ncl.nclcustomerservice.object.DailyReportsAddVO;
 import com.ncl.nclcustomerservice.object.DailyReportsResListVO;
 import com.ncl.nclcustomerservice.object.Team;
 
@@ -84,16 +86,16 @@ public class DailyReportsFragment extends BaseFragment implements RetrofitRespon
         }
     }
 
-    private void setOnAdapter(RecyclerView rvList, List<DailyReportsResListVO.DailyReportsResVO>  dailyReportsResVOList) {
+    private void setOnAdapter(RecyclerView rvList, List<DailyReportsAddVO>  dailyReportsResVOList) {
         DailyReportsAdapter dailyReportsAdapter = new DailyReportsAdapter(getContext(), dailyReportsResVOList);
         rvList.setAdapter(dailyReportsAdapter);
         dailyReportsAdapter.setOnItemClickListener(new DailyReportsAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, View viewItem, int position) {
-//                ViewCustomerProjectActivity.open(
-//                        requireActivity(),
-////                        dailyReportsResVOList.get(position)
-//                );
+                ViewDailyReportsActivty.open(
+                        requireActivity(),
+                        dailyReportsResVOList.get(position)
+                );
             }
         });
     }

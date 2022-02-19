@@ -31,11 +31,11 @@ class DailyReportsAddVO : Serializable {
 
     @SerializedName("project_name")
     @Expose
-    var projectName: Any? = null
+    var projectName: String? = null
 
     @SerializedName("project_head_name")
     @Expose
-    var projectHeadName: Any? = null
+    var projectHeadName: String? = null
 
     @SerializedName("call_type")
     @Expose
@@ -81,7 +81,7 @@ class DailyReportsAddVO : Serializable {
     @Expose
     var descriptionOfWorks: List<DescriptionOfWork>? = null
 
-    class DescriptionOfWork {
+    class DescriptionOfWork: Serializable {
         @SerializedName("cs_dailyreport_description_of_works_id")
         @Expose
         var csDailyreportDescriptionOfWorksId: String? = null

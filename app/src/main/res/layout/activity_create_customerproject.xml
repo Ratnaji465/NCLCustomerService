@@ -163,6 +163,7 @@
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:inputType="text"
+                    android:text="Select Project Head"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 

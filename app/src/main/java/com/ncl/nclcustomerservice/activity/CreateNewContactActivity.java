@@ -232,7 +232,6 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
         tvContractorFirmName.setText(Common.setSppanableText("* Contractor Firm Name"));
         tvAadharNo.setText(Common.setSppanableText("* Aadhar Number"));
         tvPanNo.setText(Common.setSppanableText("* PAN Number"));
-        tvGSTNo.setText(Common.setSppanableText("* GST Number"));
         tvTeamSizeNo.setText(Common.setSppanableText("* Team Size in nos"));
         tvNameOfBuilding.setText(Common.setSppanableText("* Name of building,Floor,Block no"));
         tvState.setText(Common.setSppanableText("* State"));
@@ -737,11 +736,13 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etPanNo.requestFocus();
             etPanNo.setError("Please enter valid PAN number");
             isFilled = false;
-        } else if (etGSTNo.getText().toString().trim().length() == 0) {
-            etGSTNo.requestFocus();
-            etGSTNo.setError("Please add GST Number");
-            isFilled = false;
-        } else if (etTeamSizeNo.getText().toString().trim().length() == 0) {
+        }
+//        else if (etGSTNo.getText().toString().trim().length() == 0) {
+//            etGSTNo.requestFocus();
+//            etGSTNo.setError("Please add GST Number");
+//            isFilled = false;
+//        }
+        else if (etTeamSizeNo.getText().toString().trim().length() == 0) {
             etTeamSizeNo.requestFocus();
             etTeamSizeNo.setError("Please add Team Size");
             isFilled = false;

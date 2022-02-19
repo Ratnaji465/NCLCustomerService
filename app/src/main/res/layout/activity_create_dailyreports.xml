@@ -27,7 +27,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/toolbar"
                 android:layout_margin="@dimen/_10sdp"
                 android:orientation="vertical">
 
@@ -213,6 +212,7 @@
                         android:id="@+id/btnCheckIn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
                         android:background="@drawable/button_bg_green"
                         android:text="Check In"
                         android:textColor="@android:color/white" />
@@ -222,6 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
+                        android:padding="@dimen/_5sdp"
                         android:background="@drawable/button_bg_green"
                         android:text="Check Out"
                         android:textColor="@android:color/white" />
@@ -236,13 +237,15 @@
                     android:text="Description Of Works"
                     android:textAllCaps="true" />
 
-                <com.ncl.nclcustomerservice.customviews.CustomButton
+
+                <ImageView
                     android:id="@+id/btnAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_bg_green"
-                    android:text="Add"
-                    android:textColor="@android:color/white" />
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/add_table"
+                    android:layout_gravity="end"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:text="+" />
 
 
                 <LinearLayout

@@ -141,26 +141,7 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
         } catch (Exception e) {
 
         }
-
-
-     /*if (listReqVo != null) {
-            if (listReqVo.value.equalsIgnoreCase("sales_call")) {
-                goToMethod(new SalesFragment(), true);
-            } else if (listReqVo.value.equalsIgnoreCase("opportunity_list")) {
-                goToMethod(new OpportunitiesFragment(), true);
-            } else if (listReqVo.value.equalsIgnoreCase("contact_list")) {
-                goToMethod(new ContactsFragment(), true);
-            }
-        }*/
-
         profileid = Common.getProfileId(this);
-        LoginResVo loginResVo = new Gson().fromJson(Common.getObject(this), LoginResVo.class);
-//        leftNavs = loginResVo.leftNav;
-       /* if (leftNavsAll.size()>4){
-            leftNavs.add(leftNavsAll.get(0));
-            leftNavs.add(leftNavsAll.get(1));
-            leftNavs.add(leftNavsAll.get(3));
-        }*/
 
         LeftNav routeMap = new LeftNav();
         routeMap.methodName = Constants.MethodNames.ROUTE_MAP;
@@ -179,7 +160,7 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
         contacts.id = "1";
         contacts.read = "1";
         contacts.create = "1";
-        contacts.drawable = R.drawable.contracts;
+        contacts.drawable = R.drawable.contacts;
         leftNavs.add(contacts);
 
         LeftNav customer_project = new LeftNav();
@@ -188,7 +169,7 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
         customer_project.id = "2";
         customer_project.read = "2";
         customer_project.create = "2";
-        customer_project.drawable = R.drawable.contracts;
+        customer_project.drawable = R.drawable.customerprojects;
         leftNavs.add(customer_project);
 
         LeftNav daily_report = new LeftNav();
@@ -197,7 +178,7 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
         daily_report.id = "3";
         daily_report.read = "3";
         daily_report.create = "3";
-        daily_report.drawable = R.drawable.contracts;
+        daily_report.drawable = R.drawable.dailyreports;
         leftNavs.add(daily_report);
 
         LeftNav final_report = new LeftNav();
@@ -217,237 +198,16 @@ public class MainActivity extends NetworkChangeListenerActivity implements DuoMe
         object.create = "0";
         object.drawable = R.drawable.logout;
         leftNavs.add(object);
-
-//        for (int i = 0; i < leftNavs.size(); i++) {
-//           if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.SALES_ORDER_LIST)) {
-//               LeftNav thirdPartyOrders = new LeftNav();
-//               thirdPartyOrders.methodName = Constants.MethodNames.SALES_ODERS_THIRDPARTY;
-//               thirdPartyOrders.name ="Third Party Orders";
-//               thirdPartyOrders.id = "0";
-//               thirdPartyOrders.read = "1";
-//               thirdPartyOrders.create = "1";
-//               thirdPartyOrders.delete = "0";
-//               thirdPartyOrders.update = leftNavs.get(i).update;
-//               leftNavs.add(i+1,thirdPartyOrders);
-//           }
-//            if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.CUSTOMER_LIST)) {
-//                LeftNav thirdPartyOrders = new LeftNav();
-//                thirdPartyOrders.methodName = Constants.MethodNames.CUSTOMER_LIST_THIRDPARTY;
-//                thirdPartyOrders.name ="Third Party Customers";
-//                thirdPartyOrders.id = "0";
-//                thirdPartyOrders.read = "1";
-//                thirdPartyOrders.create = "1";
-//                thirdPartyOrders.delete = "0";
-//                thirdPartyOrders.update = leftNavs.get(i).update;
-//                leftNavs.add(i+1,thirdPartyOrders);
-//            }
-//
-////           if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.DASHBOARD)){
-////               leftNavs.get(i).drawable=R.drawable.dashboard;
-////           }
-//           if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.LEAD_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.leadsicon;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.CUSTOMER_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.customers;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.CUSTOMER_LIST_THIRDPARTY)){
-//               leftNavs.get(i).drawable=R.drawable.customers;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.CONTACT_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.contacts_icon;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.OPPORTUNITY_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.opportunities_icon;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.CONTRACT_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.contracts;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.SALES_ORDER_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.sales_orders_icon;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.SALES_ODERS_THIRDPARTY)){
-//               leftNavs.get(i).drawable=R.drawable.sales_orders_icon;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.SALES_CALLS_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.sales_calls;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.COMPLAINT_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.complaints;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.EXPENSES_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.expenses;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.PAYMENT_COLLECTIONS)){
-//               leftNavs.get(i).drawable=R.drawable.payment_icon;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.QUOTATION_LIST)){
-//               leftNavs.get(i).drawable=R.drawable.quotation_icon;
-//           }if (leftNavs.get(i).methodName.equalsIgnoreCase(Constants.MethodNames.NOTIFICATION)){
-//               leftNavs.get(i).drawable=R.drawable.notifications_icon;
-//           }
-//        }
-
-
         //mTitles = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.menuOptions)));
         for (int i = 0; i < Common.NAVITEMICONS.length; i++) {
             mIcons.add(Common.NAVITEMICONS[i]);
         }
-
-
-        if (getIntent()!= null && getIntent().hasExtra("id")) {
-            pageNo = getIntent().getStringExtra("id");
-            typeNotification = getIntent().getStringExtra("type");
-
-           if (typeNotification.equalsIgnoreCase("Lead")){
-               List<LeadInsertReqVo>  lead = db.commonDao().getLead();
-               for (int i = 0; i < lead.size(); i++) {
-                   String leads = String.valueOf(lead.get(i).leadsId);
-//                   if (leads.equalsIgnoreCase(pageNo)) {
-//                       Intent intent = new Intent(this, InsertLeadViewActivity.class);
-//                       intent.putExtra("leadList", (Serializable) lead.get(i));
-//                       intent.putExtra("leads", Common.getLeftNav(this, Constants.MethodNames.LEAD_LIST));
-//                       startActivity(intent);
-//                   }
-               }
-           }else if (typeNotification.equalsIgnoreCase("Lead Converted")){
-               bundle = new Bundle();
-               NotificationFragment notificationFragment = new NotificationFragment();
-               bundle.putSerializable("notification", Common.getLeftNav(this,Constants.MethodNames.NOTIFICATION));
-               goToFragment(notificationFragment, true);
-
-           }else if (typeNotification.equalsIgnoreCase("Customer")){
-              List<CustomerList> customerList = db.commonDao().getCustomerList();
-
-               for (int i = 0; i < customerList.size(); i++) {
-                   String customerLists = String.valueOf(customerList.get(i).customerId);
-//                   if (customerLists.equalsIgnoreCase(pageNo)) {
-//                       Intent intent = new Intent(this, CustomerViewActivity.class);
-//                       intent.putExtra("customer", (Serializable) customerList.get(i));
-//                       intent.putExtra("customers", Common.getLeftNav(this, Constants.MethodNames.CUSTOMER_LIST));
-//                       startActivity(intent);
-//                   }
-               }
-
-           }else if (typeNotification.equalsIgnoreCase("Contact")){
-              List<ContactList> contactLists = db.commonDao().getContactList(100,0, "%%");
-
-               for (int i = 0; i < contactLists.size(); i++) {
-                   String contact = String.valueOf(contactLists.get(i).contactId);
-                   if (contact.equalsIgnoreCase(pageNo)) {
-                       Intent intent = new Intent(this, ContactViewActivity.class);
-                       intent.putExtra("contactlist", (Serializable) contactLists.get(i));
-                       intent.putExtra("leftnav", Common.getLeftNav(this, Constants.MethodNames.CONTACT_LIST));
-                       startActivity(intent);
-                   }
-               }
-           }else if (typeNotification.equalsIgnoreCase("Opportunitie")){
-              List<OpportunitiesList> opportunitiesLists = db.commonDao().getOpportunitiesList(20,0);
-
-               for (int i = 0; i < opportunitiesLists.size(); i++) {
-                   String oppo = String.valueOf(opportunitiesLists.get(i).opportunityId);
-//                   if (oppo.equalsIgnoreCase(pageNo)) {
-//                       Intent intent = new Intent(this, OpportunityViewActivity.class);
-//                       intent.putExtra("opportunity", (Serializable) opportunitiesLists.get(i));
-//                       intent.putExtra("view","notification");
-//                       intent.putExtra("leftnav", Common.getLeftNav(this, Constants.MethodNames.OPPORTUNITY_LIST));
-//                       startActivity(intent);
-//                   }
-               }
-
-           }else if (typeNotification.equalsIgnoreCase("Quotation")){
-               bundle = new Bundle();
-               NotificationFragment notificationFragment = new NotificationFragment();
-               bundle.putSerializable("notification", Common.getLeftNav(this,Constants.MethodNames.NOTIFICATION));
-               goToFragment(notificationFragment, true);
-//              List<OpportunitiesList> opportunitiesLists = db.commonDao().getOpportunitiesList();
-//
-//               for (int i =0 ; i<opportunitiesLists.size();i++){
-//                   String opportunity = String.valueOf(opportunitiesLists.get(i).opportunityId);
-//
-//                   if (opportunity.equalsIgnoreCase(opportunityId)){
-//                      List<QuotationList> quotationLists = db.commonDao().getQutation();
-//
-//                       for (int k = 0; k<quotationLists.size();k++){
-//                           String quotation = String.valueOf(quotationLists.get(k).quotationId);
-//
-//                           if (quotation.equalsIgnoreCase(pageNo)){
-////                                List<QuotationProductList> quotationProductLists = db.commonDao().getQuotationProductLineItem(quotation);
-//                               Intent intent = new Intent(this, QuotationViewActivity.class);
-//                               intent.putExtra("quotationList",quotationLists.get(k));
-////                                intent.putExtra("quotationLineItem", (Serializable) quotationProductLists.get(0));
-//                               intent.putExtra("view","notifyview");
-////                                intent.putExtra("","");
-//                               startActivity(intent);
-//                           }
-//                       }
-//                   }
-//               }
-           }else if (typeNotification.equalsIgnoreCase("Contract")){
-               List<ContractList> contractLists = db.commonDao().getContractList(25,0);
-
-               for (int i = 0; i < contractLists.size(); i++) {
-                   String contract = String.valueOf(contractLists.get(i).contractId);
-
-//                   if (contract.equalsIgnoreCase(pageNo)) {
-////                        List<ContractLineItem> contractLineItems = db.commonDao().getContractLineItems(contract);
-//                       Intent intent = new Intent(this, ContractViewActivity.class);
-//                       intent.putExtra("contractList", (Serializable) contractLists.get(i));
-////                        intent.putExtra("contractLineItem", (Serializable) contractLineItems);
-//                       intent.putExtra("view","contract");
-//                       intent.putExtra("leftnav", Common.getLeftNav(this, Constants.MethodNames.CONTRACT_LIST));
-//                       startActivity(intent);
-//                   }
-               }
-
-           }else if (typeNotification.equalsIgnoreCase("SalesOrder")){
-               List<SalesOrderList> salesOrderLists = db.commonDao().getSalesOrderList(25,0);
-
-               for (int i = 0; i < salesOrderLists.size(); i++) {
-                   String salesorder = String.valueOf(salesOrderLists.get(i).salesOrderId);
-
-
-               }
-
-           }else if (typeNotification.equalsIgnoreCase("SalesCalls")){
-              List<SalesCallList> salesCallLists = db.commonDao().getSalesCallList(25,0);
-
-               for (int i = 0; i < salesCallLists.size(); i++) {
-                   String salescall = String.valueOf(salesCallLists.get(i).salesCallId);
-
-               }
-
-           }
-
-
-//            bundle = new Bundle();
-//            NotificationFragment notificationFragment = new NotificationFragment();
-//            bundle.putSerializable("notification", Common.getLeftNav(this,Constants.MethodNames.NOTIFICATION));
-//            goToFragment(notificationFragment, true);
-
-//            goToFragment(new NotificationFragment(), false);
-//            Intent intent = new Intent(MainActivity.this, QuotationListActivity.class);
-//            startActivity(intent);
-        }
-
-
         mViewHolder = new ViewHolder();
         handleToolbar();
         handleMenu();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             handleDrawer();
         }
-
-
-//        if (pageNo == 2) {
-//            goToFragment(new NotificationFragment(), true);
-//        }
-//        if (pageNo == 5) {
-//            goToFragment(new OrderIndentFragment(), true);
-//        } else if (pageNo == 6) {
-//            goToFragment(new ComplaintsFragment(), true);
-//        } else if (pageNo == 8) {
-//            leftPanelPostion = 7;
-//            if (isRM())
-//                goToFragment(new DistributorsFragment(), true);
-//        }
-//        Intent serviceIntent = new Intent(MainActivity.this, MyIntentService.class);
-//        serviceIntent.putExtra("sensational", "get_masters_db");
-//        startService(serviceIntent);
-
-//        goToFragment(new ProductCatalogueFragment(), true);
-    }
-
-    private void setNotificationData(String pageNo) {
-
     }
 
     @Override

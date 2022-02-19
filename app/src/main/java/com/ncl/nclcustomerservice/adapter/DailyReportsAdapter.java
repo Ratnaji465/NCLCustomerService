@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
+import com.ncl.nclcustomerservice.object.DailyReportsAddVO;
 import com.ncl.nclcustomerservice.object.DailyReportsResListVO;
 
 import java.util.List;
@@ -22,8 +23,8 @@ import butterknife.ButterKnife;
 public class DailyReportsAdapter extends RecyclerView.Adapter<DailyReportsAdapter.ViewHolder>{
     Context context;
     OnItemClickListener listener;
-    List<DailyReportsResListVO.DailyReportsResVO> dailyReportsResVOList;
-    public DailyReportsAdapter(Context context, List<DailyReportsResListVO.DailyReportsResVO> dailyReportsResVOList) {
+    List<DailyReportsAddVO> dailyReportsResVOList;
+    public DailyReportsAdapter(Context context, List<DailyReportsAddVO> dailyReportsResVOList) {
         this.context = context;
         this.dailyReportsResVOList = dailyReportsResVOList;
 
@@ -44,15 +45,15 @@ public class DailyReportsAdapter extends RecyclerView.Adapter<DailyReportsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(dailyReportsResVOList.get(position).relatedTo!=null)
-        holder.project_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).relatedTo));
-        if(dailyReportsResVOList.get(position).contractorName!=null){
-            holder.et_address.setText(Common.toCamelCase(dailyReportsResVOList.get(position).contractorName));
+        if(dailyReportsResVOList.get(position).getRelatedTo()!=null)
+        holder.project_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getRelatedTo()));
+        if(dailyReportsResVOList.get(position).getContractorName()!=null){
+            holder.et_address.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getContractorName()));
         }
 
-        if(dailyReportsResVOList.get(position).userName!=null)
-        holder.et_project_owner.setText(Common.toCamelCase(dailyReportsResVOList.get(position).userName));
-        holder.et_date.setText(dailyReportsResVOList.get(position).callDate);
+        if(dailyReportsResVOList.get(position).getUserName()!=null)
+        holder.et_project_owner.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getUserName()));
+        holder.et_date.setText(dailyReportsResVOList.get(position).getCallDate());
     }
 
     @Override

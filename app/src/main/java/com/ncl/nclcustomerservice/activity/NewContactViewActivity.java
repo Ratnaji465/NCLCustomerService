@@ -168,10 +168,14 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                                 .load(aadharPath)
                                 .error(R.drawable.ic_profile)
                                 .into(iv_aadhar);
-//                    Picasso.with(this)
-//                            .load(contactContractorList.contractorAadharImagePath)
-//                            .error(R.drawable.ic_profile)
-//                            .into(iv_aadhar);
+                        iv_aadhar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent=new Intent(NewContactViewActivity.this,ViewImageActivity.class);
+                                intent.putExtra("ImagePath",aadharPath);
+                                startActivity(intent);
+                            }
+                        });
                     }else {
                         pv_aadhar.setVisibility(View.VISIBLE);
                         new RetriveAadharPDFfromUrl().execute(aadharPath);
@@ -192,6 +196,14 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                                 .load(panPath)
                                 .error(R.drawable.ic_profile)
                                 .into(iv_pan);
+                        iv_pan.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent=new Intent(NewContactViewActivity.this,ViewImageActivity.class);
+                                intent.putExtra("ImagePath",panPath);
+                                startActivity(intent);
+                            }
+                        });
                     }else {
                         pv_pan.setVisibility(View.VISIBLE);
                         new RetrivePanPDFfromUrl().execute(panPath);
@@ -200,11 +212,6 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
             }catch (Exception e){
                 e.printStackTrace();
             }
-
-
-
-
-
             coAddress.setText(contactContractorList.contractorAddress);
             coState.setText(contactContractorList.contractorState);
             coCity.setText(contactContractorList.contractorCity);
@@ -215,7 +222,6 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                 for (int i = 0; i < contactContractorList.teamMembers.size(); i++) {
                     View rowView = getLayoutInflater().inflate(R.layout.contractor_team_member_details_row, null);
                     addContractorTeamList(rowView, contactContractorList.teamMembers.get(i));
-
                 }
             }
 
@@ -294,7 +300,6 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
 //        });
     }
     class RetriveAadharPDFfromUrl extends AsyncTask<String, Void, InputStream>{
-
         @Override
         protected InputStream doInBackground(String... strings) {
             InputStream inputStream = null;
@@ -302,7 +307,7 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                 URL url = new URL(strings[0]);
                 // below is the step where we are
                 // creating our connection.
-                HttpURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 if (urlConnection.getResponseCode() == 200) {
                     // response is success.
                     // we are getting input stream from url
@@ -334,7 +339,7 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                 URL url = new URL(strings[0]);
                 // below is the step where we are
                 // creating our connection.
-                HttpURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 if (urlConnection.getResponseCode() == 200) {
                     // response is success.
                     // we are getting input stream from url

@@ -1,14 +1,17 @@
 package com.ncl.nclcustomerservice.activity
 
+import CheckInCheckOutVO
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -17,14 +20,20 @@ import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.*
 import com.ncl.nclcustomerservice.`object`.DailyReportsAddVO.CustomerprojectClientprojectDetails
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
+import com.ncl.nclcustomerservice.adapter.CustomSpinnerAdapter
 import com.ncl.nclcustomerservice.commonutils.Common
+import com.ncl.nclcustomerservice.commonutils.Constants
+import com.ncl.nclcustomerservice.commonutils.getArguments
 import com.ncl.nclcustomerservice.commonutils.toast
 import com.ncl.nclcustomerservice.customviews.CustomEditText
 import com.ncl.nclcustomerservice.database.DatabaseHandler
 import com.ncl.nclcustomerservice.databinding.ActivityCreateDailyreportsBinding
 import com.ncl.nclcustomerservice.databinding.ItemDescriptionWorkBinding
+import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 import java.io.Serializable
+import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,7 +43,8 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 
     override fun onInternetDisconnected() {
     }
-
+    private lateinit var dailyReport:DailyReportsAddVO
+    var isEdit = false
     private var nextTag = 0
     private lateinit var binding: ActivityCreateDailyreportsBinding
     private lateinit var db: DatabaseHandler
@@ -64,9 +74,13 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                 clientProjectList.addAll(customerProjectList.get(i).clientProjects)
             }
             Log.d("clientProjectList", clientProjectList.size.toString())
+            getArguments<Args>()?.let {
+                isEdit = true
+                 dailyReport = it.dailyReport!!
+                it.dailyReport?.let { it1 -> setUI(it1) }
+            }
             setClickListeners()
         }
-        setUI(DailyReportsAddVO())
     }
 
 
@@ -77,7 +91,22 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             etCallDate.setText(reportObj.callDate.orEmpty())
             etCallTime.setText(reportObj.callTime.orEmpty())
             etOANo.setText(reportObj.oaNumbers.orEmpty())
-            DailyReportsAddVO().descriptionOfWorks?.forEach {
+            if (reportObj.relatedTo.equals("Contractor")) {
+                llSelectRelatedTo.visibility = View.VISIBLE
+                tvClientProject.text = Common.setSppanableText("* Contractor")
+                tvProjectHeadName.text = Common.setSppanableText("* Mobile No")
+                etClientProject.setText(reportObj.contractorName)
+                etProjectHeadName.setText(reportObj.contractorMobileNo)
+                loadContractorDetails()
+            } else if (reportObj.relatedTo.equals("Client Project")) {
+                llSelectRelatedTo.visibility = View.VISIBLE
+                tvClientProject.text = Common.setSppanableText("* Client Project")
+                tvProjectHeadName.text = Common.setSppanableText("* Project Head Name")
+                etClientProject.setText(reportObj.projectName)
+                etProjectHeadName.setText(reportObj.projectHeadName)
+                loadClientProjectDetails()
+            }
+            reportObj.descriptionOfWorks?.forEach {
                 addDescriptionItem(it)
             }
         }
@@ -162,11 +191,36 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             etCallTime.setOnClickListener {
                 getTime(etCallTime)
             }
-            btnCheckIn.setOnClickListener {
+//            {"requesterid":529,"requestname":"daily_report_checkin_checkout","requestparameters":
+//            {"cs_dailyreport_id":"12","type":"checkin","datetime":"2022-01-17 20:10:10"}}
 
+            btnCheckIn.setOnClickListener {
+                val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
+                Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
+                var checkInCheckOutVO=CheckInCheckOutVO().apply {
+                    csDailyreportId="12"
+                    type="checkin"
+                    datetime=parseDateToddMMyyyy(currentDateTimeString)
+                }
+                RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
+                        Constants.RequestNames.DAILY_REPORTS_CHECKIN_CHECKOUT,
+                        checkInCheckOutVO,
+                        true
+                )
             }
             btnCheckOut.setOnClickListener {
-
+                val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
+                Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
+                var checkInCheckOutVO=CheckInCheckOutVO().apply {
+                    csDailyreportId="12"
+                    type="checkout"
+                    datetime=parseDateToddMMyyyy(currentDateTimeString)
+                }
+                RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
+                        Constants.RequestNames.DAILY_REPORTS_CHECKIN_CHECKOUT,
+                        checkInCheckOutVO,
+                        true
+                )
             }
             btnAdd.setOnClickListener {
                 addDescriptionItem(null)
@@ -201,7 +255,23 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 
         }
     }
-
+    fun parseDateToddMMyyyy(time: String?): String? {
+//        "6 Feb 2022 15:06:10"
+//        2022-01-17 20:10:10
+        val inputPattern = "dd MMM yyyy HH:mm:ss"
+        val outputPattern = "yyyy-MM-dd HH:mm:ss"
+        val inputFormat = SimpleDateFormat(inputPattern)
+        val outputFormat = SimpleDateFormat(outputPattern)
+        var date: Date? = null
+        var str: String? = null
+        try {
+            date = inputFormat.parse(time)
+            str = outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return str
+    }
     private fun addDescriptionItem(obj: DailyReportsAddVO.DescriptionOfWork?) {
         binding.apply {
             var view: ItemDescriptionWorkBinding = DataBindingUtil.inflate(
@@ -231,18 +301,16 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
         }
     }
 
-    //    {"requesterid":529,"requestname":"daily_report_add","requestparameters":
-//    {"call_type":"Visit","related_to":"Client Project",
-//    "contact_contractor_id":"0","customer_project_id":"4","call_date":"2022-01-17",
-//    "call_time":"2022/01/17 17:00","cs_customerproject_clientproject_details":
-//    [{"cs_customerproject_clientproject_detailsid":"3"},{"cs_customerproject_clientproject_detailsid":"15"}],
-//    "description_of_works":[{"description_of_work":"test"},{"description_of_work":"test2"}]}}
     private fun callAddReportsApi(worksData: MutableList<String>) {
         try {
             binding.apply {
                 val dailyReportsAddVO = DailyReportsAddVO().apply {
                     csCustomerprojectClientprojectDetails = selectedSubseries.map {
                         CustomerprojectClientprojectDetails(it)
+                    }
+                    if (csCustomerprojectClientprojectDetails!!.size==0){
+                        toast("Please select OA No")
+                        return
                     }
                     descriptionOfWorks = worksData.map {
                         DailyReportsAddVO.DescriptionOfWork().apply {
@@ -253,20 +321,40 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                     callType = etCallType.text.toString()
                     callDate = etCallDate.text.toString()
                     callTime = etCallDate.text.toString() + " " + etCallTime.text.toString()
-                    if (etRelatedTo.text.toString().equals("Contractor")) {
-                        contactContractorId = selectedCCId
-                        customerProjectId = "0"
-                    } else if (etRelatedTo.text.toString() == "Client Project") {
-                        contactContractorId = "0"
-                        customerProjectId = selectedCPId
-                    }
+
                 }
-                println(Gson().toJson(dailyReportsAddVO))
-//                RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
-//                    Constants.RequestNames.ADD_DAILY_REPORTS,
-//                    dailyReportsAddVO,
-//                    true
-//                )
+                if(isEdit){
+                    if (etRelatedTo.text.toString().equals("Contractor")) {
+                        dailyReportsAddVO.contactContractorId = dailyReport.contactContractorId
+                        dailyReportsAddVO.customerProjectId = "0"
+                    } else if (etRelatedTo.text.toString() == "Client Project") {
+                        dailyReportsAddVO.contactContractorId = "0"
+                        dailyReportsAddVO.customerProjectId = dailyReport.customerProjectId
+                    }
+                    dailyReportsAddVO.csDailyreportId= dailyReport.csDailyreportId
+                    println(Gson().toJson(dailyReportsAddVO))
+                    RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
+                            Constants.RequestNames.EDIT_DAILY_REPORTS,
+                            dailyReportsAddVO,
+                            true
+                    )
+                }else{
+                    if (etRelatedTo.text.toString().equals("Contractor")) {
+                        dailyReportsAddVO.contactContractorId = selectedCCId
+                        dailyReportsAddVO.customerProjectId = "0"
+                    } else if (etRelatedTo.text.toString() == "Client Project") {
+                        dailyReportsAddVO.contactContractorId = "0"
+                        dailyReportsAddVO.customerProjectId = selectedCPId
+                    }
+                    println(Gson().toJson(dailyReportsAddVO))
+                    RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
+                            Constants.RequestNames.ADD_DAILY_REPORTS,
+                            dailyReportsAddVO,
+                            true
+                    )
+                }
+
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -274,7 +362,37 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 
 
     }
+    override fun onResponseSuccess(
+            objectResponse: ApiResponseController,
+            objectRequest: ApiRequestController,
+            progressDialog: ProgressDialog
+    ) {
+        try {
+            when (objectResponse.requestname) {
+                Constants.RequestNames.ADD_DAILY_REPORTS,
+                Constants.RequestNames.EDIT_DAILY_REPORTS,
+                Constants.RequestNames.DAILY_REPORTS_CHECKIN_CHECKOUT-> {
 
+                    val dailyReportsAddVO: DailyReportsResObjVO =
+                            Common.getSpecificDataObject(
+                                    objectResponse.result,
+                                    DailyReportsResObjVO::class.java
+                            )
+                    if (dailyReportsAddVO != null) {
+//                        db.commonDao().insertCustomerProject(dailyReportsAddVO)
+                        ViewDailyReportsActivty.open(
+                                this@CreateDailyReportsActivity,
+                                dailyReportsAddVO.dailyReportsResObjVO!!
+                        )
+                        finish()
+                    }
+                }
+            }
+            Common.dismissProgressDialog(progressDialog)
+        } catch (e: Exception) {
+            Common.disPlayExpection(e, progressDialog)
+        }
+    }
     private fun isValidate(): Boolean {
         var isFilled = false
         binding.apply {
@@ -366,14 +484,11 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 
     companion object {
         fun open(context: Context, args: Args) {
-
+            context.startActivity(
+                    Intent(context, CreateDailyReportsActivity::class.java).apply {
+                        putExtra("args", args)
+                    }
+            )
         }
-    }
-
-    override fun onResponseSuccess(
-        objectResponse: ApiResponseController?,
-        objectRequest: ApiRequestController?,
-        progressDialog: ProgressDialog?
-    ) {
     }
 }

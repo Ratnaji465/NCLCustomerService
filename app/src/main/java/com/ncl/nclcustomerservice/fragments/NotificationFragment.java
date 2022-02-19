@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ncl.nclcustomerservice.R;
-import com.ncl.nclcustomerservice.activity.ContactViewActivity;
 import com.ncl.nclcustomerservice.activity.MainActivity;
 import com.ncl.nclcustomerservice.adapter.NotificationAdapter;
 import com.ncl.nclcustomerservice.commonutils.Common;
@@ -195,19 +194,7 @@ public class NotificationFragment extends Fragment implements RetrofitResponseLi
                 }
                 break;
 
-            case Constants.Notification.CONTACTS:
-                contactLists = db.commonDao().getContactList(100,0, "%%");
 
-                for (int i = 0; i < contactLists.size(); i++) {
-                    String contact = String.valueOf(contactLists.get(i).contactId);
-                    if (contact.equalsIgnoreCase(notificationId)) {
-                        Intent intent = new Intent(getActivity(), ContactViewActivity.class);
-                        intent.putExtra("contactlist", (Serializable) contactLists.get(i));
-                        intent.putExtra("leftnav", Common.getLeftNav(getActivity(), Constants.MethodNames.CONTACT_LIST));
-                        startActivity(intent);
-                    }
-                }
-                break;
 
             case Constants.Notification.OPPORTUNITIES:
                 opportunitiesLists = db.commonDao().getOpportunitiesList(20,0);
