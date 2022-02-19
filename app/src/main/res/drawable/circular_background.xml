@@ -2,8 +2,7 @@
 <shape
 
     android:shape="oval"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color = "@color/white"/>
 
 <stroke android:width="2dp" android:color="@color/toolbar_bottom"/>

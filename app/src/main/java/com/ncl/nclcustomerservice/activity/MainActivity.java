@@ -1,9 +1,6 @@
 package com.ncl.nclcustomerservice.activity;
 
 import android.annotation.SuppressLint;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,7 +24,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.gson.Gson;
 import com.ncl.duo_navigation_drawer.views.DuoDrawerLayout;
 import com.ncl.duo_navigation_drawer.views.DuoMenuView;
 import com.ncl.duo_navigation_drawer.widgets.DuoDrawerToggle;
@@ -36,7 +32,6 @@ import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity;
 import com.ncl.nclcustomerservice.adapter.MenuAdapter;
 import com.ncl.nclcustomerservice.application.BackgroundService;
 import com.ncl.nclcustomerservice.checkinout.AlarmReceiver;
-import com.ncl.nclcustomerservice.checkinout.JobScheduleService;
 import com.ncl.nclcustomerservice.checkinout.LocationUpdatesService;
 import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.commonutils.Constants;
@@ -44,19 +39,9 @@ import com.ncl.nclcustomerservice.database.DatabaseHandler;
 import com.ncl.nclcustomerservice.fragments.CustomerProjectFragment;
 import com.ncl.nclcustomerservice.fragments.DailyReportsFragment;
 import com.ncl.nclcustomerservice.fragments.NewContactsFragment;
-import com.ncl.nclcustomerservice.fragments.NotificationFragment;
-import com.ncl.nclcustomerservice.object.ContactList;
-import com.ncl.nclcustomerservice.object.ContractList;
-import com.ncl.nclcustomerservice.object.CustomerList;
-import com.ncl.nclcustomerservice.object.LeadInsertReqVo;
 import com.ncl.nclcustomerservice.object.LeftNav;
-import com.ncl.nclcustomerservice.object.LoginResVo;
-import com.ncl.nclcustomerservice.object.OpportunitiesList;
-import com.ncl.nclcustomerservice.object.SalesCallList;
-import com.ncl.nclcustomerservice.object.SalesOrderList;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

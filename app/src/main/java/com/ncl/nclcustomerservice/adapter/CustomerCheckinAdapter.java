@@ -1,12 +1,12 @@
 package com.ncl.nclcustomerservice.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityLogsPojo;

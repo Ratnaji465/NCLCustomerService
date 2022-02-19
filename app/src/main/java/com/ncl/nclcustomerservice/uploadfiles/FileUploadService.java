@@ -1,13 +1,15 @@
 package com.ncl.nclcustomerservice.uploadfiles;
 
+import static com.ncl.nclcustomerservice.uploadfiles.RetryJobReceiver.ACTION_CLEAR;
+import static com.ncl.nclcustomerservice.uploadfiles.RetryJobReceiver.ACTION_RETRY;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import androidx.core.app.JobIntentService;
-
-import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
+import androidx.core.app.JobIntentService;
+import androidx.core.app.NotificationCompat;
 
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.activity.SplashActivity;
@@ -20,9 +22,6 @@ import io.reactivex.disposables.Disposable;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-
-import static com.ncl.nclcustomerservice.uploadfiles.RetryJobReceiver.ACTION_CLEAR;
-import static com.ncl.nclcustomerservice.uploadfiles.RetryJobReceiver.ACTION_RETRY;
 
 
 public class FileUploadService extends JobIntentService {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.commonutils.Common;
-import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
 
 import java.util.List;

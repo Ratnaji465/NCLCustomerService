@@ -2,10 +2,11 @@ package com.ncl.nclcustomerservice.adapter;
 
 import android.app.Activity;
 import android.os.Build;
-import androidx.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import androidx.annotation.RequiresApi;
 
 import com.ncl.duo_navigation_drawer.views.DuoOptionView;
 import com.ncl.nclcustomerservice.object.LeftNav;

@@ -4,7 +4,6 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ncl.nclcustomerservice.object.ActionWorkDone;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 
 import java.lang.reflect.Type;

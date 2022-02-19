@@ -3,14 +3,13 @@ package com.ncl.nclcustomerservice.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.ncl.nclcustomerservice.R
-import com.ncl.nclcustomerservice.`object`.ClientProject
 import com.ncl.nclcustomerservice.`object`.ClientProjectResponse
 import com.ncl.nclcustomerservice.`object`.CustomerProjectResVO
 import com.ncl.nclcustomerservice.commonutils.Common

@@ -19,7 +19,6 @@ package com.ncl.nclcustomerservice.fcm;
 import android.app.ProgressDialog;
 import android.util.Log;
 
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener;

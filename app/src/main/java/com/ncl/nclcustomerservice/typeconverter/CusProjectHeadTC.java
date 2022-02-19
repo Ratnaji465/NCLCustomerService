@@ -5,7 +5,6 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
-import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
 
 import java.lang.reflect.Type;
 import java.util.Collections;

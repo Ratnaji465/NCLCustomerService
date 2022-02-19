@@ -1,11 +1,12 @@
 package com.ncl.nclcustomerservice.adapter;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.object.UsersTeam;

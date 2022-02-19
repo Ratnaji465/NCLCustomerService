@@ -3,7 +3,6 @@ package com.ncl.nclcustomerservice.fragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.tabs.TabLayout;
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.activity.CreateNewContactActivity;
@@ -29,9 +30,9 @@ import com.ncl.nclcustomerservice.object.ApiResponseController;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.NewCustomerResVo;
 import com.ncl.nclcustomerservice.object.Team;
+
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NewContactsFragment extends BaseFragment implements RetrofitResponseListener, SwipeRefreshLayout.OnRefreshListener {

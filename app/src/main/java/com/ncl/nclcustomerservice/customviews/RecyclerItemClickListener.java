@@ -1,10 +1,11 @@
 package com.ncl.nclcustomerservice.customviews;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by User on 4/3/2018.

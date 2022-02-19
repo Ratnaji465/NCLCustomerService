@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -20,7 +19,6 @@ import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.*
 import com.ncl.nclcustomerservice.`object`.DailyReportsAddVO.CustomerprojectClientprojectDetails
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
-import com.ncl.nclcustomerservice.adapter.CustomSpinnerAdapter
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.Constants
 import com.ncl.nclcustomerservice.commonutils.getArguments

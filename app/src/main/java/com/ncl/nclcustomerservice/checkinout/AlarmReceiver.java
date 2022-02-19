@@ -1,5 +1,7 @@
 package com.ncl.nclcustomerservice.checkinout;
 
+import static android.content.Context.POWER_SERVICE;
+
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -18,17 +20,15 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.PowerManager;
 import android.os.RemoteException;
-import androidx.annotation.Nullable;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 
 import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.database.DatabaseHandler;
 
 import java.util.List;
 import java.util.Timer;
-
-import static android.content.Context.POWER_SERVICE;
 
 /**
  * Created by suprasoft on 8/10/2018.

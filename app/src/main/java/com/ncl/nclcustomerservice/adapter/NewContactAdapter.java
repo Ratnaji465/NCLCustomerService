@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.commonutils.Common;
-import com.ncl.nclcustomerservice.object.ContactList;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
-import com.ncl.nclcustomerservice.object.ListContactListCustomer;
 
 import java.util.List;
 

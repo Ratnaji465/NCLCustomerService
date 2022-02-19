@@ -1,49 +1,31 @@
 package com.ncl.nclcustomerservice.activity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity;
-import com.ncl.nclcustomerservice.commonutils.Common;
-import com.ncl.nclcustomerservice.commonutils.Constants;
-import com.ncl.nclcustomerservice.database.DatabaseHandler;
-import com.ncl.nclcustomerservice.network.RetrofitRequestController;
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener;
 import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
-import com.ncl.nclcustomerservice.object.ContactDeleteReqVo;
-import com.ncl.nclcustomerservice.object.ContactList;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
-import com.ncl.nclcustomerservice.object.LeftNav;
-import com.ncl.nclcustomerservice.object.ListReqVo;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
-import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -12,7 +12,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-
 import com.ncl.nclcustomerservice.checkinout.EmpActivityLogsPojo;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityPojo;
 import com.ncl.nclcustomerservice.object.AssociateContact;
@@ -36,8 +35,8 @@ import com.ncl.nclcustomerservice.object.PaymentCollectionList;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
 import com.ncl.nclcustomerservice.object.QuotationList;
 import com.ncl.nclcustomerservice.object.QuotationProductList;
-import com.ncl.nclcustomerservice.object.SalesOrderLineItem;
 import com.ncl.nclcustomerservice.object.SalesCallList;
+import com.ncl.nclcustomerservice.object.SalesOrderLineItem;
 import com.ncl.nclcustomerservice.object.SalesOrderList;
 import com.ncl.nclcustomerservice.object.SalesPersonLineItem;
 import com.ncl.nclcustomerservice.object.TadaList;

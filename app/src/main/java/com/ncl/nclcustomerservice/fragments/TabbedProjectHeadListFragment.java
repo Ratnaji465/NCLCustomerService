@@ -16,7 +16,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.activity.NewContactViewActivity;
-import com.ncl.nclcustomerservice.adapter.NewContactAdapter;
 import com.ncl.nclcustomerservice.adapter.ProjectHeadAdapter;
 import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.commonutils.Constants;
@@ -25,8 +24,6 @@ import com.ncl.nclcustomerservice.network.RetrofitRequestController;
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener;
 import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
-import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
-import com.ncl.nclcustomerservice.object.NewCustomerResVo;
 import com.ncl.nclcustomerservice.object.ProjectHeadContactListResVo;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
 import com.ncl.nclcustomerservice.object.Team;

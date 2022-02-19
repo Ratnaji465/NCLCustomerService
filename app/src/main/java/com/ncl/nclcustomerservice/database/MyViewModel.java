@@ -1,8 +1,9 @@
 package com.ncl.nclcustomerservice.database;
 
 import android.app.Application;
-import androidx.lifecycle.AndroidViewModel;
+
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 /**
  * Created by User on 8/29/2018.

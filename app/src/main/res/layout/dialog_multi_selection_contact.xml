@@ -11,15 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@color/grey"
-            android:paddingVertical="@dimen/_10sdp"
             android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingVertical="@dimen/_10sdp"
             android:text="Select Options"
             android:textAllCaps="true" />
+
+        <com.ncl.nclcustomerservice.customviews.CustomEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
@@ -33,6 +40,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
+            android:id="@+id/llButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end">

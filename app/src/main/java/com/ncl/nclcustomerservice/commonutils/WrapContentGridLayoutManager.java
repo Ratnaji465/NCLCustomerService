@@ -1,9 +1,10 @@
 package com.ncl.nclcustomerservice.commonutils;
 
 import android.content.Context;
+import android.util.AttributeSet;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.AttributeSet;
 
 /**
  * Created by User on 2/8/2019.

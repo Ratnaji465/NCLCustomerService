@@ -1,15 +1,16 @@
 package com.ncl.nclcustomerservice.database;
 
+import android.content.Context;
+import android.content.Intent;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
-import android.content.Context;
-import android.content.Intent;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.ncl.nclcustomerservice.activity.LoginActivity;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityLogsPojo;
@@ -38,8 +39,8 @@ import com.ncl.nclcustomerservice.object.PriceList;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
 import com.ncl.nclcustomerservice.object.QuotationList;
 import com.ncl.nclcustomerservice.object.QuotationProductList;
-import com.ncl.nclcustomerservice.object.SalesOrderLineItem;
 import com.ncl.nclcustomerservice.object.SalesCallList;
+import com.ncl.nclcustomerservice.object.SalesOrderLineItem;
 import com.ncl.nclcustomerservice.object.SalesOrderList;
 import com.ncl.nclcustomerservice.object.SalesPersonLineItem;
 import com.ncl.nclcustomerservice.object.TadaList;

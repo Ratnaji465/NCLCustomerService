@@ -9,7 +9,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.util.Log.d
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -41,7 +40,6 @@ import java.io.File
 import java.io.IOException
 import java.io.Serializable
 import java.util.*
-import kotlin.collections.LinkedHashSet
 
 class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitResponseListener {
     private var selectedProducts: LinkedHashSet<Int> = linkedSetOf<Int>()

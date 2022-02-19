@@ -5,8 +5,9 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
-import androidx.legacy.content.WakefulBroadcastReceiver;
 import android.widget.Toast;
+
+import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import com.google.gson.Gson;
 import com.ncl.nclcustomerservice.application.MyApplication;

@@ -1,7 +1,7 @@
 package com.ncl.nclcustomerservice.object;
 
-import androidx.room.Ignore;
 import androidx.annotation.NonNull;
+import androidx.room.Ignore;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

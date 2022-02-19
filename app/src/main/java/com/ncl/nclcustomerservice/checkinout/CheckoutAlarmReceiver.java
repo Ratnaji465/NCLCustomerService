@@ -1,5 +1,7 @@
 package com.ncl.nclcustomerservice.checkinout;
 
+import static android.content.Context.POWER_SERVICE;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.job.JobInfo;
@@ -12,13 +14,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.PowerManager;
 
-
 import com.ncl.nclcustomerservice.commonutils.Common;
 
 import java.util.Calendar;
 import java.util.List;
-
-import static android.content.Context.POWER_SERVICE;
 
 /**
  * Created by suprasoft on 10/23/2018.

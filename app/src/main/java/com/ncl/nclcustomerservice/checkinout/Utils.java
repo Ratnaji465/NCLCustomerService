@@ -22,7 +22,6 @@ import android.content.Context;
 import android.location.Location;
 import android.preference.PreferenceManager;
 
-
 import com.ncl.nclcustomerservice.R;
 
 import java.text.DateFormat;

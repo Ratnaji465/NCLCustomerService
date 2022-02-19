@@ -88,6 +88,8 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         db = DatabaseHandler.getDatabase(this);
+        username.setText("venkatesh.k@nclbuildtek.com");
+        password.setText("1234");
         username.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 if (username.getText().toString().matches(emailPattern) && s.length() > 0) {

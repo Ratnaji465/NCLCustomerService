@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.activity.CreateCustomerProjectActivity;
 import com.ncl.nclcustomerservice.activity.MainActivity;
-import com.ncl.nclcustomerservice.activity.NewContactViewActivity;
 import com.ncl.nclcustomerservice.activity.ViewCustomerProjectActivity;
 import com.ncl.nclcustomerservice.adapter.CustomerProjectAdapter;
 import com.ncl.nclcustomerservice.commonutils.Common;
@@ -30,11 +29,8 @@ import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
 import com.ncl.nclcustomerservice.object.CustomerProjectResListVO;
 import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
-import com.ncl.nclcustomerservice.object.NewCustomerResVo;
 import com.ncl.nclcustomerservice.object.Team;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

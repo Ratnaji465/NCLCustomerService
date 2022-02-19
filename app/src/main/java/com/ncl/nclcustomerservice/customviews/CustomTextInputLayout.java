@@ -2,8 +2,9 @@ package com.ncl.nclcustomerservice.customviews;
 
 import android.content.Context;
 import android.graphics.Rect;
-import com.google.android.material.textfield.TextInputLayout;
 import android.util.AttributeSet;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

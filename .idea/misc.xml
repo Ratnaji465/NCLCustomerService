@@ -4,23 +4,6 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/NCLCustomerService(22-01-22)/app/src/main/res/layout/fragment_customers.xml" value="0.1140625" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/drawable/button_bg_green.xml" value="0.2598958333333333" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/activity_contractor_contact_details.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/activity_create_clientproject.xml" value="0.25" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/activity_create_customerproject.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/activity_create_newcontact.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/activity_new_contact_details.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/activity_view_customerproject.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/associate_contacts_row.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/associate_contacts_row_binding.xml" value="0.1" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/clientproject_product_row.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/contractor_details_row.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/contractor_team_member_details_row1.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/filter_toolbar.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/filter_toolbar_binding.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/fragment_customer_project.xml" value="0.11604439959636731" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/new_contact_list.xml" value="0.23958333333333334" />
-        <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/New folder(22-01-22)/NCLCustomerService/app/src/main/res/layout/new_customer_project_list.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/ncl-crm/NCLDevEn/app/src/main/res/drawable/background_toolbar_multi.xml" value="0.23425925925925925" />
         <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/ncl-crm/NCLDevEn/app/src/main/res/drawable/button_border_blue.xml" value="0.23425925925925925" />
         <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/ncl-crm/NCLDevEn/app/src/main/res/drawable/ic_passwordicon.xml" value="0.23425925925925925" />
@@ -110,8 +93,27 @@
         <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/new/NCLCustomerService/app/src/main/res/layout/spinner_rows.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/new/NCLCustomerService/app/src/main/res/layout/tabbed_contractor_list.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/Ratnaji/AndroidStudioProjects/new/NCLCustomerService/app/src/main/res/layout/tabbed_projecthead_list.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/layout/activity_add_sales_call.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_contract_view.xml" value="0.13431541095622732" />
+        <entry key="app/src/main/res/layout/activity_create_clientproject.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_create_customerproject.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_create_dailyreports.xml" value="0.5376434326171875" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_view_customer_project.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_view_customerproject.xml" value="0.25761772853185594" />
+        <entry key="app/src/main/res/layout/associate_contacts_row.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/associate_contacts_row_binding.xml" value="0.10648148148148148" />
+        <entry key="app/src/main/res/layout/clientproject_product_row.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/contractor_details_row.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/contractor_team_member_details_row.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/contractor_team_member_details_row1.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/dialog_multi_selection_contact.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/filter_toolbar.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/filter_toolbar_binding.xml" value="0.10648148148148148" />
         <entry key="app/src/main/res/layout/fragment_customer_project.xml" value="0.1381340579710145" />
+        <entry key="app/src/main/res/layout/item_description_work.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_multi_selection_contact.xml" value="0.1" />
       </map>
     </option>
   </component>

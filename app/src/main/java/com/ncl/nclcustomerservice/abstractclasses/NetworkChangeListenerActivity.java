@@ -1,5 +1,7 @@
 package com.ncl.nclcustomerservice.abstractclasses;
 
+import static com.ncl.nclcustomerservice.commonutils.Common.setSettingsAutomaticDateTimeIfNeeded;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -10,9 +12,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import android.util.Log;
 
 import com.ncl.nclcustomerservice.application.BackgroundService;
 import com.ncl.nclcustomerservice.application.MyApplication;
@@ -22,10 +25,6 @@ import com.ncl.nclcustomerservice.commonutils.Constants;
 import com.ncl.nclcustomerservice.commonutils.PermissionUtil;
 import com.ncl.nclcustomerservice.customviews.CustomerAlertDialog3;
 import com.ncl.nclcustomerservice.customviews.DialogClickListener;
-
-//import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import static com.ncl.nclcustomerservice.commonutils.Common.setSettingsAutomaticDateTimeIfNeeded;
 
 
 public abstract class NetworkChangeListenerActivity extends BaseActivity implements PermissionUtil.PermissionAskListener {

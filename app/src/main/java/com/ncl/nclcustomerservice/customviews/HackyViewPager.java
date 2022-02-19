@@ -1,9 +1,10 @@
 package com.ncl.nclcustomerservice.customviews;
 
 import android.content.Context;
-import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by User on 7/11/2018.

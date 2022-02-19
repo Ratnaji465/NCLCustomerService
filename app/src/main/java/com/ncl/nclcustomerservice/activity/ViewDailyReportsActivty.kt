@@ -9,10 +9,8 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.ncl.nclcustomerservice.R
-import com.ncl.nclcustomerservice.`object`.CustomerProjectResVO
 import com.ncl.nclcustomerservice.`object`.DailyReportsAddVO
 import com.ncl.nclcustomerservice.commonutils.getArguments
-import com.ncl.nclcustomerservice.databinding.ActivityCreateDailyreportsBinding
 import com.ncl.nclcustomerservice.databinding.ActivityViewDailyreportsBinding
 import com.ncl.nclcustomerservice.databinding.ItemDescriptionWorkBinding
 import java.io.Serializable

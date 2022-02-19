@@ -1,5 +1,8 @@
 package com.ncl.nclcustomerservice.commonutils;
 
+import static android.content.Context.LOCATION_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -41,15 +44,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.Settings;
-
-import androidx.annotation.RequiresPermission;
-
-import com.google.android.material.textfield.TextInputLayout;
-
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -74,14 +68,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresPermission;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.adapter.UserAdapter;
 import com.ncl.nclcustomerservice.application.MyApplication;
@@ -98,7 +94,10 @@ import com.ncl.nclcustomerservice.object.Geo_Tracking_POJO;
 import com.ncl.nclcustomerservice.object.LeftNav;
 import com.ncl.nclcustomerservice.object.LoginResVo;
 import com.ncl.nclcustomerservice.object.UsersTeam;
-
+import com.squareup.okhttp.RequestBody;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.json.JSONException;
@@ -145,9 +144,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import okio.Buffer;
-
-import static android.content.Context.LOCATION_SERVICE;
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class Common {

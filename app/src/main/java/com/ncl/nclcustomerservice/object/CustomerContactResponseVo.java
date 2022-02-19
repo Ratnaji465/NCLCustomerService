@@ -8,7 +8,6 @@ import androidx.room.TypeConverters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.ncl.nclcustomerservice.typeconverter.ContractorTeamMemberTC;
-import com.ncl.nclcustomerservice.typeconverter.LeadActionTOTC;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

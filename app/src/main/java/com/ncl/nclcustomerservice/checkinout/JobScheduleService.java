@@ -12,11 +12,10 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.PowerManager;
 import android.os.RemoteException;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import android.util.Log;
-
 
 import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.database.DatabaseHandler;

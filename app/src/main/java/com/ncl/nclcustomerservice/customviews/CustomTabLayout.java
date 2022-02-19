@@ -2,14 +2,15 @@ package com.ncl.nclcustomerservice.customviews;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.appcompat.widget.AppCompatTextView;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.viewpager.widget.PagerAdapter;
+
+import com.google.android.material.tabs.TabLayout;
 import com.ncl.nclcustomerservice.R;
 
 

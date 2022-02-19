@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.commonutils.Common;
-import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
 import com.ncl.nclcustomerservice.object.DailyReportsAddVO;
-import com.ncl.nclcustomerservice.object.DailyReportsResListVO;
 
 import java.util.List;
 
