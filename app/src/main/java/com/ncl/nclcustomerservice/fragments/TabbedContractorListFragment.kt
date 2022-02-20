@@ -7,29 +7,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.*
+import com.ncl.nclcustomerservice.activity.MultiSelectionDialog
 import com.ncl.nclcustomerservice.activity.NewContactViewActivity
 import com.ncl.nclcustomerservice.adapter.NewContactAdapter
-import com.ncl.nclcustomerservice.commonutils.Common
-import com.ncl.nclcustomerservice.commonutils.Constants
+import com.ncl.nclcustomerservice.commonutils.*
 import com.ncl.nclcustomerservice.database.DatabaseHandler
+import com.ncl.nclcustomerservice.databinding.TabbedContractorListBinding
 import com.ncl.nclcustomerservice.network.RetrofitRequestController
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 import java.io.Serializable
 
 class TabbedContractorListFragment : BaseFragment(), RetrofitResponseListener, OnRefreshListener {
-    var db: DatabaseHandler? = null
-    private var contactAdapter: NewContactAdapter? = null
+    private var contact: MutableList<CustomerContactResponseVo.ContactContractorList> =
+        mutableListOf()
+    private lateinit var binding: TabbedContractorListBinding
+    private lateinit var loginResponse: LoginResVo
+    val db: DatabaseHandler by lazy { DatabaseHandler.getDatabase(activity) }
+    private lateinit var contactAdapter: NewContactAdapter
 
-    @JvmField
-    @BindView(R.id.contact_recycler)
-    var contact_recycler: RecyclerView? = null
     private fun callService(userId: String) {
         if (Common.haveInternet(activity)) {
             val contactTeam = Team()
@@ -40,24 +40,73 @@ class TabbedContractorListFragment : BaseFragment(), RetrofitResponseListener, O
                 false
             )
         } else {
-            val contact: List<CustomerContactResponseVo.ContactContractorList>? =
-                db!!.commonDao().getContractorContactList(100, 0)
-            contact?.let { setOnAdapter(contact_recycler, it) }
+            db.commonDao().getContractorContactList(100, 0)?.let {
+                contact = it.toMutableList()
+                setOnAdapter(binding.contactRecycler, it)
+            }
         }
+        loginResponse = Common.getLoginResponse(requireContext())
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view: View =
-            LayoutInflater.from(activity).inflate(R.layout.tabbed_contractor_list, container, false)
-        ButterKnife.bind(this, view)
-        db = DatabaseHandler.getDatabase(activity)
-        val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        contact_recycler!!.layoutManager = linearLayoutManager
-        return view
+    ): View {
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(activity),
+            R.layout.tabbed_contractor_list,
+            container,
+            false
+        )
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.etSearch.onTextChange {
+            it?.let { filterList(it.toString()) }
+        }
+        binding.ivFilter.setOnClickListener {
+            var list = loginResponse.usersTeam.map { it }.toMutableList()
+            list.apply {
+                add(0, UsersTeam().apply {
+                    userId = -1
+                    name = "All"
+                })
+            }
+            MultiSelectionDialog(
+                context = requireContext(),
+                list = list,
+                mapper = { if (it.name == loginResponse.name) "My Data" else it.name },
+                selectedPosition = null,
+                isSingleSelection = true,
+                isSearchable = false,
+                receivedData = {
+                    binding.etSearch.setText("")
+                    var obj = list[it[0]]
+                    when (obj.name) {
+                        "All" -> {
+                            setOnAdapter(binding.contactRecycler, contact)
+                        }
+                        loginResponse.name -> {
+                            setOnAdapter(
+                                binding.contactRecycler,
+                                contact.filter { it.createdBy == obj.userId.toString() })
+                        }
+                        else -> {
+                            setOnAdapter(
+                                binding.contactRecycler,
+                                contact.filter { it.createdBy == loginResponse.userId.toString() })
+                        }
+                    }
+                },
+            ).show()
+        }
+    }
+
+    private fun filterList(text: String) {
+        contactAdapter.filter(text)
     }
 
     override fun onResume() {
@@ -66,17 +115,17 @@ class TabbedContractorListFragment : BaseFragment(), RetrofitResponseListener, O
     }
 
     private fun setOnAdapter(
-        contact_recycler: RecyclerView?,
+        contact_recycler: RecyclerView,
         contactLists: List<CustomerContactResponseVo.ContactContractorList>
     ) {
-        contactAdapter = NewContactAdapter(context, contactLists)
-        contact_recycler!!.adapter = contactAdapter
-        contactAdapter!!.setOnItemClickListener { view, viewItem, position ->
+        contactAdapter = NewContactAdapter(requireContext(), contactLists) { obj ->
             val intent = Intent(activity, NewContactViewActivity::class.java)
-            intent.putExtra("contactContractorList", contactLists[position] as Serializable)
+            intent.putExtra("contactContractorList", obj as Serializable)
             intent.putExtra("type", "Contractor")
             startActivity(intent)
         }
+        contact_recycler.adapter = contactAdapter
+
     }
 
     override fun onResponseSuccess(
@@ -92,18 +141,19 @@ class TabbedContractorListFragment : BaseFragment(), RetrofitResponseListener, O
                             objectResponse.result,
                             NewCustomerResVo::class.java
                         )
-                    if (newCustomerResVo != null && newCustomerResVo.contactList != null) {
+                    if (newCustomerResVo.contactList != null) {
                         if (newCustomerResVo.contactList.contactContractorLists != null && newCustomerResVo.contactList.contactContractorLists.size > 0) {
                             val contactContractorLists: List<CustomerContactResponseVo.ContactContractorList> =
                                 newCustomerResVo.contactList.contactContractorLists
-                            contact_recycler!!.visibility = View.VISIBLE
-                            db!!.commonDao().deleteContactContractorList()
-                            db!!.commonDao().insertContractorContact(contactContractorLists)
-                            setOnAdapter(contact_recycler, contactContractorLists)
+                            binding.contactRecycler.show()
+                            db.commonDao().deleteContactContractorList()
+                            db.commonDao().insertContractorContact(contactContractorLists)
+                            contact = contactContractorLists.toMutableList()
+                            setOnAdapter(binding.contactRecycler, contactContractorLists)
                         }
                     }
                 } else {
-                    contact_recycler!!.visibility = View.GONE
+                    binding.contactRecycler.hide()
                     Toast.makeText(activity, objectResponse.message, Toast.LENGTH_SHORT).show()
                 }
             }

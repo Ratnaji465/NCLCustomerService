@@ -234,7 +234,7 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                             Common.saveDepartmentIdIntoSP(loginResVo.departmentName);
                             Common.saveMobileIntoSP(loginResVo.phone);
                             // Common.saveUserPassword(password.getText().toString().trim());
-                            Common.saveObject(this, loginResVo);
+                            Common.saveLoginResponse(this, loginResVo);
                             Common.saveUserTeam(loginResVo.usersTeam);
                             Common.saveDivisions(loginResVo.divisions);
                             Common.saveImageIntoSP(loginResVo.profileImg);

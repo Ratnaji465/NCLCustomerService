@@ -175,7 +175,7 @@ public interface CommonDao {
     @Query("DELETE FROM TadaList where taDaId =:taDaId")
     void deleteTadaFromDb(int taDaId);
 
-    @Insert(onConflict =  OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertProjectHeadContact(List<ProjectHeadReqVo> projectHeadReqVoList);
 
     @Query("SELECT * FROM ProjectHeadReqVo where projectHeadName like :queryString ORDER BY contactId DESC LIMIT :limit OFFSET :offset")
@@ -187,7 +187,7 @@ public interface CommonDao {
     @Query("DELETE FROM ProjectHeadReqVo")
     void deleteProjectHeadContactList();
 
-    @Insert(onConflict =  OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertContractorContact(List<CustomerContactResponseVo.ContactContractorList> contactContractorList);
 
     @Query("SELECT * FROM ContactContractorList where contractorName ORDER BY contactId DESC LIMIT :limit OFFSET :offset")
@@ -208,7 +208,7 @@ public interface CommonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCustomerProject(CustomerProjectResVO customerProjectResVO);
 
-    @Insert(onConflict =  OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCustomerProjectList(List<CustomerProjectResVO> customerProjectResVOList);
 
     @Query("DELETE FROM CustomerProjectResVO")
@@ -311,7 +311,7 @@ public interface CommonDao {
     public List<PaymentCollectionList> getPaymentCollectionList(int limit, int offset);
 
     @Query("SELECT * FROM PaymentCollectionList where customerName like :queryString ORDER BY paymentCollectionId DESC LIMIT :limit OFFSET :offset")
-    public List<PaymentCollectionList> getPaymentCollectionList(int limit, int offset,String queryString);
+    public List<PaymentCollectionList> getPaymentCollectionList(int limit, int offset, String queryString);
 
     @Query("DELETE FROM PaymentCollectionList")
     void deletePaymentCollectionList();
@@ -445,7 +445,8 @@ public interface CommonDao {
 
     @Query("SELECT * FROM SalesOrderLineItem WHERE saleslineItemId=:salesOrderId")
     List<SalesOrderLineItem> getSalesOrderLineItems(String salesOrderId);
-@Query("SELECT * FROM SalesPersonLineItem WHERE saleslineItemId=:salesOrderId")
+
+    @Query("SELECT * FROM SalesPersonLineItem WHERE saleslineItemId=:salesOrderId")
     List<SalesPersonLineItem> getSalesPersonOrderLineItems(String salesOrderId);
 
     @Query("UPDATE GEO_TRACKING_POJO SET status=:status, checkOutLatLong=:checkinlatlong,checkOutTime=:strDate,polyline=:polyline,distance=:distance,personalUsesKm=:personalUsesKm WHERE trackingId=:trackingId")

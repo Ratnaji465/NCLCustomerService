@@ -1106,12 +1106,12 @@ public class Common {
 
     }
 
-    public static void saveObject(Context context, LoginResVo obj) {
+    public static void saveLoginResponse(Context context, LoginResVo obj) {
         getDefaultSP(context).edit().putString("leftnav", new Gson().toJson(obj)).commit();
     }
 
-    public static String getObject(Context context) {
-        return getDefaultSP(context).getString("leftnav", null);
+    public static LoginResVo getLoginResponse(Context context) {
+        return (new Gson()).fromJson(getDefaultSP(context).getString("leftnav", null), LoginResVo.class);
     }
 
     public static void saveTeamObject(Context context, LoginResVo obj) {
@@ -2780,7 +2780,7 @@ public class Common {
 
                 shift = 0;
                 result = 0;
-                index=0;
+                index = 0;
                 do {
                     b = poly.charAt(index++) - 63;
                     result |= (b & 0x1f) << shift;
@@ -2795,10 +2795,10 @@ public class Common {
             }
 
             return decoded;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-       return null;
+        return null;
     }
 
     public static String textInputToString(TextInputLayout textInputLayout) {

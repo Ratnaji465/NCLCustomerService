@@ -1,45 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/contact_recycler"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+    <data>
 
-   </androidx.recyclerview.widget.RecyclerView>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.ncl.nclcustomerservice.customviews.CustomEditText
+                android:id="@+id/etSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/ivFilter"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/filtericon" />
+        </LinearLayout>
 
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_gravity="center_vertical|center_horizontal"
-       android:gravity="center"
-       android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contact_recycler"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="wrap_content">
 
-      <ImageView
-          android:id="@+id/error_image"
-          android:layout_width="@dimen/_90sdp"
-          android:layout_height="@dimen/_90sdp"
-          android:layout_marginTop="@dimen/_50sdp"
-          android:visibility="gone"
-          app:srcCompat="@drawable/notasks_avaliable" />
+        </androidx.recyclerview.widget.RecyclerView>
 
-      <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
-          android:id="@+id/error_message"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="@dimen/_70sdp"
-          android:layout_marginRight="@dimen/_60sdp"
-          android:layout_marginTop="@dimen/_10sdp"
-          android:singleLine="false"
-          android:text="No Data to Display Please Check After Some Time"
-          android:textSize="@dimen/_12sdp"
-          android:visibility="gone" />
 
-   </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center"
+            android:orientation="vertical">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/error_image"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/notasks_avaliable" />
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                android:id="@+id/error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_70sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_60sdp"
+                android:singleLine="false"
+                android:text="No Data to Display Please Check After Some Time"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
