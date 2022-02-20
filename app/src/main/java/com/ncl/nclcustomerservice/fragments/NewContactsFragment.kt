@@ -1,199 +1,137 @@
-package com.ncl.nclcustomerservice.fragments;
+package com.ncl.nclcustomerservice.fragments
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.app.ProgressDialog
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import butterknife.ButterKnife
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.ncl.nclcustomerservice.R
+import com.ncl.nclcustomerservice.`object`.*
+import com.ncl.nclcustomerservice.activity.CreateNewContactActivity
+import com.ncl.nclcustomerservice.activity.MainActivity
+import com.ncl.nclcustomerservice.application.BackgroundService
+import com.ncl.nclcustomerservice.commonutils.Common
+import com.ncl.nclcustomerservice.commonutils.Constants
+import com.ncl.nclcustomerservice.commonutils.hide
+import com.ncl.nclcustomerservice.database.DatabaseHandler
+import com.ncl.nclcustomerservice.network.RetrofitRequestController
+import com.ncl.nclcustomerservice.network.RetrofitResponseListener
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.google.android.material.tabs.TabLayout;
-import com.ncl.nclcustomerservice.R;
-import com.ncl.nclcustomerservice.activity.CreateNewContactActivity;
-import com.ncl.nclcustomerservice.activity.MainActivity;
-import com.ncl.nclcustomerservice.application.BackgroundService;
-import com.ncl.nclcustomerservice.commonutils.Common;
-import com.ncl.nclcustomerservice.commonutils.Constants;
-import com.ncl.nclcustomerservice.database.DatabaseHandler;
-import com.ncl.nclcustomerservice.network.RetrofitRequestController;
-import com.ncl.nclcustomerservice.network.RetrofitResponseListener;
-import com.ncl.nclcustomerservice.object.ApiRequestController;
-import com.ncl.nclcustomerservice.object.ApiResponseController;
-import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
-import com.ncl.nclcustomerservice.object.NewCustomerResVo;
-import com.ncl.nclcustomerservice.object.Team;
-
-import java.util.List;
-
-import butterknife.ButterKnife;
-
-public class NewContactsFragment extends BaseFragment implements RetrofitResponseListener, SwipeRefreshLayout.OnRefreshListener {
-    DatabaseHandler db;
-    private ImageView filterView;
-    private ImageView addView;
-//    @BindView(R.id.swipe_layout)
-//    SwipeRefreshLayout swipeRefreshLayout;
-    private String queryString="%%";
-//    private NewContactAdapter contactAdapter;
-//    private EndlessRecyclerOnScrollListener mScrollListener = null;
-    private boolean isRefreshing;
-    private TabLayout tabLayout;
-    @Override
-    public void onRefresh() {
-        callService(Common.getTeamUserIdFromSP(getActivity()));
-//        swipeRefreshLayout.setRefreshing(true);
-//        isRefreshing = true;
+class NewContactsFragment : BaseFragment(), RetrofitResponseListener, OnRefreshListener {
+    var db: DatabaseHandler? = null
+    private lateinit var filterView: ImageView
+    private lateinit var addView: ImageView
+    private lateinit var tabLayout: TabLayout
+    override fun onRefresh() {
+        callService(Common.getTeamUserIdFromSP(activity))
     }
 
-    private void callService(String userId) {
-        if (Common.haveInternet(getActivity())) {
-            Team contactTeam = new Team();
-            contactTeam.teamId = userId;
-            new RetrofitRequestController(this).sendRequest(Constants.RequestNames.CONTACT_LIST, contactTeam, true);
+    private fun callService(userId: String) {
+        if (Common.haveInternet(activity)) {
+            val contactTeam = Team()
+            contactTeam.teamId = userId
+            RetrofitRequestController(this).sendRequest(
+                Constants.RequestNames.CONTACT_LIST,
+                contactTeam,
+                true
+            )
         }
-//        else {
-//            List<CustomerContactResponseVo.ContactContractorList> contact = db.commonDao().getContractorContactList(100,0, queryString);
-//            if (contact != null)
-//                setOnAdapter(contact_recycler, contact);
-//        }
     }
 
-    @Override
-    public void setUserId(String userId) {
-        super.setUserId(userId);
-//        callService(userId);
+    override fun setUserId(userId: String) {
+        super.setUserId(userId)
     }
 
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_contact, container, false);
-        ButterKnife.bind(this, view);
-
-        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        TabLayout.Tab firstTab = tabLayout.newTab();
-        firstTab.setText("Contractor");
-        tabLayout.addTab(firstTab);
-        TabLayout.Tab secondTab = tabLayout.newTab();
-        secondTab.setText("Project Head");
-        tabLayout.addTab(secondTab);
-        getFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, new TabbedContractorListFragment())
-                .commit();
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getPosition()==0){
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentContainerView, new TabbedContractorListFragment())
-                            .commit();
-                }else if(tab.getPosition()==1){
-                    getFragmentManager().beginTransaction()
-//                            .setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left,
-//                                    R.anim.slide_in_from_left, R.anim.slide_out_to_right)
-                            .replace(R.id.fragmentContainerView, new TabbedProjectHeadListFragment())
-                            .commit();
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view =
+            LayoutInflater.from(activity).inflate(R.layout.fragment_contact, container, false)
+        ButterKnife.bind(this, view)
+        tabLayout = view.findViewById<View>(R.id.tabs) as TabLayout
+        val firstTab = tabLayout.newTab()
+        firstTab.text = "Contractor"
+        tabLayout.addTab(firstTab)
+        val secondTab = tabLayout.newTab()
+        secondTab.text = "Project Head"
+        tabLayout.addTab(secondTab)
+        childFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, TabbedContractorListFragment())
+            .commit()
+        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                if (tab.position == 0) {
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainerView, TabbedContractorListFragment())
+                        .commit()
+                } else if (tab.position == 1) {
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainerView, TabbedProjectHeadListFragment())
+                        .commit()
                 }
             }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-
-        db = DatabaseHandler.getDatabase(getActivity());
-        if (Common.haveInternet(getActivity())){
-            Common.startService(getActivity(), BackgroundService.class);
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+        db = DatabaseHandler.getDatabase(activity)
+        if (Common.haveInternet(activity)) {
+            Common.startService(activity, BackgroundService::class.java)
         }
-        filterView = ((MainActivity) getActivity()).findViewById(R.id.filter_task);
-//
-            filterView.setVisibility(View.GONE);
-        filterView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Common.getSelectedUser(NewContactsFragment.this);
-            }
-        });
-        addView = ((MainActivity) getActivity()).findViewById(R.id.add_task);
-        ((TextView) ((MainActivity) getActivity()).getSupportActionBar().getCustomView().findViewById(R.id.title_text)).setText("CONTACTS");
-        addView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addIntent = new Intent(getActivity(), CreateNewContactActivity.class);
-                addIntent.putExtra("form_key", "new");
-                startActivity(addIntent);
-            }
-        });
-        List<CustomerContactResponseVo.ContactContractorList> contact = db.commonDao().getContractorContactList(100,0);
-
-        ((SearchView)(((MainActivity) getActivity()).findViewById(R.id.searchView))).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                Common.Log.i(s);
-                queryString = '%' + s + '%';
-                List<CustomerContactResponseVo.ContactContractorList> contact = db.commonDao().getContractorContactList(100, 0);
-//                if (contact != null)
-//                    setOnAdapter(contact_recycler, contact);
-                    return false;
-            }
-        });
-
-        return view;
+        filterView = (activity as MainActivity?)!!.findViewById(R.id.filter_task)
+        filterView.hide()
+        filterView.setOnClickListener(View.OnClickListener { Common.getSelectedUser(this@NewContactsFragment) })
+        addView = (activity as MainActivity?)!!.findViewById(R.id.add_task)
+        ((activity as MainActivity?)!!.supportActionBar!!.customView.findViewById<View>(R.id.title_text) as TextView).text =
+            "CONTACTS"
+        addView.setOnClickListener(View.OnClickListener {
+            val addIntent = Intent(activity, CreateNewContactActivity::class.java)
+            addIntent.putExtra("form_key", "new")
+            startActivity(addIntent)
+        })
+//        val contact: List<CustomerContactResponseVo.ContactContractorList> =
+//            db?.commonDao()?.getContractorContactList(100, 0) as List<CustomerContactResponseVo.ContactContractorList>
+        return view
     }
 
-
-    @Override
-    public void onResponseSuccess(ApiResponseController objectResponse, ApiRequestController objectRequest, ProgressDialog progressDialog) {
-    try {
-        switch (objectRequest.requestname) {
-            case Constants.RequestNames.CONTACT_LIST:
-                if (objectResponse.result != null) {
-//                    swipeRefreshLayout.setRefreshing(false);
-                    isRefreshing = false;
-                    NewCustomerResVo newCustomerResVo=Common.getSpecificDataObject(objectResponse.result, NewCustomerResVo.class);
-                    if(newCustomerResVo!=null && newCustomerResVo.contactList!=null){
-                        if(newCustomerResVo.contactList.contactContractorLists!=null && newCustomerResVo.contactList.contactContractorLists.size()>0){
-                            List<CustomerContactResponseVo.ContactContractorList> contactContractorLists=newCustomerResVo.contactList.contactContractorLists;
-//                            contact_recycler.setVisibility(View.VISIBLE);
-                            db.commonDao().deleteContactContractorList();
-                            db.commonDao().insertContractorContact(contactContractorLists);
-//                            setOnAdapter(contact_recycler, contactContractorLists);
+    override fun onResponseSuccess(
+        objectResponse: ApiResponseController,
+        objectRequest: ApiRequestController,
+        progressDialog: ProgressDialog
+    ) {
+        try {
+            when (objectRequest.requestname) {
+                Constants.RequestNames.CONTACT_LIST -> if (objectResponse.result != null) {
+                    val newCustomerResVo: NewCustomerResVo =
+                        Common.getSpecificDataObject<NewCustomerResVo>(
+                            objectResponse.result,
+                            NewCustomerResVo::class.java
+                        )
+                    if (newCustomerResVo?.contactList != null) {
+                        if (newCustomerResVo.contactList.contactContractorLists != null && newCustomerResVo.contactList.contactContractorLists.size > 0) {
+                            val contactContractorLists: List<CustomerContactResponseVo.ContactContractorList> =
+                                newCustomerResVo.contactList.contactContractorLists
+                            db!!.commonDao().deleteContactContractorList()
+                            db!!.commonDao().insertContractorContact(contactContractorLists)
                         }
-
                     }
-                }else {
-//                    contact_recycler.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), objectResponse.message, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(activity, objectResponse.message, Toast.LENGTH_SHORT).show()
                 }
-                break;
+            }
+            Common.dismissProgressDialog(progressDialog)
+        } catch (e: Exception) {
+            Common.disPlayExpection(e, progressDialog)
         }
-        Common.Log.i("result-->" + objectResponse.result);
-        Common.dismissProgressDialog(progressDialog);
-
-    }catch (Exception e){
-        Common.disPlayExpection(e, progressDialog);
     }
-    }
-
 }
