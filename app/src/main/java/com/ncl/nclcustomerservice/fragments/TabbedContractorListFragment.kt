@@ -92,12 +92,12 @@ class TabbedContractorListFragment : BaseFragment(), RetrofitResponseListener, O
                         loginResponse.name -> {
                             setOnAdapter(
                                 binding.contactRecycler,
-                                contact.filter { it.createdBy == obj.userId.toString() })
+                                contact.filter { it.createdBy == loginResponse.userId.toString() })
                         }
                         else -> {
                             setOnAdapter(
                                 binding.contactRecycler,
-                                contact.filter { it.createdBy == loginResponse.userId.toString() })
+                                contact.filter { it.createdBy == obj.userId.toString() })
                         }
                     }
                 },

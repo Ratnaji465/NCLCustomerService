@@ -96,12 +96,12 @@ class TabbedProjectHeadListFragment : BaseFragment(), RetrofitResponseListener, 
                         loginResponse.name -> {
                             setOnAdapter(
                                 binding.contactRecycler,
-                                projectHeads.filter { it.createdBy == obj.userId.toString() })
+                                projectHeads.filter { it.createdBy == loginResponse.userId.toString() })
                         }
                         else -> {
                             setOnAdapter(
                                 binding.contactRecycler,
-                                projectHeads.filter { it.createdBy == loginResponse.userId.toString() })
+                                projectHeads.filter { it.createdBy == obj.userId.toString() })
                         }
                     }
                 },
