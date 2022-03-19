@@ -26,7 +26,10 @@
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search" />
+            android:layout_margin="@dimen/_5sdp"
+            android:hint="Search"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:background="@drawable/button_border_black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"

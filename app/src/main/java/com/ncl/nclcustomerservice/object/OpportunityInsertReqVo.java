@@ -132,18 +132,9 @@ public class OpportunityInsertReqVo implements Serializable {
     @SerializedName("opportunity_main_contact_company")
     @Expose
     public String opportunityMainContactCompany;
-    @SerializedName("brands_product")
-    @Expose
-    public List<OpportunityBrandsLineItem> brandsProduct = null;
     @SerializedName("associate_contact")
     @Expose
     public List<AssociateContactLead> associateContact = null;
-    @SerializedName("competition_product")
-    @Expose
-    public List<OpportunityCompetitionLineItem> competitionProduct = null;
-    @SerializedName("final_product")
-    @Expose
-    public List<OpportunityProductLineItem> finalProduct = null;
     @SerializedName("size_calss_unit")
     @Expose
     public String size_calss_unit;

@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.gson.Gson;
 import com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner;
+import com.kenmeidearu.searchablespinnerlibrary.mListString;
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity;
 import com.ncl.nclcustomerservice.adapter.CustomSpinnerAdapter;
@@ -39,10 +40,12 @@ import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.CustomerContractorInsertReqVo;
+import com.ncl.nclcustomerservice.object.DepartmentList;
 import com.ncl.nclcustomerservice.object.DropDownData;
 import com.ncl.nclcustomerservice.object.DropDownDataReqVo;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
 import com.ncl.nclcustomerservice.object.ProjectHeadVO;
+import com.ncl.nclcustomerservice.object.RemarksListVO;
 import com.ncl.nclcustomerservice.object.SpinnerModel;
 import com.ncl.nclcustomerservice.object.StatesList;
 
@@ -141,26 +144,34 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 
     @BindView(R.id.tvCCRemarks)
     TextView tvCCRemarks;
-    @BindView(R.id.etCCRemarks)
-    EditText etCCRemarks;
+    @BindView(R.id.ll_CCRemarks)
+    LinearLayout ll_CCRemarks;
 
     //    project head
-    @BindView(R.id.tvProjectHeadName)
-    TextView tvProjectHeadName;
-    @BindView(R.id.etProjectHeadName)
-    EditText etProjectHeadName;
     @BindView(R.id.tvCompanyName)
     TextView tvCompanyName;
     @BindView(R.id.etCompanyName)
     EditText etCompanyName;
+    @BindView(R.id.tvProjectName)
+    TextView tvProjectName;
+    @BindView(R.id.etProjectName)
+    EditText etProjectName;
+    @BindView(R.id.tvClientCode)
+    TextView tvClientCode;
+    @BindView(R.id.etClientCode)
+    EditText etClientCode;
+    @BindView(R.id.tvProjectHeadName)
+    TextView tvProjectHeadName;
+    @BindView(R.id.etProjectHeadName)
+    EditText etProjectHeadName;
     @BindView(R.id.tvMobile)
     TextView tvMobile;
     @BindView(R.id.etMobile)
     EditText etMobile;
     @BindView(R.id.tvDepartment)
     TextView tvDepartment;
-    @BindView(R.id.etDepartment)
-    EditText etDepartment;
+    @BindView(R.id.ph_department_spinner)
+    SearchableSpinner phDepartmentSpinner;
     @BindView(R.id.tvEmail)
     TextView tvEmail;
     @BindView(R.id.etEmail)
@@ -185,6 +196,8 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
     TextView tvPHRemarks;
     @BindView(R.id.etPHRemarks)
     EditText etPHRemarks;
+    @BindView(R.id.ll_PHRemarks)
+    LinearLayout ll_PHRemarks;
 
     @BindView(R.id.ll_contractor_team_member_details)
     LinearLayout ll_contractor_team_member_details;
@@ -207,7 +220,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
     File con_pan_file, con_aadha_file;
     List<File> tm_aadhar_file_list = new ArrayList<>();
     private List<StatesList> statesLists;
-    String stateId;
+    String stateId,departmentId;
     CustomerContactResponseVo.ContactContractorList contactContractorList;
     ProjectHeadReqVo projectHeadReqVo;
 
@@ -224,7 +237,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 //        contractor
         tvContractorName.setText(Common.setSppanableText("* Contractor Name"));
         tvContractorMobileNo.setText(Common.setSppanableText("* Contractor Mobile No"));
-        tvContractorFirmName.setText(Common.setSppanableText("* Contractor Firm Name"));
+//        tvContractorFirmName.setText(Common.setSppanableText("* Contractor Firm Name"));
         tvAadharNo.setText(Common.setSppanableText("* Aadhar Number"));
         tvPanNo.setText(Common.setSppanableText("* PAN Number"));
         tvTeamSizeNo.setText(Common.setSppanableText("* Team Size in nos"));
@@ -236,30 +249,41 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 //        project head
         tvProjectHeadName.setText(Common.setSppanableText("* Project Head Name"));
         tvCompanyName.setText(Common.setSppanableText("* Company Name(Client name)"));
+        tvProjectName.setText(Common.setSppanableText("* Project Name"));
+        tvClientCode.setText(Common.setSppanableText("* Client code"));
         tvMobile.setText(Common.setSppanableText("* Mobile"));
         tvDepartment.setText(Common.setSppanableText("* Department"));
-        tvEmail.setText(Common.setSppanableText("* Email"));
+//        tvEmail.setText(Common.setSppanableText("* Email"));
         tvAddress.setText(Common.setSppanableText("* Address"));
         tvPHstate.setText(Common.setSppanableText("* State"));
         tvPHcountry.setText(Common.setSppanableText("* Country"));
         tvPHpincode.setText(Common.setSppanableText("* Pincode"));
-        tvPHRemarks.setText(Common.setSppanableText("* Remarks"));
-        tvCCRemarks.setText(Common.setSppanableText("* Remarks"));
+//        tvPHRemarks.setText(Common.setSppanableText("* Remarks"));
+//        tvCCRemarks.setText(Common.setSppanableText("* Remarks"));
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        View rowCCRemarks = getLayoutInflater().inflate(R.layout.remarks_row, null);
+
+
         radioGroupCustomer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radioButton1) {
                     layout_projecthead.setVisibility(View.GONE);
                     layout_contractor.setVisibility(View.VISIBLE);
+                    ll_PHRemarks.removeAllViews();
+                    ll_CCRemarks.addView(rowCCRemarks);
+                    addCCRemarks(null);
                 } else if (checkedId == R.id.radioButton2) {
                     layout_projecthead.setVisibility(View.VISIBLE);
                     layout_contractor.setVisibility(View.GONE);
+                    ll_CCRemarks.removeAllViews();
+                    ll_PHRemarks.addView(rowCCRemarks);
+                    addPHRemarks(null);
                 }
 
             }
@@ -272,10 +296,6 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                 click_aadhar = true;
                 click_pan = false;
                 tm_click_aadhar = false;
-//                Intent intent = new Intent();
-//                intent.setType("application/*|image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(intent, 200);
                 ImagePicker.Companion.with(CreateNewContactActivity.this)
                         .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
                         .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
@@ -288,10 +308,6 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                 click_pan = true;
                 click_aadhar = false;
                 tm_click_aadhar = false;
-//                Intent intent = new Intent();
-//                intent.setType("application/*|image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(intent, 200);
                 ImagePicker.Companion.with(CreateNewContactActivity.this)
                         .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
                         .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
@@ -336,7 +352,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                             return;
                         }
                         customerContractorInsertReqVo.teamMember = teamMemberList;
-                        customerContractorInsertReqVo.contactContractorRemarks = etCCRemarks.getText().toString().trim();
+                        customerContractorInsertReqVo.contactContractorRemarks = getCCRemarks();
 
                         sendImage(customerContractorInsertReqVo);
 
@@ -346,25 +362,27 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                     if (!isProjectHeadFieldsValidated()) {
                         return;
                     }
-                    if (arePhAssociateContactsItemsValidated()) {
+//                    if (arePhAssociateContactsItemsValidated()) {
                         if (Common.haveInternet(getApplication())) {
                             ProjectHeadReqVo projectHeadReq = new ProjectHeadReqVo();
                             projectHeadReq.category = "Project Head";
                             projectHeadReq.projectHeadName = etProjectHeadName.getText().toString().trim();
+                            projectHeadReq.projectName=etProjectName.getText().toString().trim();
+                            projectHeadReq.clientCode=etClientCode.getText().toString().trim();
                             projectHeadReq.companyOrClientName = etCompanyName.getText().toString().trim();
                             projectHeadReq.projectHeadMobile = etMobile.getText().toString().trim();
-                            projectHeadReq.projectHeadDepartment = etDepartment.getText().toString().trim();
+                            projectHeadReq.projectHeadDepartment = departmentId;
                             projectHeadReq.projectHeadAddress = etAddress.getText().toString().trim();
                             projectHeadReq.projectHeadState = stateId;
                             projectHeadReq.projectHeadCountry = etPHcountry.getText().toString().trim();
                             projectHeadReq.projectHeadPincode = etPHpincode.getText().toString().trim();
-                            projectHeadReq.projectHeadContactRemarks = etPHRemarks.getText().toString().trim();
+                            projectHeadReq.remarksListVOS = getPHRemarks();
                             projectHeadReq.projectHeadEmail = etEmail.getText().toString().trim();
                             List<ProjectHeadReqVo.AssociateContact> associateContactList = getAssociateContactList();
-                            if (associateContactList == null || associateContactList.size() == 0) {
-                                Toast.makeText(CreateNewContactActivity.this, "Please add Associate Contact Details", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
+//                            if (associateContactList == null || associateContactList.size() == 0) {
+//                                Toast.makeText(CreateNewContactActivity.this, "Please add Associate Contact Details", Toast.LENGTH_SHORT).show();
+//                                return;
+//                            }
                             projectHeadReq.associateContacts = associateContactList;
                             if (form_type.equalsIgnoreCase("edit")) {
                                 projectHeadReq.contactId = projectHeadReqVo.contactId;
@@ -376,7 +394,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                         } else {
                             Toast.makeText(getApplication(), "Please check internet connection", Toast.LENGTH_LONG).show();
                         }
-                    }
+//                    }
                 }
 
 
@@ -417,20 +435,92 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             View rowAssociateContacts = getLayoutInflater().inflate(R.layout.associate_contacts_row, null);
             ll_associate_contacts.addView(rowAssociateContacts);
             addAssociateContacts(null);
+
+
+        }
+    }
+    private void addPHRemarks(List<RemarksListVO> projectHeadRemarks) {
+        for (int i = 0; i < ll_PHRemarks.getChildCount(); i++) {
+            View ll_PHRemarks_view = ll_PHRemarks.getChildAt(i);
+            RemarksViewHolder viewHolder = new RemarksViewHolder(ll_PHRemarks_view);
+            if (ll_PHRemarks.getChildCount() > 1) {
+                viewHolder.removelayout_remarks.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.removelayout_remarks.setVisibility(View.GONE);
+            }
+            if(projectHeadRemarks!=null){
+                viewHolder.etRemarks.setText(projectHeadRemarks.get(i).remark);
+            }
+            int finalI = i;
+            viewHolder.removelayout_remarks.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ll_PHRemarks.removeViewAt(finalI);
+                    addPHRemarks(null);
+                }
+            });
+            viewHolder.addlayout_remarks.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ll_PHRemarks.addView(getLayoutInflater().inflate(R.layout.remarks_row, null));
+                    addPHRemarks(null);
+                }
+            });
+
+        }
+    }
+
+    private void addCCRemarks(List<RemarksListVO> ccRemarks) {
+        for (int i = 0; i < ll_CCRemarks.getChildCount(); i++) {
+            View ll_CCRemarks_view = ll_CCRemarks.getChildAt(i);
+            RemarksViewHolder viewHolder = new RemarksViewHolder(ll_CCRemarks_view);
+            if (ll_CCRemarks.getChildCount() > 1) {
+                viewHolder.removelayout_remarks.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.removelayout_remarks.setVisibility(View.GONE);
+            }
+            if(ccRemarks!=null){
+                viewHolder.etRemarks.setText(ccRemarks.get(i).remark);
+            }
+            int finalI = i;
+            viewHolder.removelayout_remarks.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ll_CCRemarks.removeViewAt(finalI);
+                    addCCRemarks(null);
+                }
+            });
+            viewHolder.addlayout_remarks.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ll_CCRemarks.addView(getLayoutInflater().inflate(R.layout.remarks_row, null));
+                    addCCRemarks(null);
+                }
+            });
+
         }
     }
 
     private void setEditProjectHeadData(ProjectHeadReqVo projectHeadReqVo) {
         if (projectHeadReqVo != null) {
             etProjectHeadName.setText(projectHeadReqVo.projectHeadName);
+            etProjectName.setText(projectHeadReqVo.projectName);
+            etClientCode.setText(projectHeadReqVo.clientCode);
             etCompanyName.setText(projectHeadReqVo.companyOrClientName);
             etMobile.setText(projectHeadReqVo.projectHeadMobile);
-            etDepartment.setText(projectHeadReqVo.projectHeadDepartment);
             etEmail.setText(projectHeadReqVo.projectHeadEmail);
             etAddress.setText(projectHeadReqVo.projectHeadAddress);
             etPHcountry.setText(projectHeadReqVo.projectHeadCountry);
             etPHpincode.setText(projectHeadReqVo.projectHeadPincode);
-            etPHRemarks.setText(projectHeadReqVo.projectHeadContactRemarks);
+            ll_PHRemarks.removeAllViews();
+            if(projectHeadReqVo.remarksListVOS!=null && projectHeadReqVo.remarksListVOS.size()>0){
+                for(int i=0; i<projectHeadReqVo.remarksListVOS.size(); i++){
+                    View rowView = getLayoutInflater().inflate(R.layout.remarks_row,null);
+                    ll_PHRemarks.addView(rowView);
+                }
+                addPHRemarks(projectHeadReqVo.remarksListVOS);
+            }
+
             if (projectHeadReqVo.associateContacts != null && projectHeadReqVo.associateContacts.size() > 0) {
                 for (int i = 0; i < projectHeadReqVo.associateContacts.size(); i++) {
                     View rowView = getLayoutInflater().inflate(R.layout.associate_contacts_row, null);
@@ -454,7 +544,15 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etNameOfBuilding.setText(contactContractorList.contractorAddress);
             etCity.setText(contactContractorList.contractorCity);
             etPincode.setText(contactContractorList.contractorPincode);
-            etCCRemarks.setText(contactContractorList.contactContractorRemarks);
+            ll_CCRemarks.removeAllViews();
+            if(contactContractorList.remarksListVOS!=null && contactContractorList.remarksListVOS.size()>0){
+                for(int i=0; i<contactContractorList.remarksListVOS.size(); i++){
+                    View rowView = getLayoutInflater().inflate(R.layout.remarks_row,null);
+                    ll_CCRemarks.addView(rowView);
+                }
+                addCCRemarks(contactContractorList.remarksListVOS);
+            }
+
             String aadharPath = contactContractorList.contractorAadharImagePath;
             if (aadharPath != null) {
                 String aadharFilename = aadharPath.substring(aadharPath.lastIndexOf("/") + 1);
@@ -580,7 +678,6 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                 if (projectHeadReqVo.associateContacts.size() > i) {
                     associateContact.contactProjectheadAssociatecontactId = projectHeadReqVo.associateContacts.get(i).contactProjectheadAssociatecontactId;
                     associateContact.contactId = projectHeadReqVo.associateContacts.get(i).contactId;
-
                 }
             }
 
@@ -592,7 +689,42 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 
         return associateContactList;
     }
-
+    private ArrayList<RemarksListVO> getPHRemarks(){
+        ArrayList<RemarksListVO> remarkslist=new ArrayList<>();
+        for (int i = 0; i < ll_PHRemarks.getChildCount(); i++) {
+            View childView = ll_PHRemarks.getChildAt(i);
+            RemarksViewHolder loopHolder=new RemarksViewHolder(childView);
+            RemarksListVO remarksListVO=new RemarksListVO();
+            if (form_type.equalsIgnoreCase("edit")) {
+                if (projectHeadReqVo.remarksListVOS.size() > i) {
+                   remarksListVO.id=projectHeadReqVo.remarksListVOS.get(i).id;
+                }
+            }
+            if(loopHolder.etRemarks.getText().toString().length()>0){
+                remarksListVO.remark=loopHolder.etRemarks.getText().toString();
+                remarkslist.add(remarksListVO);
+            }
+        }
+        return remarkslist;
+    }
+    private ArrayList<RemarksListVO> getCCRemarks(){
+        ArrayList<RemarksListVO> remarkslist=new ArrayList<>();
+        for (int i = 0; i < ll_CCRemarks.getChildCount(); i++) {
+            View childView = ll_CCRemarks.getChildAt(i);
+            RemarksViewHolder loopHolder=new RemarksViewHolder(childView);
+            RemarksListVO remarksListVO=new RemarksListVO();
+            if (form_type.equalsIgnoreCase("edit")) {
+                if (contactContractorList.remarksListVOS.size() > i) {
+                    remarksListVO.id=contactContractorList.remarksListVOS.get(i).id;
+                }
+            }
+            if(loopHolder.etRemarks.getText().toString().length()>0){
+                remarksListVO.remark=loopHolder.etRemarks.getText().toString();
+                remarkslist.add(remarksListVO);
+            }
+        }
+        return remarkslist;
+    }
     private List<CustomerContractorInsertReqVo.TeamMember> getTeamMemberList() {
         addTeamMemberList.clear();
         for (int i = 0; i < ll_contractor_team_member_details.getChildCount(); i++) {
@@ -669,27 +801,33 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 
     private boolean isProjectHeadFieldsValidated() {
         boolean isFilled = true;
-        if (etProjectHeadName.getText().toString().trim().length() == 0) {
-            etProjectHeadName.requestFocus();
-            etProjectHeadName.setError("Please add Name");
-            isFilled = false;
-        } else if (etCompanyName.getText().toString().trim().length() == 0) {
+        if (etCompanyName.getText().toString().trim().length() == 0) {
             etCompanyName.requestFocus();
             etCompanyName.setError("Please add Company Name");
+            isFilled = false;
+        }else if (etProjectName.getText().toString().trim().length() == 0) {
+            etProjectName.requestFocus();
+            etProjectName.setError("Please add Project Name");
+            isFilled = false;
+        }else if (etClientCode.getText().toString().trim().length() == 0) {
+            etClientCode.requestFocus();
+            etClientCode.setError("Please add Client code");
+            isFilled = false;
+        }else if (etProjectHeadName.getText().toString().trim().length() == 0) {
+            etProjectHeadName.requestFocus();
+            etProjectHeadName.setError("Please add Project Head Name");
             isFilled = false;
         } else if (etMobile.getText().toString().trim().length() == 0 || etMobile.getText().toString().trim().length() < 10) {
             etMobile.requestFocus();
             etMobile.setError("Please add Mobile No");
             isFilled = false;
-        } else if (etDepartment.getText().toString().trim().length() == 0) {
-            etDepartment.requestFocus();
-            etDepartment.setError("Please add Department");
-            isFilled = false;
-        } else if (etEmail.getText().toString().trim().length() == 0) {
-            etEmail.requestFocus();
-            etEmail.setError("Please add Email");
-            isFilled = false;
-        } else if (etAddress.getText().toString().trim().length() == 0) {
+        }
+//        else if (etEmail.getText().toString().trim().length() == 0) {
+//            etEmail.requestFocus();
+//            etEmail.setError("Please add Email");
+//            isFilled = false;
+//        }
+        else if (etAddress.getText().toString().trim().length() == 0) {
             etAddress.requestFocus();
             etAddress.setError("Please add Address");
             isFilled = false;
@@ -701,11 +839,12 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etPHpincode.requestFocus();
             etPHpincode.setError("Please add Pincode");
             isFilled = false;
-        } else if (etPHRemarks.getText().toString().trim().length() == 0) {
-            etPHRemarks.requestFocus();
-            etPHRemarks.setError("Please add Remarks");
-            isFilled = false;
         }
+//        else if (etPHRemarks.getText().toString().trim().length() == 0) {
+//            etPHRemarks.requestFocus();
+//            etPHRemarks.setError("Please add Remarks");
+//            isFilled = false;
+//        }
         return isFilled;
     }
 
@@ -719,11 +858,13 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etContractorMobileNo.requestFocus();
             etContractorMobileNo.setError("Please add Contractor Mobile No");
             isFilled = false;
-        } else if (etContractorFirmName.getText().toString().trim().length() == 0) {
-            etContractorFirmName.requestFocus();
-            etContractorFirmName.setError("Please add Contractor Firm Name");
-            isFilled = false;
-        } else if (etAadharNo.getText().toString().trim().length() == 0 || etAadharNo.getText().toString().trim().length() < 12) {
+        }
+//        else if (etContractorFirmName.getText().toString().trim().length() == 0) {
+//            etContractorFirmName.requestFocus();
+//            etContractorFirmName.setError("Please add Contractor Firm Name");
+//            isFilled = false;
+//        }
+        else if (etAadharNo.getText().toString().trim().length() == 0 || etAadharNo.getText().toString().trim().length() < 12) {
             etAadharNo.requestFocus();
             etAadharNo.setError("Please enter valid Aadhar number");
             isFilled = false;
@@ -788,7 +929,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                     setTMAadharFileName(tm_aadhar_file);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -820,9 +961,9 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
         for (int i = 0; i < ll_associate_contacts.getChildCount(); i++) {
             View ll_associate_contacts_view = ll_associate_contacts.getChildAt(i);
             AssociateContactViewHolder viewHolder = new AssociateContactViewHolder(ll_associate_contacts_view);
-            viewHolder.tvACName.setText(Common.setSppanableText("* Name"));
-            viewHolder.tvACDesignation.setText(Common.setSppanableText("* Designation"));
-            viewHolder.tvACMobile.setText(Common.setSppanableText("* Mobile"));
+//            viewHolder.tvACName.setText(Common.setSppanableText("* Name"));
+//            viewHolder.tvACDesignation.setText(Common.setSppanableText("* Designation"));
+//            viewHolder.tvACMobile.setText(Common.setSppanableText("* Mobile"));
 
             if (ll_associate_contacts.getChildCount() > 1) {
                 viewHolder.removeLayout_ac.setVisibility(View.VISIBLE);
@@ -894,7 +1035,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                                 .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
                                 .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                                 .start();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -922,18 +1063,18 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 
     private boolean isAssociateLineItemValidated(AssociateContactViewHolder viewHolder) {
         if (viewHolder.etACName.getText().toString().trim().length() == 0) {
-            viewHolder.etACName.setError("please enter name");
-            viewHolder.etACName.requestFocus();
+//            viewHolder.etACName.setError("please enter name");
+//            viewHolder.etACName.requestFocus();
             return false;
         }
         if (viewHolder.etACDesignation.getText().toString().trim().length() == 0) {
-            viewHolder.etACDesignation.setError("please enter designation");
-            viewHolder.etACDesignation.requestFocus();
+//            viewHolder.etACDesignation.setError("please enter designation");
+//            viewHolder.etACDesignation.requestFocus();
             return false;
         }
         if (viewHolder.etACMobile.getText().toString().trim().length() == 0) {
-            viewHolder.etACMobile.setError("please enter mobile number");
-            viewHolder.etACMobile.requestFocus();
+//            viewHolder.etACMobile.setError("please enter mobile number");
+//            viewHolder.etACMobile.requestFocus();
             return false;
         }
         return true;
@@ -978,8 +1119,10 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                 case Constants.RequestNames.DROP_DOWN_LIST:
                     DropDownData dropDownData = Common.getSpecificDataObject(objectResponse.result, DropDownData.class);
                     if (dropDownData != null) {
+                        loadDepatmentSpinner(dropDownData.departmentLists);
                         statesLists = dropDownData.statesList;
                         if (statesLists != null) {
+                            ArrayList<mListString> stringStates = new ArrayList<>();
                             StatesList sl = new StatesList();
                             sl.stateId = "0";
                             sl.stateName = "Select State";
@@ -990,9 +1133,10 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                                 spinnerModel.setId(statesLists.get(i).stateId);
                                 spinnerModel.setTitle(statesLists.get(i).stateName);
                                 states.add(spinnerModel);
+                                stringStates.add(new mListString(Integer.parseInt(Common.isNull(statesLists.get(i).stateId)), statesLists.get(i).stateName));
                             }
-                            CustomSpinnerAdapter customSpinnerAdapter = new CustomSpinnerAdapter(this, 0, states);
-                            state_spinner.setAdapter(customSpinnerAdapter);
+//                            CustomSpinnerAdapter customSpinnerAdapter = new CustomSpinnerAdapter(this, 0, states);
+                            state_spinner.setAdapter(stringStates, 1, 1);
                             state_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1007,7 +1151,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 
                                 }
                             });
-                            ph_state_spinner.setAdapter(customSpinnerAdapter);
+                            ph_state_spinner.setAdapter(stringStates, 1, 1);
                             ph_state_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -1084,6 +1228,62 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             Common.disPlayExpection(e, progressDialog);
         }
 
+    }
+
+    private void loadDepatmentSpinner(List<DepartmentList> departmentLists) {
+        if (departmentLists != null) {
+            ArrayList<mListString> stringDepartments = new ArrayList<>();
+            DepartmentList dl = new DepartmentList();
+            dl.departmentId = "0";
+            dl.departmentName = "Select Department";
+            departmentLists.add(0, dl);
+            List<SpinnerModel> departSpinner = new ArrayList<>();
+            for (int i = 0; i < departmentLists.size(); i++) {
+                SpinnerModel spinnerModel = new SpinnerModel();
+                spinnerModel.setId(departmentLists.get(i).departmentId);
+                spinnerModel.setTitle(departmentLists.get(i).departmentName);
+                departSpinner.add(spinnerModel);
+                stringDepartments.add(new mListString(Integer.parseInt(Common.isNull(departmentLists.get(i).departmentId)), departmentLists.get(i).departmentName));
+            }
+            phDepartmentSpinner.setAdapter(stringDepartments, 1, 1);
+            phDepartmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (i > 0)
+                        departmentId = departmentLists.get(i).departmentName;
+                    else departmentId = "";
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            if (form_type.equalsIgnoreCase("edit")) {
+                if (projectHeadReqVo != null && projectHeadReqVo.category.equalsIgnoreCase("Project Head")) {
+                    for (int i = 0; i < departmentLists.size(); i++) {
+                        if (Common.nullChecker(projectHeadReqVo.projectHeadDepartment).equalsIgnoreCase(departmentLists.get(i).departmentName)) {
+                            phDepartmentSpinner.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    static class RemarksViewHolder {
+        @BindView(R.id.etRemarks)
+        EditText etRemarks;
+        @BindView(R.id.addlayout_remarks)
+        LinearLayout addlayout_remarks;
+        @BindView(R.id.removelayout_remarks)
+        LinearLayout removelayout_remarks;
+
+        public RemarksViewHolder(View rowView) {
+            ButterKnife.bind(this, rowView);
+        }
     }
 
     static class AssociateContactViewHolder {

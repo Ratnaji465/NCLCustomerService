@@ -37,7 +37,7 @@ public class DailyReportsAdapter extends RecyclerView.Adapter<DailyReportsAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.new_customer_project_list,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.daily_reports_list,null);
         return new ViewHolder(view);
     }
 
@@ -51,7 +51,19 @@ public class DailyReportsAdapter extends RecyclerView.Adapter<DailyReportsAdapte
 
         if(dailyReportsResVOList.get(position).getUserName()!=null)
         holder.et_project_owner.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getUserName()));
-        holder.et_date.setText(dailyReportsResVOList.get(position).getCallDate());
+        holder.et_call_type.setText(dailyReportsResVOList.get(position).getCallType());
+        if(dailyReportsResVOList.get(position).getCheckInTime()!=null){
+            holder.et_checkin.setText(dailyReportsResVOList.get(position).getCheckInTime());
+        }else {
+            holder.et_checkin.setText("--");
+        }
+        if(dailyReportsResVOList.get(position).getCheckoutTime()!=null){
+            holder.et_checkout.setText(dailyReportsResVOList.get(position).getCheckoutTime());
+        }else {
+            holder.et_checkout.setText("--");
+        }
+
+
     }
 
     @Override
@@ -66,27 +78,18 @@ public class DailyReportsAdapter extends RecyclerView.Adapter<DailyReportsAdapte
         TextView et_address;
         @BindView(R.id.et_project_owner)
         TextView et_project_owner;
-        @BindView(R.id.et_date)
-        TextView et_date;
+        @BindView(R.id.et_call_type)
+        TextView et_call_type;
+        @BindView(R.id.et_checkin)
+        TextView et_checkin;
+        @BindView(R.id.et_checkout)
+        TextView et_checkout;
 
-
-        @BindView(R.id.item_name_label)
-        TextView item_name_label;
-        @BindView(R.id.item_category_label)
-        TextView item_category_label;
-//        @BindView(R.id.item_mobile_label)
-//        TextView item_mobile_label;
-//        @BindView(R.id.item_team_size_label)
-//        TextView item_team_size_label;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            item_name_label.setText("Related To");
-            item_category_label.setText("Name");
-//            item_mobile_label.setText("");
-//            item_team_size_label.setText("");
             itemView.setOnClickListener(this);
         }
 

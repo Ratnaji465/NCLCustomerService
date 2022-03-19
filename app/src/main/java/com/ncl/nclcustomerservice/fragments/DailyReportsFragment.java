@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.ncl.nclcustomerservice.network.RetrofitRequestController;
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener;
 import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
+import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
 import com.ncl.nclcustomerservice.object.DailyReportsAddVO;
 import com.ncl.nclcustomerservice.object.DailyReportsResListVO;
 import com.ncl.nclcustomerservice.object.Team;
@@ -35,7 +37,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class DailyReportsFragment extends BaseFragment implements RetrofitResponseListener {
-    private ImageView filterView;
+    private ImageView filterView,searchIv;
     RecyclerView rvList;
     private String queryString = "%%";
     private ImageView addView;
@@ -47,7 +49,18 @@ public class DailyReportsFragment extends BaseFragment implements RetrofitRespon
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_customer_project, container, false);
         ((TextView) ((MainActivity) getActivity()).getSupportActionBar().getCustomView().findViewById(R.id.title_text)).setText("DAILY REPORTS");
         filterView = ((MainActivity) getActivity()).findViewById(R.id.filter_task);
-        filterView.setVisibility(View.GONE);
+        searchIv=((MainActivity) getActivity()).findViewById(R.id.searchIv);
+        searchIv.setVisibility(View.VISIBLE);
+        if (Common.getUserTeam(getActivity()).size() > 1)
+            filterView.setVisibility(View.VISIBLE);
+        else
+            filterView.setVisibility(View.GONE);
+        filterView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common.getSelectedUser(DailyReportsFragment.this);
+            }
+        });
         rvList = view.findViewById(R.id.rvList);
         db = DatabaseHandler.getDatabase(getActivity());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -59,6 +72,22 @@ public class DailyReportsFragment extends BaseFragment implements RetrofitRespon
                 Intent addIntent = new Intent(getActivity(), CreateDailyReportsActivity.class);
                 addIntent.putExtra("form_key", "new");
                 startActivity(addIntent);
+            }
+        });
+        ((SearchView)(((MainActivity) getActivity()).findViewById(R.id.searchView))).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Common.Log.i(s);
+                queryString='%'+s+'%';
+                List<DailyReportsAddVO> dailyReportsResVOS = db.commonDao().getDailyReportsList(100, 0, queryString);
+                if (dailyReportsResVOS != null)
+                    setOnAdapter(rvList, dailyReportsResVOS);
+                return false;
             }
         });
         return view;
@@ -76,9 +105,9 @@ public class DailyReportsFragment extends BaseFragment implements RetrofitRespon
             contactTeam.teamId = userId;
             new RetrofitRequestController(this).sendRequest(Constants.RequestNames.DAILY_REPORTS_LIST, contactTeam, false);
         } else {
-//            List<CustomerProjectResVO> customerProjectResVOS = db.commonDao().getCustomerProjectList(100, 0, queryString);
-//            if (customerProjectResVOS != null)
-//                setOnAdapter(rvList, customerProjectResVOS);
+            List<DailyReportsAddVO> dailyReportsResVOS = db.commonDao().getDailyReportsList(100, 0, queryString);
+            if (dailyReportsResVOS != null)
+                setOnAdapter(rvList, dailyReportsResVOS);
         }
     }
 
@@ -104,8 +133,8 @@ public class DailyReportsFragment extends BaseFragment implements RetrofitRespon
                     if (objectResponse.result != null) {
                         DailyReportsResListVO dailyReportsResListVO = Common.getSpecificDataObject(objectResponse.result, DailyReportsResListVO.class);
                         if (dailyReportsResListVO != null && dailyReportsResListVO.dailyReportsResVOList != null) {
-//                            db.commonDao().deleteCustomerProjectList();
-//                            db.commonDao().insertCustomerProjectList(customerProjectResListVO.customerProjectResVOList);
+                            db.commonDao().deleteDailyReportsList();
+                            db.commonDao().insertDailyReportsList(dailyReportsResListVO.dailyReportsResVOList);
                             Collections.reverse(dailyReportsResListVO.dailyReportsResVOList);
                             setOnAdapter(rvList, dailyReportsResListVO.dailyReportsResVOList);
                         }

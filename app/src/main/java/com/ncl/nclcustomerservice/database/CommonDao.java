@@ -14,23 +14,17 @@ import androidx.room.Update;
 
 import com.ncl.nclcustomerservice.checkinout.EmpActivityLogsPojo;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityPojo;
-import com.ncl.nclcustomerservice.object.AssociateContact;
-import com.ncl.nclcustomerservice.object.AssociateContactLead;
 import com.ncl.nclcustomerservice.object.ComplaintsTable;
 import com.ncl.nclcustomerservice.object.ContactList;
-import com.ncl.nclcustomerservice.object.ContractLineItem;
 import com.ncl.nclcustomerservice.object.ContractList;
 import com.ncl.nclcustomerservice.object.Customer;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.CustomerList;
 import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
-import com.ncl.nclcustomerservice.object.CustomerUserList;
+import com.ncl.nclcustomerservice.object.DailyReportsAddVO;
 import com.ncl.nclcustomerservice.object.Geo_Tracking_POJO;
-import com.ncl.nclcustomerservice.object.LeadInsertReqVo;
 import com.ncl.nclcustomerservice.object.OpportunitiesList;
 import com.ncl.nclcustomerservice.object.OpportunityBrandsLineItem;
-import com.ncl.nclcustomerservice.object.OpportunityCompetitionLineItem;
-import com.ncl.nclcustomerservice.object.OpportunityProductLineItem;
 import com.ncl.nclcustomerservice.object.PaymentCollectionList;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
 import com.ncl.nclcustomerservice.object.QuotationList;
@@ -38,7 +32,6 @@ import com.ncl.nclcustomerservice.object.QuotationProductList;
 import com.ncl.nclcustomerservice.object.SalesCallList;
 import com.ncl.nclcustomerservice.object.SalesOrderLineItem;
 import com.ncl.nclcustomerservice.object.SalesOrderList;
-import com.ncl.nclcustomerservice.object.SalesPersonLineItem;
 import com.ncl.nclcustomerservice.object.TadaList;
 
 import java.util.List;
@@ -103,56 +96,11 @@ public interface CommonDao {
     @Query("DELETE FROM CustomerList")
     void deleteCustomerList();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCustomerLineItems(List<CustomerUserList> customerUserList);
-
-    @Query("SELECT * FROM CustomerUserList WHERE lineitemid=:customerId")
-    List<CustomerUserList> getCustomerLineItems(int customerId);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertLeadList(List<LeadInsertReqVo> lead);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertLead(LeadInsertReqVo lead);
-
-    @Query("SELECT * FROM LeadInsertReqVo ORDER BY  leadsId DESC")
-    List<LeadInsertReqVo> getLead();
-
-    @Query("SELECT * FROM LeadInsertReqVo where leadProjectName like :firstName OR company like :firstName ORDER BY  leadsId DESC")
-    List<LeadInsertReqVo> getLead(String firstName);
-
-    @Query("SELECT * FROM LeadInsertReqVo where leadsId =:leadId")
-    LeadInsertReqVo getLeadInOpportunity(String leadId);
-
-//    @Query("UPDATE Lead set firstName=:firstName,lastName=:lastName,company=:company,associateContactId=:associateContactId,annualRevenue=:annualRevenue,description=:description,doNotCall=:doNotCall,email=:email,fax=:fax,industry=:industry,leadOwner=:leadOwner,leadSource=:leadSource,leadStatus=:leadStatus,mobile=:mobile,noEmployees=:noEmployees,phone=:phone,rating=:rating,title=:title,website=:website,status=:status,projectName=:projectName,projectType=:projectType,sizeClassProject=:sizeClassProject,statusProject=:statusProject,billingStreet1=:billingStreet1,billingstreet2=:billingstreet2,billingCountry=:billingCountry,stateProvince=:stateProvince,billingCity=:billingCity,billingZipPostal=:billingZipPostal,shippingStreet1=:shippingStreet1,shippingstreet2=:shippingstreet2,shippingCountry=:shippingCountry,shippingStateProvince=:shippingStateProvince,shippingCity=:shippingCity,shippingZipPostal=:shippingZipPostal WHERE leadsId=:leadsId")
-//    void updateLeadList(String firstName, int leadsId,String lastName, String comapany, String associateContactId, String annualRevenue, String description, String doNotCall, String email,String fax,String industry, String leadOwner, String leadSource, String leadStatus, String mobile, String noEmployees, String phone, String rating, String title,String website,String status, String projectName, String projectType, String sizeClassProject, String statusProject, String billingStreet1,String billingstreet2,String billingCountry, String stateProvince, String billingCity, String billingZipPostal,String shippingStreet1, String shippingstreet2, String shippingCountry, String shippingStateProvince, String shippingZipPostal);
-
-    @Update
-    void updateLead(LeadInsertReqVo lead);
-
     @Update
     void updateCustomer(CustomerList customerList);
 
     @Update
     void updateContact(ContactList contactList);
-
-    @Update
-    void updateOpportunity(OpportunitiesList opportunitiesList);
-
-    @Update
-    void updateContract(ContractList contractList);
-
-    @Update
-    void updateSalesOrder(SalesOrderList salesOrderList);
-
-    @Update
-    void updateSallesCall(SalesCallList salesCallList);
-
-    @Update
-    void updateQuotation(QuotationList quotationList);
-
-    @Query("DELETE FROM QuotationList where quotationId =:quotationId")
-    void deleteQuotationListFromDb(int quotationId);
 
     @Query("DELETE FROM LeadInsertReqVo where leadsId =:leadsId")
     void deleteLeadFromDb(int leadsId);
@@ -214,11 +162,30 @@ public interface CommonDao {
     @Query("DELETE FROM CustomerProjectResVO")
     void deleteCustomerProjectList();
 
-    @Query("SELECT * FROM CustomerProjectResVO where projectName ORDER BY customerProjectId DESC LIMIT :limit OFFSET :offset")
-    List<CustomerProjectResVO> getCustomerProjectList(int limit, int offset);
+    @Query("SELECT * FROM CustomerProjectResVO where projectName like :queryString ORDER BY customerProjectId DESC LIMIT :limit OFFSET :offset")
+    List<CustomerProjectResVO> getCustomerProjectList(int limit, int offset, String queryString);
 
     @Query("SELECT * FROM CustomerProjectResVO")
     List<CustomerProjectResVO> getAllCustomerProjectList();
+
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertDailyReports(DailyReportsAddVO dailyreportsResVO);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertDailyReportsList(List<DailyReportsAddVO> dailyreportsResVOList);
+
+    @Query("DELETE FROM DailyReportsAddVO")
+    void deleteDailyReportsList();
+
+    @Query("SELECT * FROM DailyReportsAddVO where contractorName like :queryString ORDER BY csDailyreportId DESC LIMIT :limit OFFSET :offset")
+    List<DailyReportsAddVO> getDailyReportsList(int limit, int offset, String queryString);
+
+    @Query("SELECT * FROM DailyReportsAddVO")
+    List<DailyReportsAddVO> getAllDailyReportsList();
+
+
 
     @Query("SELECT * FROM ContactList where firstName like :queryString ORDER BY contactId DESC LIMIT :limit OFFSET :offset")
     List<ContactList> getContactList(int limit, int offset, String queryString);
@@ -239,28 +206,6 @@ public interface CommonDao {
 
     @Query("DELETE FROM ComplaintsTable")
     void deleteComplaintList();
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertSalesCallList(List<SalesCallList> salesCallLists);
-
-    @Query("SELECT * FROM SalesCallList ORDER BY salesCallId DESC LIMIT :limit OFFSET :offset")
-    public List<SalesCallList> getSalesCallList(int limit, int offset);
-
-    @Query("SELECT * FROM SalesCallList where company OR new_contact_customer_company_name like :queryString ORDER BY salesCallId DESC LIMIT :limit OFFSET :offset")
-    public List<SalesCallList> getSalesCallList(int limit, int offset, String queryString);
-
-    @Query("SELECT * FROM SalesCallList WHERE callDate LIKE :currectDate AND owner =:owner ORDER BY salesCallId DESC ")
-    public List<SalesCallList> getSalesCallList(String currectDate, String owner);
-
-    @Query("DELETE FROM SalesCallList")
-    void deleteSalesCallList();
-
-    @Query("SELECT * FROM SalesCallList WHERE callDate LIKE :currectDate")
-    public List<SalesCallList> getTodaySalesCalls(String currectDate);
-
-
-    @Query("UPDATE SalesCallList SET lat_lon_val=:lat_lon_val, geo_status=:geoStatus WHERE salesCallId=:appId")
-    void updateSalesCallTable(String lat_lon_val, String geoStatus, int appId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertContractList(ContractList contractList);
@@ -384,79 +329,6 @@ public interface CommonDao {
     @Query("UPDATE EmpActivityLogsPojo SET checkOutTime =:checkOutTime,checkOutLatLong=:checkOutLatLong,remark=:remark, signature =:signature , status =:status WHERE sqlPkLog =:sqlPk")
     public void updateCustomerCheckout(String checkOutTime, String checkOutLatLong, String remark, String signature, int status, String sqlPk);
 
-
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    void insertProducts(List<Product> products);
-//
-//    @Query("SELECT * FROM Product")
-//    List<Product> getProductsList();
-//
-//    @Query("DELETE FROM Product WHERE mobileSerivceDetailsId=:record")
-//    void deleteProductRecord(long record);
-
-    @Query("UPDATE EmpActivityPojo SET polyline =:polyline, checkOutTime=:checkOutTime, checkOutLatLong =:checkOutLatLong,distance =:distance, status=:status,gpsStatus =:gpsStatus  WHERE employeeActivityId =:employeeActivityId")
-    public void updateDateCheckOutData(int employeeActivityId, String checkOutTime, String polyline, String checkOutLatLong, String distance, int status, String gpsStatus);
-
-    @Query("DELETE FROM EmpActivityPojo")
-    void deleteEmpActivityPojo();
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertContractLineItems(List<ContractLineItem> contractProduct);
-
-    @Query("SELECT * FROM ContractLineItem WHERE lineItemId=:contractId")
-    List<ContractLineItem> getContractLineItems(String contractId);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAssociateContacts(List<AssociateContact> associateContact);
-
-    @Query("SELECT * FROM AssociateContact WHERE contacts=:opportunityId")
-    List<AssociateContactLead> getAssociateContacts(String opportunityId);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertQuotationLineItem(List<QuotationProductList> qutationProductLists);
-
-    @Query("SELECT * FROM QuotationProductList where quotationLineId=:quotationId")
-    List<QuotationProductList> getQuotationProductLineItem(String quotationId);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOpportunitiesProducts(List<OpportunityProductLineItem> productOpportunitieList);
-
-    @Query("SELECT * FROM OpportunityProductLineItem WHERE oppProduct=:opportunityId")
-    List<OpportunityProductLineItem> getOpportunityProducts(String opportunityId);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOpportunityCompetition(List<OpportunityCompetitionLineItem> opportunityCompetitionLineItems);
-
-    @Query("SELECT * FROM OpportunityCompetitionLineItem WHERE opportunityCompetion=:opportunityId")
-    List<OpportunityCompetitionLineItem> getOpportunityCompetition(String opportunityId);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertOpportunityBrandLineItem(List<OpportunityBrandsLineItem> opportunityBrandsLineItems);
-
-    @Query("SELECT * FROM OpportunityBrandsLineItem WHERE oppoBrand=:opportunityId")
-    List<OpportunityBrandsLineItem> getOpportunityBrand(String opportunityId);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertSalesOrderLineItem(List<SalesOrderLineItem> salesOrderProductList);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertSalesPersonOrderLineItem(List<SalesPersonLineItem> salesOrderProductList);
-
-    @Query("SELECT * FROM SalesOrderLineItem WHERE saleslineItemId=:salesOrderId")
-    List<SalesOrderLineItem> getSalesOrderLineItems(String salesOrderId);
-
-    @Query("SELECT * FROM SalesPersonLineItem WHERE saleslineItemId=:salesOrderId")
-    List<SalesPersonLineItem> getSalesPersonOrderLineItems(String salesOrderId);
-
-    @Query("UPDATE GEO_TRACKING_POJO SET status=:status, checkOutLatLong=:checkinlatlong,checkOutTime=:strDate,polyline=:polyline,distance=:distance,personalUsesKm=:personalUsesKm WHERE trackingId=:trackingId")
-    void updateCheckoutData(String status, String checkinlatlong, String strDate, String polyline, String distance, String personalUsesKm, String trackingId);
-
-    @Query("DELETE FROM Geo_Tracking_POJO")
-    void deleteGeoTrackingdata();
-
-    @Query("SELECT visitDate FROM GEO_TRACKING_POJO ORDER BY visitDate DESC LIMIT 1")
-    String getMaxDate();
 
     @Query("UPDATE GEO_Tracking_POJO SET polyline=:polyline,distance=:distance,routePathLatLon=:routePathLatLon WHERE trackingId=:trackingId")
     void updateGeoTrackingPojo(String polyline, String distance, String routePathLatLon, String trackingId);

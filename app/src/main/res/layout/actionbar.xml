@@ -58,9 +58,9 @@
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:visibility="gone"
-                app:srcCompat="@drawable/ic_search_black_24dp" />
+                app:srcCompat="@drawable/ic_search_white_24dp" />
 
 
             <ImageView
@@ -68,7 +68,7 @@
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:padding="@dimen/_5sdp"
                 android:visibility="visible"
                 app:srcCompat="@drawable/filtericon" />
@@ -96,7 +96,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/_10sdp"
         android:visibility="gone"
-        android:searchIcon="@drawable/ic_search_black_24dp"
+        android:searchIcon="@drawable/ic_search_white_24dp"
         android:closeIcon="@drawable/ic_close_black_24dp"
         android:iconifiedByDefault="false"
         android:focusable="true"

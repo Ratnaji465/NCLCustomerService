@@ -136,22 +136,10 @@ public class OpportunitiesList implements Serializable {
     @SerializedName("opportunity_main_contact_company")
     @Expose
     public String opportunityMainContactCompany;
-    @SerializedName("brands_product")
-    @Expose
-    @Ignore
-    public List<OpportunityBrandsLineItem> brandsProduct = null;
     @SerializedName("associate_contact")
     @Expose
     @Ignore
     public List<AssociateContactLead> associateContact = null;
-    @Ignore
-    @SerializedName("competition_product")
-    @Expose
-    public List<OpportunityCompetitionLineItem> competitionProduct = null;
-    @Ignore
-    @SerializedName("final_product")
-    @Expose
-    public List<OpportunityProductLineItem> finalProduct = null;
     @Ignore
     @SerializedName("stage")
     @Expose

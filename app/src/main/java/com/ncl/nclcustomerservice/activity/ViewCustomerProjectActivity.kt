@@ -95,6 +95,7 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
             etState.setText(contactContractorList.state)
             etPincode.setText(contactContractorList.pincode)
             etTeamSizeNo.setText(contactContractorList.contractorTeamSize)
+
         }
     }
 
@@ -103,7 +104,7 @@ class ViewCustomerProjectActivity : AppCompatActivity() {
             etPHMobile.setText(projectHead.projectHeadMobile)
             etPHDepartment.setText(projectHead.projectHeadDepartment)
             etHeadName.setText(projectHead.projectHeadName)
-            etPHCompanyName.setText(projectHead.projectHeadEmail)
+            etPHCompanyName.setText(projectHead.companyOrClientName)
         }
     }
 

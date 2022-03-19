@@ -74,14 +74,11 @@ public class QuotationInsertReqVo implements Serializable
     @SerializedName("ExpiryDate")
     @Expose
     public String expiryDate;
-    @SerializedName("products_price")
-    @Expose
-    public List<QuotationProductList> productsPrice = null;
     private final static long serialVersionUID = -7919722713033278555L;
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("quotationId", quotationId).append("opportunity", opportunity).append("customer", customer).append("contact", contact).append("billingStreet1", billingStreet1).append("billingstreet2", billingstreet2).append("billingCountry", billingCountry).append("stateProvince", stateProvince).append("billingCity", billingCity).append("billingZipPostal", billingZipPostal).append("shippingStreet1", shippingStreet1).append("shippingstreet2", shippingstreet2).append("shippingCountry", shippingCountry).append("shippingStateProvince", shippingStateProvince).append("shippingCity", shippingCity).append("shippingZipPostal", shippingZipPostal).append("totalPrice", totalPrice).append("remarks", remarks).append("quotationDate", quotationDate).append("expiryDate", expiryDate).append("productsPrice", productsPrice).toString();
+        return new ToStringBuilder(this).append("quotationId", quotationId).append("opportunity", opportunity).append("customer", customer).append("contact", contact).append("billingStreet1", billingStreet1).append("billingstreet2", billingstreet2).append("billingCountry", billingCountry).append("stateProvince", stateProvince).append("billingCity", billingCity).append("billingZipPostal", billingZipPostal).append("shippingStreet1", shippingStreet1).append("shippingstreet2", shippingstreet2).append("shippingCountry", shippingCountry).append("shippingStateProvince", shippingStateProvince).append("shippingCity", shippingCity).append("shippingZipPostal", shippingZipPostal).append("totalPrice", totalPrice).append("remarks", remarks).append("quotationDate", quotationDate).append("expiryDate", expiryDate).toString();
     }
 
 }

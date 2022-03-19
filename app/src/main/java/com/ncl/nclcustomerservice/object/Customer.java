@@ -25,15 +25,12 @@ public class Customer implements Serializable {
     @SerializedName("CustomerName")
     @Expose
     public String customerName;
-    @Ignore
-    @SerializedName("contact_list")
-    @Expose
-    public List<Contact> contactList = null;
+
     private final static long serialVersionUID = 4199633836429109028L;
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("customerId", customerId).append("customerName", customerName).append("contactList", contactList).toString();
+        return new ToStringBuilder(this).append("customerId", customerId).append("customerName", customerName).toString();
     }
 
 }

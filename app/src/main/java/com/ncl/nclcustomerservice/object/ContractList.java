@@ -87,10 +87,7 @@ public class ContractList implements Serializable {
     @SerializedName("Status")
     @Expose
     public String status;
-    @Ignore
-    @SerializedName("contract_product")
-    @Expose
-    public List<ContractLineItem> contractProduct = null;
+
     @Ignore
     @SerializedName("approval_process")
     @Expose
@@ -99,7 +96,7 @@ public class ContractList implements Serializable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("contractId", contractId).append("customer", customer).append("customerId", customerId).append("activatedBy", activatedBy).append("billingAddress", billingAddress).append("shippingAddress", shippingAddress).append("companySignedBy", companySignedBy).append("companySignedDate", companySignedDate).append("contractName", contractName).append("contractNumber", contractNumber).append("contractStartDate", contractStartDate).append("contractEndDate", contractEndDate).append("contractOwner", contractOwner).append("customerSignedBy", customerSignedBy).append("customerSignedDate", customerSignedDate).append("description", description).append("totalAmount", totalAmount).append("ownerExpirationNotice", ownerExpirationNotice).append("specialTerms", specialTerms).append("status", status).append("contractProduct", contractProduct).append("approvalProcess", approvalProcess).toString();
+        return new ToStringBuilder(this).append("contractId", contractId).append("customer", customer).append("customerId", customerId).append("activatedBy", activatedBy).append("billingAddress", billingAddress).append("shippingAddress", shippingAddress).append("companySignedBy", companySignedBy).append("companySignedDate", companySignedDate).append("contractName", contractName).append("contractNumber", contractNumber).append("contractStartDate", contractStartDate).append("contractEndDate", contractEndDate).append("contractOwner", contractOwner).append("customerSignedBy", customerSignedBy).append("customerSignedDate", customerSignedDate).append("description", description).append("totalAmount", totalAmount).append("ownerExpirationNotice", ownerExpirationNotice).append("specialTerms", specialTerms).append("status", status).append("approvalProcess", approvalProcess).toString();
     }
 
 }

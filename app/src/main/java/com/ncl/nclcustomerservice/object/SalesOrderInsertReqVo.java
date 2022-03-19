@@ -79,12 +79,7 @@ public class SalesOrderInsertReqVo implements Serializable {
     @SerializedName("Total")
     @Expose
     public String total;
-    @SerializedName("sales_order_prodct")
-    @Expose
-    public List<SalesOrderLineItem> salesOrderProdct = null;
-    @SerializedName("salesPersonsProducts")
-    @Expose
-    public List<SalesPersonLineItem> salesPersonsProducts = null;
+
     @SerializedName("date_of_delivery")
     @Expose
     public String date_of_delivery;
@@ -115,7 +110,7 @@ public class SalesOrderInsertReqVo implements Serializable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("salesOrderId", salesOrderId).append("contractId", contractId).append("customer", customer).append("orderType", orderType).append("soldtopartycode", soldtopartycode).append("shiptopartycode", shiptopartycode).append("billtopartyCode", billtopartyCode).append("ponumber", ponumber).append("remarks", remarks).append("cashDiscount", cashDiscount).append("withoutdiscountamount", withoutdiscountamount).append("schemeDiscount", schemeDiscount).append("quntityDiscount", quntityDiscount).append("freight", freight).append("iGST", iGST).append("cGST", cGST).append("sGST", sGST).append("discountAmount", discountAmount).append("freightAmount", freightAmount).append("total", total).append("salesOrderProdct", salesOrderProdct).toString();
+        return new ToStringBuilder(this).append("salesOrderId", salesOrderId).append("contractId", contractId).append("customer", customer).append("orderType", orderType).append("soldtopartycode", soldtopartycode).append("shiptopartycode", shiptopartycode).append("billtopartyCode", billtopartyCode).append("ponumber", ponumber).append("remarks", remarks).append("cashDiscount", cashDiscount).append("withoutdiscountamount", withoutdiscountamount).append("schemeDiscount", schemeDiscount).append("quntityDiscount", quntityDiscount).append("freight", freight).append("iGST", iGST).append("cGST", cGST).append("sGST", sGST).append("discountAmount", discountAmount).append("freightAmount", freightAmount).append("total", total).toString();
     }
 
 }

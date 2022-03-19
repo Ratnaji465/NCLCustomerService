@@ -170,10 +170,6 @@ public class CustomerList implements Serializable {
  @SerializedName("price_list_id")
  @Expose
  public String priceListId;
- @Ignore
- @SerializedName("user_details")
- @Expose
- public List<CustomerUserList> customerUserList = null;
  @SerializedName("CustomerOwner")
  @Expose
  public String customerOwner;

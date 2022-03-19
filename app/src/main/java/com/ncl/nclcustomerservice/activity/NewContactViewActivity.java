@@ -20,12 +20,14 @@ import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
+import com.ncl.nclcustomerservice.object.RemarksListVO;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,8 +57,8 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
     TextView coGSTNo;
     @BindView(R.id.coTeamSize)
     TextView coTeamSize;
-    @BindView(R.id.coRemarks)
-    TextView coRemarks;
+    @BindView(R.id.ll_CCRemarks)
+    LinearLayout ll_CCRemarks;
     @BindView(R.id.iv_aadhar)
     ImageView iv_aadhar;
     @BindView(R.id.iv_pan)
@@ -103,8 +105,8 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
     TextView phCountry;
     @BindView(R.id.phPincode)
     TextView phPincode;
-    @BindView(R.id.phRemarks)
-    TextView phRemarks;
+    @BindView(R.id.ll_PHRemarks)
+    LinearLayout ll_PHRemarks;
     @BindView(R.id.ll_associate_details)
     LinearLayout ll_associate_details;
 
@@ -138,8 +140,12 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
             coPanNo.setText(contactContractorList.contractorPanNumber);
             coGSTNo.setText(contactContractorList.contractorGstNumber);
             coTeamSize.setText(contactContractorList.contractorTeamSize);
-            coRemarks.setText(contactContractorList.contactContractorRemarks);
-
+            if (contactContractorList.remarksListVOS != null && contactContractorList.remarksListVOS.size() > 0) {
+                for (int i = 0; i < contactContractorList.remarksListVOS.size(); i++) {
+                    View rowView = getLayoutInflater().inflate(R.layout.remarks_row, null);
+                    addCCRemarks(rowView, contactContractorList.remarksListVOS.get(i));
+                }
+            }
             try {
                 String aadharPath=contactContractorList.contractorAadharImagePath;
                 if(aadharPath!=null){
@@ -223,7 +229,13 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                 phState.setText(projectHeadReqVo.projectHeadState);
                 phCountry.setText(projectHeadReqVo.projectHeadCountry);
                 phPincode.setText(projectHeadReqVo.projectHeadPincode);
-                phRemarks.setText(projectHeadReqVo.projectHeadContactRemarks);
+//                phRemarks.setText(projectHeadReqVo.projectHeadContactRemarks);
+                if (projectHeadReqVo.remarksListVOS != null && projectHeadReqVo.remarksListVOS.size() > 0) {
+                    for (int i = 0; i < projectHeadReqVo.remarksListVOS.size(); i++) {
+                        View rowView = getLayoutInflater().inflate(R.layout.remarks_row, null);
+                        addPHRemarks(rowView, projectHeadReqVo.remarksListVOS.get(i));
+                    }
+                }
                 if (projectHeadReqVo.associateContacts != null && projectHeadReqVo.associateContacts.size() > 0) {
                     for (int i = 0; i < projectHeadReqVo.associateContacts.size(); i++) {
                         View rowView = getLayoutInflater().inflate(R.layout.associate_contacts_row, null);
@@ -343,6 +355,28 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
             // task we are loading our pdf in our pdf view.
             pv_pan.fromStream(inputStream).load();
         }
+    }
+    private void addCCRemarks(View rowView,RemarksListVO CCRemarks) {
+        ll_CCRemarks.addView(rowView);
+        CreateNewContactActivity.RemarksViewHolder viewHolder = new CreateNewContactActivity.RemarksViewHolder(rowView);
+        if(CCRemarks!=null){
+            viewHolder.removelayout_remarks.setVisibility(View.GONE);
+            viewHolder.addlayout_remarks.setVisibility(View.GONE);
+            viewHolder.etRemarks.setEnabled(false);
+            viewHolder.etRemarks.setText(CCRemarks.remark);
+        }
+
+    }
+    private void addPHRemarks(View rowView,RemarksListVO projectHeadRemarks) {
+            ll_PHRemarks.addView(rowView);
+            CreateNewContactActivity.RemarksViewHolder viewHolder = new CreateNewContactActivity.RemarksViewHolder(rowView);
+            if(projectHeadRemarks!=null){
+                viewHolder.removelayout_remarks.setVisibility(View.GONE);
+                viewHolder.addlayout_remarks.setVisibility(View.GONE);
+                viewHolder.etRemarks.setEnabled(false);
+                viewHolder.etRemarks.setText(projectHeadRemarks.remark);
+            }
+
     }
     private void addPHAssociateContacts(View rowView, ProjectHeadReqVo.AssociateContact associateContact) {
         ll_associate_details.addView(rowView);

@@ -1,7 +1,10 @@
 package com.ncl.nclcustomerservice.object;
 
+import androidx.room.TypeConverters;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ncl.nclcustomerservice.typeconverter.ProjectHeadRemarksTC;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -62,7 +65,8 @@ public class CustomerContractorInsertReqVo implements Serializable {
     public String contractorPincode;
     @SerializedName("contact_contractor_remarks")
     @Expose
-    public String contactContractorRemarks;
+    @TypeConverters(ProjectHeadRemarksTC.class)
+    public List<RemarksListVO> contactContractorRemarks;
     @SerializedName("team_member")
     @Expose
     public List<TeamMember> teamMember = null;

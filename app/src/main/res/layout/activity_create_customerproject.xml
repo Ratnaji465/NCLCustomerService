@@ -43,23 +43,32 @@
                     android:textAllCaps="true" />
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
+                    android:id="@+id/tvCompanyName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Company Name(Client name)" />
+
+                <com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinner_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/custom_spinner" />
+
+                <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvProjectName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Project Name" />
 
-                <com.ncl.nclcustomerservice.customviews.CustomEditText
-                    android:id="@+id/etProjectName"
+                <com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerProjectName"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:background="@drawable/button_bg_white"
-                    android:gravity="left|center"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:background="@drawable/custom_spinner" />
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvProjectAddress"
@@ -93,7 +102,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/custom_spinner"
-                    android:text="State"></com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner>
+                    android:text="State" />
 
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
@@ -216,6 +225,14 @@
                     android:inputType="text"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
+                <com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/etPHDepartmentSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/custom_spinner"
+                    android:visibility="gone" />
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvPHCompanyName"

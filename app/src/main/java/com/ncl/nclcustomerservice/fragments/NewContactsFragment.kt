@@ -63,7 +63,7 @@ class NewContactsFragment : BaseFragment(), RetrofitResponseListener, OnRefreshL
         firstTab.text = "Contractor"
         tabLayout.addTab(firstTab)
         val secondTab = tabLayout.newTab()
-        secondTab.text = "Project Head"
+        secondTab.text = "Project contact details"
         tabLayout.addTab(secondTab)
         childFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, TabbedContractorListFragment())

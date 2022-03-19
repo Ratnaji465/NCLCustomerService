@@ -1,10 +1,19 @@
 package com.ncl.nclcustomerservice.`object`
 
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.ncl.nclcustomerservice.typeconverter.CustomerprojectClientprojectDetailsTC
+import com.ncl.nclcustomerservice.typeconverter.DescriptionOfWorkTC
 import java.io.Serializable
 
+@Entity
 class DailyReportsAddVO : Serializable {
+    @PrimaryKey
+    @NonNull
     @SerializedName("cs_dailyreport_id")
     @Expose
     var csDailyreportId: String? = null
@@ -51,11 +60,15 @@ class DailyReportsAddVO : Serializable {
 
     @SerializedName("check_in_time")
     @Expose
-    var checkInTime: Any? = null
+    var checkInTime: String? = null
 
     @SerializedName("checkout_time")
     @Expose
-    var checkoutTime: Any? = null
+    var checkoutTime: String? = null
+
+    @SerializedName("call_status")
+    @Expose
+    var callStatus :Int ?=0
 
     @SerializedName("cs_customerproject_clientproject_detailsid")
     @Expose
@@ -75,10 +88,12 @@ class DailyReportsAddVO : Serializable {
 
     @SerializedName("cs_customerproject_clientproject_details")
     @Expose
+    @TypeConverters(CustomerprojectClientprojectDetailsTC::class)
     var csCustomerprojectClientprojectDetails: List<CustomerprojectClientprojectDetails>? = null
 
     @SerializedName("description_of_works")
     @Expose
+    @TypeConverters(DescriptionOfWorkTC::class)
     var descriptionOfWorks: List<DescriptionOfWork>? = null
 
     class DescriptionOfWork: Serializable {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -15,7 +16,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_120sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:orientation="vertical">
@@ -23,26 +24,30 @@
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Product" />
+                    android:text="From Date" />
 
-                <com.ncl.nclcustomerservice.customviews.CustomTextView
-                    android:id="@+id/tvProducts"
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etFromDate"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
-                    android:drawableEnd="@drawable/arrow1"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:focusable="false"
                     android:gravity="left|center"
+                    android:hint="From Date"
                     android:imeOptions="actionNext"
-                    android:text="Select Product"
+                    android:inputType="textCapSentences"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
 
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_120sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:orientation="vertical">
@@ -50,30 +55,32 @@
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Subseries" />
+                    android:text="To Date" />
 
-                <com.ncl.nclcustomerservice.customviews.CustomTextView
-                    android:id="@+id/tvSubseriesList"
+                <com.ncl.nclcustomerservice.customviews.CustomEditText
+                    android:id="@+id/etToDate"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
-                    android:drawableEnd="@drawable/arrow1"
+                    android:drawableLeft="@drawable/calendar"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:focusable="false"
                     android:gravity="left|center"
+                    android:hint="To Date"
                     android:imeOptions="actionNext"
-                    android:text="Select Subseries"
+                    android:inputType="textCapSentences"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
-
             </LinearLayout>
             <LinearLayout
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_80sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:orientation="vertical">
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
-                   android:id="@+id/tvSFT"
+                    android:id="@+id/tvSFT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SFT" />
@@ -97,8 +104,9 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:orientation="horizontal">
-              <!--  <LinearLayout
-                    android:id="@+id/addlayout_ac"
+
+                <LinearLayout
+                    android:id="@+id/addlayout_pr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
@@ -111,7 +119,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/removelayout_ac"
+                    android:id="@+id/removelayout_pr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -123,7 +131,7 @@
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:gravity="center"
                         android:src="@drawable/decrease_table" />
-                </LinearLayout>-->
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

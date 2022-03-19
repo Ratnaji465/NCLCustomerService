@@ -114,14 +114,6 @@ public class SalesOrderList implements Serializable {
     @Expose
     public String created_date_time;
     @Ignore
-    @SerializedName("sales_order_product_list")
-    @Expose
-    public List<SalesOrderLineItem> salesOrderProductList = null;
-    @Ignore
-    @SerializedName("salesPersonsProducts")
-    @Expose
-    public List<SalesPersonLineItem> salesPersonsProducts = null;
-    @Ignore
     @SerializedName("approval_process")
     @Expose
     public List<ApprovalProcess> approvalProcess = null;
@@ -150,7 +142,7 @@ public class SalesOrderList implements Serializable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("salesOrderId", salesOrderId).append("contractId", contractId).append("contractName", contractName).append("salesOrderNumber", salesOrderNumber).append("customer", customer).append("orderType", orderType).append("salesOrganisation", salesOrganisation).append("distributionChannel", distributionChannel).append("division", division).append("soldtopartycode", soldtopartycode).append("shiptopartycode", shiptopartycode).append("soldtopartycodeId", soldtopartycodeId).append("shiptopartycodeId", shiptopartycodeId).append("billtopartyCodeId", billtopartyCodeId).append("billtopartyCode", billtopartyCode).append("ponumber", ponumber).append("remarks", remarks).append("cashDiscount", cashDiscount).append("schemeDiscount", schemeDiscount).append("quntityDiscount", quntityDiscount).append("withoutdiscountamount", withoutdiscountamount).append("freight", freight).append("freightAmount", freightAmount).append("discountAmount", discountAmount).append("iGST", iGST).append("cGST", cGST).append("sGST", sGST).append("total", total).append("salesOrderProductList", salesOrderProductList).append("approvalProcess", approvalProcess).append("customerId", customerId).toString();
+        return new ToStringBuilder(this).append("salesOrderId", salesOrderId).append("contractId", contractId).append("contractName", contractName).append("salesOrderNumber", salesOrderNumber).append("customer", customer).append("orderType", orderType).append("salesOrganisation", salesOrganisation).append("distributionChannel", distributionChannel).append("division", division).append("soldtopartycode", soldtopartycode).append("shiptopartycode", shiptopartycode).append("soldtopartycodeId", soldtopartycodeId).append("shiptopartycodeId", shiptopartycodeId).append("billtopartyCodeId", billtopartyCodeId).append("billtopartyCode", billtopartyCode).append("ponumber", ponumber).append("remarks", remarks).append("cashDiscount", cashDiscount).append("schemeDiscount", schemeDiscount).append("quntityDiscount", quntityDiscount).append("withoutdiscountamount", withoutdiscountamount).append("freight", freight).append("freightAmount", freightAmount).append("discountAmount", discountAmount).append("iGST", iGST).append("cGST", cGST).append("sGST", sGST).append("total", total).append("approvalProcess", approvalProcess).append("customerId", customerId).toString();
     }
 
 }

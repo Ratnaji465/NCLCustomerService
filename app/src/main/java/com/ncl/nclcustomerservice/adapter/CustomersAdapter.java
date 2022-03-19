@@ -67,13 +67,7 @@ public class CustomersAdapter extends RecyclerView.Adapter<CustomersAdapter.MyVi
         holder.mobile.setText(Common.nullChecker(customerLists.get(i).phone));
         holder.tvlead_owner.setText(Common.nullChecker(customerLists.get(i).customerSAPCode));
 
-        holder.tvdate.setText(Common.nullChecker(customerLists.get(i).created_date_time));
-        if (db != null) {
-            List<CustomerUserList> customerUserLists = db.commonDao().getCustomerLineItems(customerLists.get(i).customerId);
-            if (customerUserLists != null && customerUserLists.size() > 0) {
-                holder.leadSource.setText(Common.nullChecker(customerUserLists.get(0).userName));
-            }
-        }
+
         if (navigationFrom != null && navigationFrom.equalsIgnoreCase(Constants.MethodNames.CUSTOMER_LIST_THIRDPARTY)) {
             holder.lead_owner.setText("Contact Name");
             holder.tvlead_owner.setText(Common.nullChecker(customerLists.get(i).contactName));

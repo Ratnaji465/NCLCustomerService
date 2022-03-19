@@ -16,39 +16,33 @@ import com.ncl.nclcustomerservice.activity.LoginActivity;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityLogsPojo;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityPojo;
 import com.ncl.nclcustomerservice.commonutils.Common;
-import com.ncl.nclcustomerservice.object.AssociateContact;
 import com.ncl.nclcustomerservice.object.ComplaintsTable;
-import com.ncl.nclcustomerservice.object.Contact;
 import com.ncl.nclcustomerservice.object.ContactList;
-import com.ncl.nclcustomerservice.object.ContractLineItem;
 import com.ncl.nclcustomerservice.object.ContractList;
 import com.ncl.nclcustomerservice.object.Customer;
 import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.CustomerList;
 import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
-import com.ncl.nclcustomerservice.object.CustomerUserList;
+import com.ncl.nclcustomerservice.object.DailyReportsAddVO;
 import com.ncl.nclcustomerservice.object.Geo_Tracking_POJO;
 import com.ncl.nclcustomerservice.object.Lead;
 import com.ncl.nclcustomerservice.object.LeadInsertReqVo;
 import com.ncl.nclcustomerservice.object.OpportunitiesList;
-import com.ncl.nclcustomerservice.object.OpportunityBrandsLineItem;
-import com.ncl.nclcustomerservice.object.OpportunityCompetitionLineItem;
-import com.ncl.nclcustomerservice.object.OpportunityProductLineItem;
 import com.ncl.nclcustomerservice.object.PaymentCollectionList;
 import com.ncl.nclcustomerservice.object.PriceList;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
 import com.ncl.nclcustomerservice.object.QuotationList;
 import com.ncl.nclcustomerservice.object.QuotationProductList;
 import com.ncl.nclcustomerservice.object.SalesCallList;
-import com.ncl.nclcustomerservice.object.SalesOrderLineItem;
 import com.ncl.nclcustomerservice.object.SalesOrderList;
-import com.ncl.nclcustomerservice.object.SalesPersonLineItem;
 import com.ncl.nclcustomerservice.object.TadaList;
 import com.ncl.nclcustomerservice.typeconverter.ContractorTeamMemberTC;
 import com.ncl.nclcustomerservice.typeconverter.CusAssociateContactTC;
 import com.ncl.nclcustomerservice.typeconverter.CusContractorTC;
 import com.ncl.nclcustomerservice.typeconverter.CusProjectHeadTC;
 import com.ncl.nclcustomerservice.typeconverter.CusTeamMemberTC;
+import com.ncl.nclcustomerservice.typeconverter.CustomerprojectClientprojectDetailsTC;
+import com.ncl.nclcustomerservice.typeconverter.DescriptionOfWorkTC;
 import com.ncl.nclcustomerservice.typeconverter.LeadActionTOTC;
 import com.ncl.nclcustomerservice.typeconverter.LeadAssociatedTC;
 import com.ncl.nclcustomerservice.typeconverter.ProjectHeadAssociateContactTC;
@@ -57,8 +51,19 @@ import com.ncl.nclcustomerservice.typeconverter.ProjectHeadAssociateContactTC;
 /**
  * Created by User on 8/23/2018.
  */
-@Database(entities = {LoginDb.class, Customer.class, PriceList.class, EmpActivityPojo.class, EmpActivityLogsPojo.class, ComplaintsTable.class, Contact.class, ContactList.class, Lead.class, CustomerList.class, CustomerUserList.class, SalesCallList.class, ContractList.class, OpportunitiesList.class, SalesOrderList.class, TadaList.class, ContractLineItem.class, Geo_Tracking_POJO.class, OpportunityProductLineItem.class, OpportunityCompetitionLineItem.class, OpportunityBrandsLineItem.class, SalesOrderLineItem.class, SalesPersonLineItem.class, QuotationList.class, QuotationProductList.class, AssociateContact.class, PaymentCollectionList.class, LeadInsertReqVo.class, CustomerContactResponseVo.ContactContractorList.class, ProjectHeadReqVo.class, CustomerProjectResVO.class}, version = 19, exportSchema = false)
-@TypeConverters({ LeadAssociatedTC.class, LeadActionTOTC.class, ContractorTeamMemberTC.class, ProjectHeadAssociateContactTC.class, CusAssociateContactTC.class, CusContractorTC.class, CusProjectHeadTC.class, CusTeamMemberTC.class})
+@Database(entities = {LoginDb.class, Customer.class, PriceList.class, EmpActivityPojo.class,
+        EmpActivityLogsPojo.class, ComplaintsTable.class,  ContactList.class,
+        Lead.class, CustomerList.class, SalesCallList.class, ContractList.class,
+        OpportunitiesList.class, SalesOrderList.class, DailyReportsAddVO.class,
+        TadaList.class, Geo_Tracking_POJO.class, QuotationList.class,
+        PaymentCollectionList.class, LeadInsertReqVo.class, CustomerContactResponseVo.ContactContractorList.class,
+        ProjectHeadReqVo.class, CustomerProjectResVO.class}, version = 5, exportSchema = false)
+
+@TypeConverters({ LeadAssociatedTC.class, LeadActionTOTC.class, ContractorTeamMemberTC.class,
+        ProjectHeadAssociateContactTC.class, CusAssociateContactTC.class, CusContractorTC.class,
+        CusProjectHeadTC.class, CusTeamMemberTC.class, CustomerprojectClientprojectDetailsTC.class,
+        DescriptionOfWorkTC.class})
+
 public abstract class DatabaseHandler extends RoomDatabase {
     private static DatabaseHandler INSTANCE = null;
     private static Context context1;

@@ -88,8 +88,8 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         db = DatabaseHandler.getDatabase(this);
-        username.setText("venkatesh.k@nclbuildtek.com");
-        password.setText("1234");
+//        username.setText("venkatesh.k@nclbuildtek.com");
+//        password.setText("1234");
         username.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 if (username.getText().toString().matches(emailPattern) && s.length() > 0) {
@@ -280,107 +280,11 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                         MastersResVo mastersResVo = Common.getSpecificDataObject(objectResponse.result, MastersResVo.class);
                         if (mastersResVo != null) {
                             if (mastersResVo.leadList != null)
-                                db.commonDao().insertLeadList(mastersResVo.leadList);
 //                            if (mastersResVo.complaintList != null)
 //                                db.commonDao().insertComplaints(convertComplaintInsertToTable(mastersResVo.complaintList));
                             if (mastersResVo.contactList != null)
                                 db.commonDao().insertContact(mastersResVo.contactList);
 
-                            if (mastersResVo.qutationLists != null) {
-                                List<QuotationList> qutationList = mastersResVo.qutationLists;
-                                for (int i = 0; i < qutationList.size(); i++) {
-                                    db.commonDao().insertQuotation(qutationList.get(i));
-                                    if (qutationList.get(i).qutationProductList != null) {
-                                        for (int j = 0; j < qutationList.get(i).qutationProductList.size(); j++) {
-                                            qutationList.get(i).qutationProductList.get(j).quotationLineId = qutationList.get(i).quotationId;
-                                        }
-                                        db.commonDao().insertQuotationLineItem(qutationList.get(i).qutationProductList);
-                                    }
-                                }
-                            }
-
-                            if (mastersResVo.contractList != null) {
-                                List<ContractList> contractLists = mastersResVo.contractList;
-                                for (int i = 0; i < contractLists.size(); i++) {
-                                    db.commonDao().insertContractList(contractLists.get(i));
-                                    if (contractLists.get(i).contractProduct != null) {
-                                        for (int j = 0; j < contractLists.get(i).contractProduct.size(); j++) {
-                                            contractLists.get(i).contractProduct.get(j).lineItemId = contractLists.get(i).contractId;
-                                        }
-                                        db.commonDao().insertContractLineItems(contractLists.get(i).contractProduct);
-                                    }
-                                }
-                            }
-
-                            if (mastersResVo.salesOrderList != null) {
-                                List<SalesOrderList> salesOrderLists = mastersResVo.salesOrderList;
-                                for (int i = 0; i < salesOrderLists.size(); i++) {
-                                    db.commonDao().insertSalesOrder(salesOrderLists.get(i));
-                                    if (salesOrderLists.get(i).salesOrderProductList != null) {
-                                        for (int j = 0; j < salesOrderLists.get(i).salesOrderProductList.size(); j++) {
-                                            salesOrderLists.get(i).salesOrderProductList.get(j).saleslineItemId = salesOrderLists.get(i).salesOrderId;
-                                        }
-                                        db.commonDao().insertSalesOrderLineItem(salesOrderLists.get(i).salesOrderProductList);
-                                    }
-                                }
-                            }
-                            if (mastersResVo.customerList != null) {
-                                List<CustomerList> customerLists = mastersResVo.customerList;
-                               /* for (int i = 0; i < customerLists.size(); i++) {
-                                    db.commonDao().insertCustomerList(customerLists.get(i));
-                                    if (customerLists.get(i).customerUserList != null) {
-                                        for (int j = 0; j < customerLists.get(i).customerUserList.size(); j++) {
-                                            customerLists.get(i).customerUserList.get(j).lineitemid = customerLists.get(i).customerId;
-                                        }
-                                        db.commonDao().insertCustomerLineItems(customerLists.get(i).customerUserList);
-                                    }
-                                }*/
-                                for (int i = 0; i < customerLists.size(); i++) {
-                                    long key = db.commonDao().insertCustomerList(customerLists.get(i));
-                                    if (customerLists.get(i).customerUserList != null) {
-                                        for (int j = 0; j < customerLists.get(i).customerUserList.size(); j++) {
-                                            customerLists.get(i).customerUserList.get(j).lineitemid = (int) key;
-                                        }
-                                        db.commonDao().insertCustomerLineItems(customerLists.get(i).customerUserList);
-                                    }
-                                }
-
-                            }
-                            if (mastersResVo.opportunitiesList != null) {
-                                List<OpportunitiesList> opportunitiesLists = mastersResVo.opportunitiesList;
-                                for (int i = 0; i < opportunitiesLists.size(); i++) {
-                                    db.commonDao().insertOpportunities(opportunitiesLists.get(i));
-                                    if (opportunitiesLists.get(i).finalProduct != null) {
-                                        for (int k = 0; k < opportunitiesLists.get(i).finalProduct.size(); k++) {
-//                                            opportunitiesLists.get(i).productOpportunitieList.get(k).oppProduct = (int) primaryKey;
-                                            opportunitiesLists.get(i).finalProduct.get(k).oppProduct = opportunitiesLists.get(i).opportunityId;
-                                        }
-                                        db.commonDao().insertOpportunitiesProducts(opportunitiesLists.get(i).finalProduct);
-                                    }
-                                    if (opportunitiesLists.get(i).competitionProduct != null) {
-                                        for (int k = 0; k < opportunitiesLists.get(i).competitionProduct.size(); k++) {
-                                            opportunitiesLists.get(i).competitionProduct.get(k).opportunityCompetion = opportunitiesLists.get(i).opportunityId;
-                                        }
-                                        db.commonDao().insertOpportunityCompetition(opportunitiesLists.get(i).competitionProduct);
-                                    }
-
-                                    if (opportunitiesLists.get(i).brandsProduct != null) {
-                                        for (int k = 0; k < opportunitiesLists.get(i).brandsProduct.size(); k++) {
-                                            opportunitiesLists.get(i).brandsProduct.get(k).oppoBrand = opportunitiesLists.get(i).opportunityId;
-                                        }
-                                        db.commonDao().insertOpportunityBrandLineItem(opportunitiesLists.get(i).brandsProduct);
-                                    }
-
-                                    if (opportunitiesLists.get(i).associateContact != null) {
-                                        for (int k = 0; k < opportunitiesLists.get(i).associateContact.size(); k++) {
-                                            opportunitiesLists.get(i).associateContact.get(k).contactId = String.valueOf(opportunitiesLists.get(i).opportunityId);
-                                        }
-                                        // db.commonDao().insertAssociateContacts(opportunitiesLists.get(i).associateContact);
-                                    }
-                                }
-                            }
-                            if (mastersResVo.salesCallList != null)
-                                db.commonDao().insertSalesCallList(mastersResVo.salesCallList);
 
 
                             if (mastersResVo.tadaList != null)
@@ -435,35 +339,18 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                         UpdateTableResVo updateTableResVo = Common.getSpecificDataObject(objectResponse.result, UpdateTableResVo.class);
                         if (updateTableResVo != null) {
 
-                            List<LeadInsertReqVo> lead = updateTableResVo.leadList;
-                            db.commonDao().insertLeadList(lead);
-
                             List<ContactList> contactList = updateTableResVo.contactList;
                             db.commonDao().insertContact(contactList);
 
                             List<CustomerList> customerLists = updateTableResVo.customerList;
                             // db.commonDao().insertCustomer(customerList);
 
-                            if (customerLists != null) {
-                                for (int i = 0; i < customerLists.size(); i++) {
-                                    long key = db.commonDao().insertCustomerList(customerLists.get(i));
-                                    if (customerLists.get(i).customerUserList != null) {
-                                        for (int j = 0; j < customerLists.get(i).customerUserList.size(); j++) {
-                                            customerLists.get(i).customerUserList.get(j).lineitemid = (int) key;
-                                        }
-                                        db.commonDao().insertCustomerLineItems(customerLists.get(i).customerUserList);
-                                    }
-                                }
-                            }
 
                             List<OpportunitiesList> opportunitiesList = updateTableResVo.opportunitiesList;
                             db.commonDao().insertOpportunityList(opportunitiesList);
 
                             List<ContractList> contractList = updateTableResVo.contractList;
                             db.commonDao().insertContract(contractList);
-
-                            List<SalesCallList> salesCallList = updateTableResVo.salesCallList;
-                            db.commonDao().insertSalesCallList(salesCallList);
 
                             List<SalesOrderList> salesOrderList = updateTableResVo.salesOrderList;
                             db.commonDao().insertSalesOrderList(salesOrderList);
@@ -482,11 +369,6 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
         } catch (Exception e) {
             Common.disPlayExpection(e, progressDialog);
         }
-
-    }
-
-    private void setUpdate() {
-
 
     }
 }

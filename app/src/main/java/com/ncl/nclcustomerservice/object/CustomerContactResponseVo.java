@@ -8,6 +8,7 @@ import androidx.room.TypeConverters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.ncl.nclcustomerservice.typeconverter.ContractorTeamMemberTC;
+import com.ncl.nclcustomerservice.typeconverter.ProjectHeadRemarksTC;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -82,7 +83,8 @@ public class CustomerContactResponseVo implements Serializable
         public String contractorPincode;
         @SerializedName("contact_contractor_remarks")
         @Expose
-        public String contactContractorRemarks;
+        @TypeConverters(ProjectHeadRemarksTC.class)
+        public List<RemarksListVO> remarksListVOS;
         @SerializedName("created_by")
         @Expose
         public String createdBy;
@@ -121,7 +123,7 @@ public class CustomerContactResponseVo implements Serializable
                     .append("contractorCity", contractorCity)
                     .append("contractorCountry", contractorCountry)
                     .append("contractorPincode", contractorPincode)
-                    .append("contactContractorRemarks", contactContractorRemarks)
+                    .append("contactContractorRemarks", remarksListVOS)
                     .append("createdBy",createdBy)
                     .append("modifiedBy",modifiedBy)
                     .append("createdDatetime",createdDatetime)

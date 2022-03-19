@@ -7,6 +7,7 @@ import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ncl.nclcustomerservice.typeconverter.ProjectHeadRemarksTC;
 import com.ncl.nclcustomerservice.typeconverter.ProjectHeadAssociateContactTC;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -24,6 +25,12 @@ public class ProjectHeadReqVo implements Serializable {
     @SerializedName("category")
     @Expose
     public String category;
+    @SerializedName("project_name")
+    @Expose
+    public String projectName;
+    @SerializedName("client_code")
+    @Expose
+    public String clientCode;
     @SerializedName("project_head_name")
     @Expose
     public String projectHeadName;
@@ -50,7 +57,8 @@ public class ProjectHeadReqVo implements Serializable {
     public String projectHeadPincode;
     @SerializedName("project_head_contact_remarks")
     @Expose
-    public String projectHeadContactRemarks;
+    @TypeConverters(ProjectHeadRemarksTC.class)
+    public List<RemarksListVO> remarksListVOS;
     @SerializedName("project_head_email")
     @Expose
     public String projectHeadEmail;
@@ -90,7 +98,7 @@ public class ProjectHeadReqVo implements Serializable {
                 .append("projectHeadState", projectHeadState)
                 .append("projectHeadCountry", projectHeadCountry)
                 .append("projectHeadPincode",projectHeadPincode)
-                .append("projectHeadContactRemarks",projectHeadContactRemarks)
+                .append("projectHeadContactRemarks",remarksListVOS)
                 .append("projectHeadEmail",projectHeadEmail)
                 .append("contactId",contactId)
                 .append("createdBy",createdBy)

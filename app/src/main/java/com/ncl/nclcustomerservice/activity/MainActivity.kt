@@ -41,19 +41,14 @@ class MainActivity : NetworkChangeListenerActivity(), OnMenuClickListener {
     var mMenuAdapter: MenuAdapter? = null
     private var mViewHolder: ViewHolder? = null
 
-    //private List<String> mTitles = new ArrayList<>();
     private val mIcons: MutableList<Int> = ArrayList()
     private var title: TextView? = null
     var profileImage: ImageView? = null
     var profileName: TextView? = null
     var TAG = 0
     private var alertDialog: AlertDialog? = null
-    var ticket_master_id: String? = null
     var doubleBackToExitPressedOnce = false
     var designationName: TextView? = null
-    var leftPanelPostion = -1
-    var pageNo: String? = null
-    var typeNotification: String? = null
     var leftNavs: MutableList<LeftNav> = ArrayList<LeftNav>()
     var profileid: String? = null
     var leftnav: String? = null
@@ -188,14 +183,11 @@ class MainActivity : NetworkChangeListenerActivity(), OnMenuClickListener {
             db?.commonDao()?.deleteContactList()
             db?.commonDao()?.deleteContactList()
             db?.commonDao()?.deleteCustomerList()
-            db?.commonDao()?.deleteEmpActivityPojo()
             db?.commonDao()?.deleteCustomer()
             db?.commonDao()?.deleteLeadList()
             db?.commonDao()?.deleteOpportunities()
-            db?.commonDao()?.deleteSalesCallList()
             db?.commonDao()?.deleteSalesOrderList()
             db?.commonDao()?.deleteTadaList()
-            db?.commonDao()?.deleteGeoTrackingdata()
             Common.getDefaultSP(this@MainActivity).edit().clear().commit()
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(intent)
@@ -244,6 +236,7 @@ class MainActivity : NetworkChangeListenerActivity(), OnMenuClickListener {
         mainLinearLayout = view.findViewById<LinearLayout>(R.id.main_layout1)
         searchView = view.findViewById(R.id.searchView)
         searchIv = view.findViewById(R.id.searchIv)
+
 
 //        title.setText("Dashboard");
 

@@ -18,12 +18,19 @@ public class DropDownData {
     @SerializedName("states_list")
     @Expose
     public List<StatesList> statesList = null;
+    @SerializedName("department_list")
+    @Expose
+    public List<DepartmentList> departmentLists = null;
+    @SerializedName("company_list")
+    @Expose
+    public List<CompanyList> companyLists=null;
 
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("divisionList", divisionList)
-                .append("statesList", statesList).toString();
+                .append("statesList", statesList)
+                .append("departmentlist",departmentLists).toString();
     }
 }

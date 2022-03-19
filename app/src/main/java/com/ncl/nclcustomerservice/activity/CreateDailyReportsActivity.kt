@@ -65,8 +65,6 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             }
             tvRelatedTo.text = Common.setSppanableText("* Related To")
             tvCallType.text = Common.setSppanableText("* Call Type")
-            tvCallDate.text = Common.setSppanableText("* Call Date")
-            tvCallTime.text = Common.setSppanableText("* Call Time")
             tvOANo.text = Common.setSppanableText("* OA No")
             for (i in 0..customerProjectList.size - 1) {
                 clientProjectList.addAll(customerProjectList.get(i).clientProjects)
@@ -86,8 +84,6 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
         binding.apply {
             etRelatedTo.setText(reportObj.relatedTo.orEmpty())
             etCallType.setText(reportObj.callType.orEmpty())
-            etCallDate.setText(reportObj.callDate.orEmpty())
-            etCallTime.setText(reportObj.callTime.orEmpty())
             etOANo.setText(reportObj.oaNumbers.orEmpty())
             if (reportObj.relatedTo.equals("Contractor")) {
                 llSelectRelatedTo.visibility = View.VISIBLE
@@ -119,7 +115,8 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                     list = list,
                     mapper = { it },
                     selectedPosition = null,
-                    isSingleSelection = true
+                    isSingleSelection = true,
+                        isSearchable=false
                 ) {
                     etRelatedTo.setText(list[it.first()])
                     if (list[it.first()].equals("Contractor")) {
@@ -142,7 +139,8 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                     list = list,
                     mapper = { it },
                     selectedPosition = null,
-                    isSingleSelection = true
+                    isSingleSelection = true,
+                        isSearchable=false
                 ) {
                     etCallType.setText(list[it.first()])
                 }.show()
@@ -163,63 +161,8 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                     )
                 }.show()
             }
-            etCallDate.setOnClickListener {
-                val mcurrentDate = Calendar.getInstance()
-                val mYear = mcurrentDate[Calendar.YEAR]
-                val mMonth = mcurrentDate[Calendar.MONTH]
-                val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
-                val mDatePicker = DatePickerDialog(
-                    this@CreateDailyReportsActivity,
-                    { datepicker, selectedyear, selectedmonth, selectedday ->
-                        // TODO Auto-generated method stub
-                        val sel_month = selectedmonth + 1
-                        var sday = selectedday.toString()
-                        var smonth: String? = null
-                        smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                        sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                        etCallDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                        etCallDate.setTag("$selectedyear-$smonth-$sday")
-                    },
-                    mYear,
-                    mMonth,
-                    mDay
-                )
-                mDatePicker.show()
-            }
-            etCallTime.setOnClickListener {
-                getTime(etCallTime)
-            }
 //            {"requesterid":529,"requestname":"daily_report_checkin_checkout","requestparameters":
 //            {"cs_dailyreport_id":"12","type":"checkin","datetime":"2022-01-17 20:10:10"}}
-
-            btnCheckIn.setOnClickListener {
-                val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
-                Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
-                var checkInCheckOutVO=CheckInCheckOutVO().apply {
-                    csDailyreportId="12"
-                    type="checkin"
-                    datetime=parseDateToddMMyyyy(currentDateTimeString)
-                }
-                RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
-                        Constants.RequestNames.DAILY_REPORTS_CHECKIN_CHECKOUT,
-                        checkInCheckOutVO,
-                        true
-                )
-            }
-            btnCheckOut.setOnClickListener {
-                val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
-                Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
-                var checkInCheckOutVO=CheckInCheckOutVO().apply {
-                    csDailyreportId="12"
-                    type="checkout"
-                    datetime=parseDateToddMMyyyy(currentDateTimeString)
-                }
-                RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
-                        Constants.RequestNames.DAILY_REPORTS_CHECKIN_CHECKOUT,
-                        checkInCheckOutVO,
-                        true
-                )
-            }
             btnAdd.setOnClickListener {
                 addDescriptionItem(null)
             }
@@ -252,23 +195,6 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             }
 
         }
-    }
-    fun parseDateToddMMyyyy(time: String?): String? {
-//        "6 Feb 2022 15:06:10"
-//        2022-01-17 20:10:10
-        val inputPattern = "dd MMM yyyy HH:mm:ss"
-        val outputPattern = "yyyy-MM-dd HH:mm:ss"
-        val inputFormat = SimpleDateFormat(inputPattern)
-        val outputFormat = SimpleDateFormat(outputPattern)
-        var date: Date? = null
-        var str: String? = null
-        try {
-            date = inputFormat.parse(time)
-            str = outputFormat.format(date)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return str
     }
     private fun addDescriptionItem(obj: DailyReportsAddVO.DescriptionOfWork?) {
         binding.apply {
@@ -317,8 +243,9 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                     }
                     relatedTo = etRelatedTo.text.toString()
                     callType = etCallType.text.toString()
-                    callDate = etCallDate.text.toString()
-                    callTime = etCallDate.text.toString() + " " + etCallTime.text.toString()
+                    callDate = ""
+                    callTime = ""
+                    callStatus = 0
 
                 }
                 if(isEdit){
@@ -368,16 +295,15 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
         try {
             when (objectResponse.requestname) {
                 Constants.RequestNames.ADD_DAILY_REPORTS,
-                Constants.RequestNames.EDIT_DAILY_REPORTS,
-                Constants.RequestNames.DAILY_REPORTS_CHECKIN_CHECKOUT-> {
+                Constants.RequestNames.EDIT_DAILY_REPORTS-> {
 
                     val dailyReportsAddVO: DailyReportsResObjVO =
                             Common.getSpecificDataObject(
                                     objectResponse.result,
                                     DailyReportsResObjVO::class.java
                             )
-                    if (dailyReportsAddVO != null) {
-//                        db.commonDao().insertCustomerProject(dailyReportsAddVO)
+                    if (dailyReportsAddVO != null && dailyReportsAddVO.dailyReportsResObjVO!=null ) {
+                        db.commonDao().insertDailyReports(dailyReportsAddVO.dailyReportsResObjVO)
                         ViewDailyReportsActivty.open(
                                 this@CreateDailyReportsActivity,
                                 dailyReportsAddVO.dailyReportsResObjVO!!
@@ -394,13 +320,7 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
     private fun isValidate(): Boolean {
         var isFilled = false
         binding.apply {
-            if (etCallDate.text?.length == 0) {
-                etCallDate.requestFocus()
-                etCallDate.setError("Please add Call Date")
-            } else if (etCallTime.text?.length == 0) {
-                etCallTime.requestFocus()
-                etCallTime.setError("Please add Call time")
-            } else if (getWorksData().size == 0) {
+            if (getWorksData().size == 0) {
                 toast("Description of works are missed")
             } else
                 isFilled = true
@@ -420,23 +340,6 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
         return list
     }
 
-    fun getTime(textView: CustomEditText) {
-        val cal = Calendar.getInstance()
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-            cal.set(Calendar.HOUR_OF_DAY, hour)
-            cal.set(Calendar.MINUTE, minute)
-            textView.setText(SimpleDateFormat("HH:mm").format(cal.time))
-        }
-        textView.setOnClickListener {
-            TimePickerDialog(
-                this,
-                timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE),
-                true
-            ).show()
-        }
-    }
 
     private fun loadClientProjectDetails() {
         binding.apply {

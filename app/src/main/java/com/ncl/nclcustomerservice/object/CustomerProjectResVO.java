@@ -104,6 +104,9 @@ public class CustomerProjectResVO implements Serializable {
         @SerializedName("project_head_email")
         @Expose
         public String projectHeadEmail;
+        @SerializedName("company_or_client_name")
+        @Expose
+        public String companyOrClientName;
         @SerializedName("associate_contacts")
         @Expose
         @TypeConverters(CusAssociateContactTC.class)

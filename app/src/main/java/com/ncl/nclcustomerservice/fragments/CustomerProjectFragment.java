@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CustomerProjectFragment extends BaseFragment implements RetrofitResponseListener {
-    private ImageView filterView;
+    private ImageView filterView,searchIv;
     RecyclerView rvList;
     private String queryString = "%%";
     private ImageView addView;
@@ -47,7 +48,18 @@ public class CustomerProjectFragment extends BaseFragment implements RetrofitRes
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_customer_project, container, false);
         ((TextView) ((MainActivity) getActivity()).getSupportActionBar().getCustomView().findViewById(R.id.title_text)).setText("CUSTOMER PROJECT");
         filterView = ((MainActivity) getActivity()).findViewById(R.id.filter_task);
-        filterView.setVisibility(View.GONE);
+        searchIv=((MainActivity) getActivity()).findViewById(R.id.searchIv);
+        searchIv.setVisibility(View.VISIBLE);
+        if (Common.getUserTeam(getActivity()).size() > 1)
+            filterView.setVisibility(View.VISIBLE);
+        else
+            filterView.setVisibility(View.GONE);
+        filterView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common.getSelectedUser(CustomerProjectFragment.this);
+            }
+        });
         rvList = view.findViewById(R.id.rvList);
 
         db = DatabaseHandler.getDatabase(getActivity());
@@ -61,6 +73,22 @@ public class CustomerProjectFragment extends BaseFragment implements RetrofitRes
                 Intent addIntent = new Intent(getActivity(), CreateCustomerProjectActivity.class);
                 addIntent.putExtra("form_key", "new");
                 startActivity(addIntent);
+            }
+        });
+        ((SearchView)(((MainActivity) getActivity()).findViewById(R.id.searchView))).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Common.Log.i(s);
+                queryString='%'+s+'%';
+                List<CustomerProjectResVO> customerProjectResVOS = db.commonDao().getCustomerProjectList(100, 0,queryString);
+                if (customerProjectResVOS != null)
+                    setOnAdapter(rvList, customerProjectResVOS);
+                return false;
             }
         });
         return view;
@@ -78,7 +106,7 @@ public class CustomerProjectFragment extends BaseFragment implements RetrofitRes
             contactTeam.teamId = userId;
             new RetrofitRequestController(this).sendRequest(Constants.RequestNames.CUSTOMER_PROJECT_LIST, contactTeam, false);
         } else {
-            List<CustomerProjectResVO> customerProjectResVOS = db.commonDao().getCustomerProjectList(100, 0);
+            List<CustomerProjectResVO> customerProjectResVOS = db.commonDao().getCustomerProjectList(100, 0,null);
             if (customerProjectResVOS != null)
                 setOnAdapter(rvList, customerProjectResVOS);
         }

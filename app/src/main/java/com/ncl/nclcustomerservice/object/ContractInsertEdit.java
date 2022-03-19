@@ -65,14 +65,11 @@ public class ContractInsertEdit implements Serializable
     @SerializedName("total_amount")
     @Expose
     public String totalAmount;
-    @SerializedName("contract_product")
-    @Expose
-    public List<SalesOrderLineItem> contractProduct = null;
     private final static long serialVersionUID = -1759135066156392916L;
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("contractId", contractId).append("customer", customer).append("activatedBy", activatedBy).append("activatedDate", activatedDate).append("companySignedBy", companySignedBy).append("companySignedDate", companySignedDate).append("contractStartDate", contractStartDate).append("contractEndDate", contractEndDate).append("contractName", contractName).append("contractTerm", contractTerm).append("customerSignedBy", customerSignedBy).append("customerSignedDate", customerSignedDate).append("description", description).append("ownerExpirationNotice", ownerExpirationNotice).append("specialTerms", specialTerms).append("status", status).append("totalAmount", totalAmount).append("contractProduct", contractProduct).toString();
+        return new ToStringBuilder(this).append("contractId", contractId).append("customer", customer).append("activatedBy", activatedBy).append("activatedDate", activatedDate).append("companySignedBy", companySignedBy).append("companySignedDate", companySignedDate).append("contractStartDate", contractStartDate).append("contractEndDate", contractEndDate).append("contractName", contractName).append("contractTerm", contractTerm).append("customerSignedBy", customerSignedBy).append("customerSignedDate", customerSignedDate).append("description", description).append("ownerExpirationNotice", ownerExpirationNotice).append("specialTerms", specialTerms).append("status", status).append("totalAmount", totalAmount).toString();
     }
 
 }

@@ -90,10 +90,6 @@ public class QuotationList implements Serializable {
     @Expose
     public String remarks;
     @Ignore
-    @SerializedName("qutation_product_list")
-    @Expose
-    public List<QuotationProductList> qutationProductList = null;
-    @Ignore
     @SerializedName("approval_process")
     @Expose
     public List<ApprovalProcess> approvalProcess = null;
@@ -101,7 +97,7 @@ public class QuotationList implements Serializable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("quotationId", quotationId).append("quotationversionID", quotationversionID).append("opportunity", opportunity).append("quotationDate", quotationDate).append("expiryDate", expiryDate).append("customer", customer).append("customerId", customerId).append("contactId", contactId).append("customerId", customerId).append("contact", contact).append("billingStreet1", billingStreet1).append("billingstreet2", billingstreet2).append("billingCountry", billingCountry).append("stateProvince", stateProvince).append("billingCity", billingCity).append("billingZipPostal", billingZipPostal).append("shippingStreet1", shippingStreet1).append("shippingstreet2", shippingstreet2).append("shippingCountry", shippingCountry).append("shippingStateProvince", shippingStateProvince).append("shippingCity", shippingCity).append("shippingZipPostal", shippingZipPostal).append("totalPrice", totalPrice).append("remarks", remarks).append("qutationProductList", qutationProductList).append("approvalProcess", approvalProcess).toString();
+        return new ToStringBuilder(this).append("quotationId", quotationId).append("quotationversionID", quotationversionID).append("opportunity", opportunity).append("quotationDate", quotationDate).append("expiryDate", expiryDate).append("customer", customer).append("customerId", customerId).append("contactId", contactId).append("customerId", customerId).append("contact", contact).append("billingStreet1", billingStreet1).append("billingstreet2", billingstreet2).append("billingCountry", billingCountry).append("stateProvince", stateProvince).append("billingCity", billingCity).append("billingZipPostal", billingZipPostal).append("shippingStreet1", shippingStreet1).append("shippingstreet2", shippingstreet2).append("shippingCountry", shippingCountry).append("shippingStateProvince", shippingStateProvince).append("shippingCity", shippingCity).append("shippingZipPostal", shippingZipPostal).append("totalPrice", totalPrice).append("remarks", remarks).append("approvalProcess", approvalProcess).toString();
     }
 
 }

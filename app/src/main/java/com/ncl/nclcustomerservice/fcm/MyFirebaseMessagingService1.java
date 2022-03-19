@@ -110,14 +110,11 @@ public class MyFirebaseMessagingService1 extends FirebaseMessagingService {
                 db.commonDao().deleteContactList();
                 db.commonDao().deleteContactList();
                 db.commonDao().deleteCustomerList();
-                db.commonDao().deleteEmpActivityPojo();
                 db.commonDao().deleteCustomer();
                 db.commonDao().deleteLeadList();
                 db.commonDao().deleteOpportunities();
-                db.commonDao().deleteSalesCallList();
                 db.commonDao().deleteSalesOrderList();
                 db.commonDao().deleteTadaList();
-                db.commonDao().deleteGeoTrackingdata();
                 Common.getDefaultSP(this).edit().clear().commit();
 
             }

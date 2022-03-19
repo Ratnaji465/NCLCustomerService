@@ -125,54 +125,6 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:textColor="@color/black" />
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:text="CALL DATE :" />
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:id="@+id/tvCallDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:text="CALL TIME :" />
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:id="@+id/tvCalltime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:textColor="@color/black" />
-                    </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -192,6 +144,7 @@
                             android:layout_marginTop="@dimen/_10sdp"
                             android:textColor="@color/black" />
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -269,11 +222,32 @@
             android:elevation="2px"
             android:gravity="center"
             android:orientation="horizontal">
+            <com.ncl.nclcustomerservice.customviews.CustomButton
+                android:id="@+id/btnCheckIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/button_bg_green"
+                android:text="Check In"
+                android:visibility="gone"
+                android:textColor="@android:color/white" />
+
+            <com.ncl.nclcustomerservice.customviews.CustomButton
+                android:id="@+id/btnCheckOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp"
+                android:visibility="gone"
+                android:background="@drawable/button_bg_green"
+                android:text="Check Out"
+                android:textColor="@android:color/white" />
 
             <com.ncl.nclcustomerservice.customviews.CustomButton
                 android:id="@+id/btnEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:background="@drawable/button_bg_green"
                 android:text="Edit"
                 android:textColor="@android:color/white" />

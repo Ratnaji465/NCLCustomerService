@@ -120,9 +120,6 @@ public class NotificationFragment extends Fragment implements RetrofitResponseLi
                         UpdateTableResVo updateTableResVo = Common.getSpecificDataObject(objectResponse.result, UpdateTableResVo.class);
                         if (updateTableResVo != null) {
 
-                            List<LeadInsertReqVo> lead = updateTableResVo.leadList;
-                            if (lead!=null)
-                            db.commonDao().insertLeadList(lead);
 
                             List<ContactList> contactList = updateTableResVo.contactList;
                             if (contactList!=null)
@@ -136,9 +133,6 @@ public class NotificationFragment extends Fragment implements RetrofitResponseLi
 
                             List<ContractList> contractList = updateTableResVo.contractList;
                             db.commonDao().insertContract(contractList);
-
-                            List<SalesCallList> salesCallList = updateTableResVo.salesCallList;
-                            db.commonDao().insertSalesCallList(salesCallList);
 
                             List<SalesOrderList> salesOrderList = updateTableResVo.salesOrderList;
                             db.commonDao().insertSalesOrderList(salesOrderList);
@@ -162,7 +156,6 @@ public class NotificationFragment extends Fragment implements RetrofitResponseLi
     private void setData(String notificationType, String opportunityId) {
         switch (notificationType) {
             case Constants.Notification.LEAD:
-                lead = db.commonDao().getLead();
 
                 for (int i = 0; i < lead.size(); i++) {
                     String leads = String.valueOf(lead.get(i).leadsId);
@@ -228,19 +221,6 @@ public class NotificationFragment extends Fragment implements RetrofitResponseLi
                 }
                 break;
 
-            case Constants.Notification.SALES_CALLS:
-                salesCallLists = db.commonDao().getSalesCallList(25,0);
-
-                for (int i = 0; i < salesCallLists.size(); i++) {
-                    String salescall = String.valueOf(salesCallLists.get(i).salesCallId);
-//                    if (salescall.equalsIgnoreCase(notificationId)) {
-//                        Intent intent = new Intent(getActivity(), SalesViewActivity.class);
-//                        intent.putExtra("view", (Serializable) salesCallLists.get(i));
-//                        intent.putExtra("leftnav", Common.getLeftNav(getActivity(), Constants.MethodNames.SALES_CALLS_LIST));
-//                        startActivity(intent);
-//                    }
-                }
-                break;
 
             case Constants.Notification.SALES_ORDER:
                 salesOrderLists = db.commonDao().getSalesOrderList(25,0);

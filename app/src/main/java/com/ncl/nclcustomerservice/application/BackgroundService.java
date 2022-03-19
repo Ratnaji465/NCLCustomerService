@@ -90,34 +90,14 @@ public class BackgroundService extends IntentService implements RetrofitResponse
 //                                db.commonDao().updateLeadList(lead.get(i).firstName, lead.get(i).leadsId,lead.get(i).lastName,lead.get(i).company,lead.get(i).associateContactId,lead.get(i).annualRevenue, lead.get(i).description,lead.get(i).doNotCall,);
                             db.commonDao().updateLead(lead.get(i));
                         } else {*/
-                    if (lead!=null && lead.size()>0)
-                    db.commonDao().insertLeadList(lead);
                      /*   }
                     }*/
 
                     List<ContactList> contactList = updateTableResVo.contactList;
-//                    List<ContactList> upcontact = db.commonDao().getContactList();
-//                    for (int i = 0; i < upcontact.size(); i++) {
-//                        if (contactList.get(i).contactId == upcontact.get(i).contactId) {
-//                            db.commonDao().updateContact(contactList.get(i));
-//                        } else {
+//
                     if (contactList!=null && contactList.size()>0)
                     db.commonDao().insertContact(contactList);
-//                        }
-//                    }
-
-                    List<CustomerList> customerLists = updateTableResVo.customerList;
-                    if (customerLists!=null) {
-                        for (int i = 0; i < customerLists.size(); i++) {
-                            long key = db.commonDao().insertCustomerList(customerLists.get(i));
-                            if (customerLists.get(i).customerUserList != null) {
-                                for (int j = 0; j < customerLists.get(i).customerUserList.size(); j++) {
-                                    customerLists.get(i).customerUserList.get(j).lineitemid = (int) key;
-                                }
-                                db.commonDao().insertCustomerLineItems(customerLists.get(i).customerUserList);
-                            }
-                        }
-                    }
+//
                     List<OpportunitiesList> opportunitiesList = updateTableResVo.opportunitiesList;
 //                    List<OpportunitiesList> upopportunity = db.commonDao().getOpportunitiesList();
 //                    for (int i=0;i<upopportunity.size();i++){
@@ -146,8 +126,7 @@ public class BackgroundService extends IntentService implements RetrofitResponse
 //                        if (salesCallList.get(i).salesCallId == upsalesaCall.get(i).salesCallId){
 //                            db.commonDao().updateSallesCall(salesCallList.get(i));
 //                        }else {
-                    if (salesCallList!=null && salesCallList.size()>0)
-                    db.commonDao().insertSalesCallList(salesCallList);
+
 //                        }
 //                    }
 
