@@ -66,6 +66,7 @@
                     android:textSize="12sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
                 android:orientation="vertical">
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
-                   android:id="@+id/tvSFT"
+                    android:id="@+id/tvSFT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SFT" />
@@ -91,14 +92,16 @@
                     android:textSize="12sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:orientation="horizontal">
-              <!--  <LinearLayout
-                    android:id="@+id/addlayout_ac"
+
+                <LinearLayout
+                    android:id="@+id/llAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
@@ -111,7 +114,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/removelayout_ac"
+                    android:id="@+id/llRemove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -123,7 +126,7 @@
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:gravity="center"
                         android:src="@drawable/decrease_table" />
-                </LinearLayout>-->
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

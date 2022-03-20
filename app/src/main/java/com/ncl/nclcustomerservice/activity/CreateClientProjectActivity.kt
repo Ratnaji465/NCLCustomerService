@@ -12,12 +12,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.core.view.get
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -29,13 +30,10 @@ import com.kenmeidearu.searchablespinnerlibrary.mListString
 import com.ncl.nclcustomerservice.R
 import com.ncl.nclcustomerservice.`object`.*
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity
-import com.ncl.nclcustomerservice.activity.CreateNewContactActivity.AssociateContactViewHolder
 import com.ncl.nclcustomerservice.application.MyApplication
-import com.ncl.nclcustomerservice.commonutils.Common
-import com.ncl.nclcustomerservice.commonutils.Constants
+import com.ncl.nclcustomerservice.commonutils.*
 import com.ncl.nclcustomerservice.commonutils.Constants.RequestNames.ADD_CLIENT_PROJECT
 import com.ncl.nclcustomerservice.commonutils.Constants.RequestNames.EDIT_CLIENT_PROJECT
-import com.ncl.nclcustomerservice.commonutils.getArguments
 import com.ncl.nclcustomerservice.customviews.CustomEditText
 import com.ncl.nclcustomerservice.databinding.ActivityCreateClientprojectBinding
 import com.ncl.nclcustomerservice.databinding.ClientprojectInstallationRowBinding
@@ -58,6 +56,23 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.LinkedHashSet
+import kotlin.collections.List
+import kotlin.collections.MutableList
+import kotlin.collections.MutableMap
+import kotlin.collections.first
+import kotlin.collections.forEach
+import kotlin.collections.forEachIndexed
+import kotlin.collections.indexOfFirst
+import kotlin.collections.indices
+import kotlin.collections.linkedSetOf
+import kotlin.collections.listOf
+import kotlin.collections.map
+import kotlin.collections.mutableListOf
+import kotlin.collections.mutableMapOf
+import kotlin.collections.set
+import kotlin.collections.toMutableList
+import kotlin.collections.toTypedArray
 
 class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitResponseListener {
     private var selectedProducts: LinkedHashSet<Int> = linkedSetOf<Int>()
@@ -65,13 +80,13 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     private var hmProducts: MutableMap<String, List<ProductList>> = mutableMapOf()
     private var products: MutableList<DivisionList> = mutableListOf()
     private var subseriesList: MutableList<ProductList> = mutableListOf()
-    private var newList: MutableList<ProductAndSubseries> = mutableListOf()
     private var customerProjectIdValue: String = ""
     private var customerprojectClientProjectDetailsId: String = ""
 
     private lateinit var binding: ActivityCreateClientprojectBinding
     private lateinit var bindingrow: ClientprojectProduct1RowBinding
-    private lateinit var bindingInstallPeriod: ClientprojectInstallationRowBinding
+
+    //    private lateinit var bindingInstallPeriod: ClientprojectInstallationRowBinding
     override fun onInternetConnected() {}
     override fun onInternetDisconnected() {}
     private var wc_certificate_file: File? = null
@@ -101,28 +116,31 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             }
             if (isEdit) {
                 toolbar.titleText.setText("Edit Client Project")
+            } else {
+                setProducts()
+                addInstallationUI()
             }
             tvOANumber.text = Common.setSppanableText("* OA Number")
             tvMaterialDispatch.text =
-                    Common.setSppanableText("* Date of Material dispatch from factory")
+                Common.setSppanableText("* Date of Material dispatch from factory")
             tvWorkStartDate.text = Common.setSppanableText("* Work start date")
             tvTotalSFT.text = Common.setSppanableText("* Total SFT")
             tvInstalledSFT.text = Common.setSppanableText("* Installed SFT")
             tvBalanceTobeInstall.text = Common.setSppanableText("* Balance to be installed")
             tvNoOfDaysInstall.text =
-                    Common.setSppanableText("* No of days for the installation completion")
+                Common.setSppanableText("* No of days for the installation completion")
             tvWCCReceiveDate.text =
-                    Common.setSppanableText("* Work Completion certificate received date")
+                Common.setSppanableText("* Work Completion certificate received date")
             tvWorkStatus.text = Common.setSppanableText("* Work Status")
             tvInstallAndHandingOver.text =
-                    Common.setSppanableText("* No of days for the installation & handing over")
+                Common.setSppanableText("* No of days for the installation & handing over")
 
             tvShortagesMaterialReceivedon.text =
-                    Common.setSppanableText("* Shortage Material Receivedon")
+                Common.setSppanableText("* Shortage Material Receivedon")
             tvRemarkDate.text =
-                    Common.setSppanableText("* Remark Date")
+                Common.setSppanableText("* Remark Date")
             tvClientRemarks.text =
-                    Common.setSppanableText("* Remark")
+                Common.setSppanableText("* Remark")
 
 //            set today date
             val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
@@ -133,67 +151,15 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 teamId = Common.getTeamUserIdFromSP(this@CreateClientProjectActivity)
             }
             RetrofitRequestController(this@CreateClientProjectActivity).sendRequest(
-                    Constants.RequestNames.DROP_DOWN_LIST,
-                    dropDownDataReqVo,
-                    true
+                Constants.RequestNames.DROP_DOWN_LIST,
+                dropDownDataReqVo,
+                true
             )
             setClickListeners()
-            TextWatchers()
         }
     }
 //    etTotalSFT,etInstalledSFT,etBalanceTobeInstall,etNoOfDaysInstall,etHandingOver,etBalanceHandingOver
 
-    private fun TextWatchers() {
-        binding.apply {
-            etTotalSFT.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!etTotalSFT.text.toString().isEmpty() && !etInstalledSFT.text.toString().isEmpty() && !etHandingOver.text.toString().isEmpty()) {
-                        val balanceInstall = Integer.parseInt(etTotalSFT.text.toString()) - Integer.parseInt(etInstalledSFT.text.toString())
-                        etBalanceTobeInstall.setText("" + balanceInstall)
-                        val handlingOver = Integer.parseInt(etTotalSFT.text.toString()) - Integer.parseInt(etHandingOver.text.toString())
-                        etBalanceHandingOver.setText("" + handlingOver)
-                    }
-
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                }
-            })
-            etInstalledSFT.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!etTotalSFT.text.toString().isEmpty() && !etInstalledSFT.text.toString().isEmpty() && !etHandingOver.text.toString().isEmpty()) {
-                        val balanceInstall = Integer.parseInt(etTotalSFT.text.toString()) - Integer.parseInt(etInstalledSFT.text.toString())
-                        etBalanceTobeInstall.setText("" + balanceInstall)
-                    }
-
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                }
-            })
-            etHandingOver.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!etTotalSFT.text.toString().isEmpty() && !etInstalledSFT.text.toString().isEmpty() && !etHandingOver.text.toString().isEmpty()) {
-                        val handlingOver = Integer.parseInt(etTotalSFT.text.toString()) - Integer.parseInt(etHandingOver.text.toString())
-                        etBalanceHandingOver.setText("" + handlingOver)
-                    }
-
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                }
-            })
-        }
-    }
 
     fun parseDateToddMMyyyy(time: String?): String? {
 //        "6 Feb 2022 15:06:10"
@@ -215,27 +181,27 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
 
     private fun setClickListeners() {
         binding.apply {
-            addInstallationPeriod()
+            getInstallationUI()
             etMaterialDispatch.setOnClickListener {
                 val mcurrentDate = Calendar.getInstance()
                 val mYear = mcurrentDate[Calendar.YEAR]
                 val mMonth = mcurrentDate[Calendar.MONTH]
                 val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
                 val mDatePicker = DatePickerDialog(
-                        this@CreateClientProjectActivity,
-                        { datepicker, selectedyear, selectedmonth, selectedday ->
-                            // TODO Auto-generated method stub
-                            val sel_month = selectedmonth + 1
-                            var sday = selectedday.toString()
-                            var smonth: String? = null
-                            smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                            sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                            etMaterialDispatch.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                            etMaterialDispatch.setTag("$selectedyear-$smonth-$sday")
-                        },
-                        mYear,
-                        mMonth,
-                        mDay
+                    this@CreateClientProjectActivity,
+                    { datepicker, selectedyear, selectedmonth, selectedday ->
+                        // TODO Auto-generated method stub
+                        val sel_month = selectedmonth + 1
+                        var sday = selectedday.toString()
+                        var smonth: String? = null
+                        smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
+                        sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
+                        etMaterialDispatch.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
+                        etMaterialDispatch.setTag("$selectedyear-$smonth-$sday")
+                    },
+                    mYear,
+                    mMonth,
+                    mDay
                 )
                 mDatePicker.show()
             }
@@ -245,20 +211,20 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 val mMonth = mcurrentDate[Calendar.MONTH]
                 val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
                 val mDatePicker = DatePickerDialog(
-                        this@CreateClientProjectActivity,
-                        { datepicker, selectedyear, selectedmonth, selectedday ->
-                            // TODO Auto-generated method stub
-                            val sel_month = selectedmonth + 1
-                            var sday = selectedday.toString()
-                            var smonth: String? = null
-                            smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                            sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                            etShortagesMaterialReceivedon.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                            etShortagesMaterialReceivedon.setTag("$selectedyear-$smonth-$sday")
-                        },
-                        mYear,
-                        mMonth,
-                        mDay
+                    this@CreateClientProjectActivity,
+                    { datepicker, selectedyear, selectedmonth, selectedday ->
+                        // TODO Auto-generated method stub
+                        val sel_month = selectedmonth + 1
+                        var sday = selectedday.toString()
+                        var smonth: String? = null
+                        smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
+                        sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
+                        etShortagesMaterialReceivedon.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
+                        etShortagesMaterialReceivedon.setTag("$selectedyear-$smonth-$sday")
+                    },
+                    mYear,
+                    mMonth,
+                    mDay
                 )
                 mDatePicker.show()
             }
@@ -268,20 +234,20 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 val mMonth = mcurrentDate[Calendar.MONTH]
                 val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
                 val mDatePicker = DatePickerDialog(
-                        this@CreateClientProjectActivity,
-                        { datepicker, selectedyear, selectedmonth, selectedday ->
-                            // TODO Auto-generated method stub
-                            val sel_month = selectedmonth + 1
-                            var sday = selectedday.toString()
-                            var smonth: String? = null
-                            smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                            sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                            etWorkStartDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                            etWorkStartDate.setTag("$selectedyear-$smonth-$sday")
-                        },
-                        mYear,
-                        mMonth,
-                        mDay
+                    this@CreateClientProjectActivity,
+                    { datepicker, selectedyear, selectedmonth, selectedday ->
+                        // TODO Auto-generated method stub
+                        val sel_month = selectedmonth + 1
+                        var sday = selectedday.toString()
+                        var smonth: String? = null
+                        smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
+                        sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
+                        etWorkStartDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
+                        etWorkStartDate.setTag("$selectedyear-$smonth-$sday")
+                    },
+                    mYear,
+                    mMonth,
+                    mDay
                 )
                 mDatePicker.show()
             }
@@ -291,20 +257,20 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 val mMonth = mcurrentDate[Calendar.MONTH]
                 val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
                 val mDatePicker = DatePickerDialog(
-                        this@CreateClientProjectActivity,
-                        { datepicker, selectedyear, selectedmonth, selectedday ->
-                            // TODO Auto-generated method stub
-                            val sel_month = selectedmonth + 1
-                            var sday = selectedday.toString()
-                            var smonth: String? = null
-                            smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                            sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                            etInstallCompDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                            etInstallCompDate.setTag("$selectedyear-$smonth-$sday")
-                        },
-                        mYear,
-                        mMonth,
-                        mDay
+                    this@CreateClientProjectActivity,
+                    { datepicker, selectedyear, selectedmonth, selectedday ->
+                        // TODO Auto-generated method stub
+                        val sel_month = selectedmonth + 1
+                        var sday = selectedday.toString()
+                        var smonth: String? = null
+                        smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
+                        sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
+                        etInstallCompDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
+                        etInstallCompDate.setTag("$selectedyear-$smonth-$sday")
+                    },
+                    mYear,
+                    mMonth,
+                    mDay
                 )
                 mDatePicker.show()
             }
@@ -314,35 +280,33 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 val mMonth = mcurrentDate[Calendar.MONTH]
                 val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
                 val mDatePicker = DatePickerDialog(
-                        this@CreateClientProjectActivity,
-                        { datepicker, selectedyear, selectedmonth, selectedday ->
-                            // TODO Auto-generated method stub
-                            val sel_month = selectedmonth + 1
-                            var sday = selectedday.toString()
-                            var smonth: String? = null
-                            smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                            sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                            etWCCReceiveDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                            etWCCReceiveDate.setTag("$selectedyear-$smonth-$sday")
-                        },
-                        mYear,
-                        mMonth,
-                        mDay
+                    this@CreateClientProjectActivity,
+                    { datepicker, selectedyear, selectedmonth, selectedday ->
+                        // TODO Auto-generated method stub
+                        val sel_month = selectedmonth + 1
+                        var sday = selectedday.toString()
+                        var smonth: String? = null
+                        smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
+                        sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
+                        etWCCReceiveDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
+                        etWCCReceiveDate.setTag("$selectedyear-$smonth-$sday")
+                    },
+                    mYear,
+                    mMonth,
+                    mDay
                 )
                 mDatePicker.show()
             }
-            val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
-            Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
-            etDate.setText(parseDateToddMMyyyy(currentDateTimeString).toString())
+            etDate.setText(SimpleDateFormat("yyyy-MM-dd").format(Date()))
             tvShortage.setOnClickListener {
                 var list = listOf<String>("Yes", "No")
                 MultiSelectionDialog(
-                        context = this@CreateClientProjectActivity,
-                        list = list,
-                        mapper = { it },
-                        selectedPosition = null,
-                        isSingleSelection = true,
-                        isSearchable = false
+                    context = this@CreateClientProjectActivity,
+                    list = list,
+                    mapper = { it },
+                    selectedPosition = null,
+                    isSingleSelection = true,
+                    isSearchable = false
                 ) {
                     tvShortage.setText(list[it.first()])
                     if (list[it.first()].equals("Yes")) {
@@ -358,12 +322,12 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             tvWorkCompletion.setOnClickListener {
                 var list = listOf<String>("Collected", "Not Collected")
                 MultiSelectionDialog(
-                        context = this@CreateClientProjectActivity,
-                        list = list,
-                        mapper = { it },
-                        selectedPosition = null,
-                        isSingleSelection = true,
-                        isSearchable = false
+                    context = this@CreateClientProjectActivity,
+                    list = list,
+                    mapper = { it },
+                    selectedPosition = null,
+                    isSingleSelection = true,
+                    isSearchable = false
                 ) {
                     tvWorkCompletion.setText(list[it.first()])
                     if (list[it.first()].equals("Collected")) {
@@ -377,69 +341,72 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             }
             tvWorkStatusSelect.setOnClickListener {
                 var list = listOf<String>(
-                        "On going project",
-                        "Project on hold",
-                        "Completed",
-                        "No work front"
+                    "On going project",
+                    "Project on hold",
+                    "Completed",
+                    "No work front"
                 )
                 MultiSelectionDialog(
-                        context = this@CreateClientProjectActivity,
-                        list = list,
-                        mapper = { it },
-                        selectedPosition = null,
-                        isSingleSelection = true,
-                        isSearchable = false
+                    context = this@CreateClientProjectActivity,
+                    list = list,
+                    mapper = { it },
+                    selectedPosition = null,
+                    isSingleSelection = true,
+                    isSearchable = false
                 ) {
                     tvWorkStatusSelect.setText(list[it.first()])
                 }.show()
             }
             btnWcCertificate.setOnClickListener {
                 with(this@CreateClientProjectActivity)
-                        .compress(1024) //Final image size will be less than 1.0 MB(Optional)
-                        .maxResultSize(
-                                1080,
-                                1080
-                        ) //Final image resolution will be less than 1080 x 1080(Optional)
-                        .start()
+                    .compress(1024) //Final image size will be less than 1.0 MB(Optional)
+                    .maxResultSize(
+                        1080,
+                        1080
+                    ) //Final image resolution will be less than 1080 x 1080(Optional)
+                    .start()
             }
             btnProducts.setOnClickListener {
                 MultiSelectionDialog(
-                        context = this@CreateClientProjectActivity,
-                        list = products,
-                        mapper = { it.divisionName },
-                        selectedPosition = selectedProducts.toMutableList(),
-                        isSingleSelection = false,
+                    context = this@CreateClientProjectActivity,
+                    list = products,
+                    mapper = { it.divisionName },
+                    selectedPosition = selectedProducts.toMutableList(),
+                    isSingleSelection = true,
                 ) {
                     selectedProducts = LinkedHashSet<Int>(it)
-                    setProducts(selectedProducts, selectedSubseries)
+                    setProducts(/*selectedProducts, selectedSubseries*/)
                 }.show()
             }
             save.setOnClickListener {
                 if (isValidate()) {
                     if (tvShortage.text?.toString().equals("Select")) {
                         Toast.makeText(
-                                this@CreateClientProjectActivity,
-                                "Please Select Shortage",
-                                Toast.LENGTH_SHORT
+                            this@CreateClientProjectActivity,
+                            "Please Select Shortage",
+                            Toast.LENGTH_SHORT
                         ).show()
                         return@setOnClickListener
                     } else if (tvWorkCompletion.text?.toString().equals("Select")) {
                         Toast.makeText(
-                                this@CreateClientProjectActivity,
-                                "Please Select Work Completion",
-                                Toast.LENGTH_SHORT
+                            this@CreateClientProjectActivity,
+                            "Please Select Work Completion",
+                            Toast.LENGTH_SHORT
                         ).show()
                         return@setOnClickListener
                     } else if (tvWorkStatusSelect.text?.toString().equals("Select")) {
                         Toast.makeText(
-                                this@CreateClientProjectActivity,
-                                "Please Select Work Status",
-                                Toast.LENGTH_SHORT
+                            this@CreateClientProjectActivity,
+                            "Please Select Work Status",
+                            Toast.LENGTH_SHORT
                         ).show()
                         return@setOnClickListener
                     }
                     callApi()
                 }
+            }
+            etHandingOver.onTextChange {
+                updateSFTUi()
             }
         }
     }
@@ -447,116 +414,103 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
 
     private fun loadProductsUI() {
         bindingrow = DataBindingUtil.inflate(
-                layoutInflater,
-                R.layout.clientproject_product1_row,
-                null,
-                false
+            layoutInflater,
+            R.layout.clientproject_product1_row,
+            null,
+            false
         )
         binding.llAddProducts.addView(bindingrow.root)
         addProducts()
     }
 
-    private fun addInstallationPeriod() {
-        bindingInstallPeriod = DataBindingUtil.inflate(
-                layoutInflater,
-                R.layout.clientproject_installation_row,
-                null,
-                false
-        )
-        binding.llInstallation.addView(bindingInstallPeriod.root)
-        addInstallationUI()
+    data class InstallationPeriod(
+        var from: String = "",
+        var to: String = "",
+        var sqrft: Double = 0.0
+    )
+
+    private fun getInstallationUI(): ClientprojectInstallationRowBinding {
+        return DataBindingUtil.inflate<ClientprojectInstallationRowBinding?>(
+            layoutInflater,
+            R.layout.clientproject_installation_row,
+            null,
+            false
+        ).apply {
+            root.setTag(R.string.app_name, InstallationPeriod())
+        }
     }
 
     private fun addInstallationUI() {
-        for (i in 0 until binding.llInstallation.getChildCount()) {
-            if (binding.llInstallation.getChildCount() > 1) {
-                bindingInstallPeriod.removelayoutPr.visibility = View.VISIBLE
-            } else {
-                bindingInstallPeriod.removelayoutPr.visibility = View.GONE
-            }
-            bindingInstallPeriod.removelayoutPr.setOnClickListener {
-//                sftInstalledTotalCal -= Integer.parseInt(bindingInstallPeriod.etSFT.text.toString())
-//                binding.etInstalledSFT.setText(Integer.toString(sftInstalledTotalCal))
-                binding.llInstallation.removeViewAt(i)
+        var view = getInstallationUI()
+        binding.llInstallation.addView(view.root)
+        view.removelayoutPr.show()
+        view.removelayoutPr.setOnClickListener {
+            view.root.setTag(R.string.app_name, null)
+            var parent = view.root.parent as ViewGroup
+            for (i in (parent.childCount - 1) downTo 0)
+                if (parent.getChildAt(i).getTag(R.string.app_name) == null)
+                    parent.removeViewAt(i)
+            updateSFTUi()
+            if (parent.childCount == 0) {
                 addInstallationUI()
             }
-            bindingInstallPeriod.addlayoutPr.setOnClickListener {
-                if (isValidateInstallPeriod()) {
-                    sftInstalledTotalCal += Integer.parseInt(bindingInstallPeriod.etSFT.text.toString())
-                    binding.etInstalledSFT.setText(Integer.toString(sftInstalledTotalCal))
-                    bindingInstallPeriod = DataBindingUtil.inflate(
-                            layoutInflater,
-                            R.layout.clientproject_installation_row,
-                            null,
-                            false
-                    )
-                    binding.llInstallation.addView(bindingInstallPeriod.root)
-                    addInstallationUI()
-                }
-            }
-            bindingInstallPeriod.etFromDate.setOnClickListener {
-                val mcurrentDate = Calendar.getInstance()
-                val mYear = mcurrentDate[Calendar.YEAR]
-                val mMonth = mcurrentDate[Calendar.MONTH]
-                val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
-                val mDatePicker = DatePickerDialog(
-                        this@CreateClientProjectActivity,
-                        { datepicker, selectedyear, selectedmonth, selectedday ->
-                            // TODO Auto-generated method stub
-                            val sel_month = selectedmonth + 1
-                            var sday = selectedday.toString()
-                            var smonth: String? = null
-                            smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                            sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                            bindingInstallPeriod.etFromDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                            bindingInstallPeriod.etFromDate.setTag("$selectedyear-$smonth-$sday")
-                        },
-                        mYear,
-                        mMonth,
-                        mDay
-                )
-                mDatePicker.show()
-            }
-            bindingInstallPeriod.etToDate.setOnClickListener {
-                val mcurrentDate = Calendar.getInstance()
-                val mYear = mcurrentDate[Calendar.YEAR]
-                val mMonth = mcurrentDate[Calendar.MONTH]
-                val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
-                val mDatePicker = DatePickerDialog(
-                        this@CreateClientProjectActivity,
-                        { datepicker, selectedyear, selectedmonth, selectedday ->
-                            // TODO Auto-generated method stub
-                            val sel_month = selectedmonth + 1
-                            var sday = selectedday.toString()
-                            var smonth: String? = null
-                            smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
-                            sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
-                            bindingInstallPeriod.etToDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
-                            bindingInstallPeriod.etToDate.setTag("$selectedyear-$smonth-$sday")
-                        },
-                        mYear,
-                        mMonth,
-                        mDay
-                )
-                mDatePicker.show()
-            }
-            var instantTotal: Int
-            bindingInstallPeriod.etSFT.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                    if (!bindingInstallPeriod.etSFT.text.toString().isEmpty()) {
-                        instantTotal = sftInstalledTotalCal + Integer.parseInt(bindingInstallPeriod.etSFT.text.toString())
-                        binding.etInstalledSFT.setText(Integer.toString(instantTotal))
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                }
-            })
         }
+        view.addlayoutPr.setOnClickListener {
+            if (isValidateInstallPeriod(view)) {
+                addInstallationUI()
+            }
+        }
+        view.etFromDate.setOnClickListener {
+            openDataPicker(view.etFromDate) {
+                view.root.getTag(R.string.app_name)?.let { tag ->
+                    (tag as InstallationPeriod).from = view.etFromDate.text.toString()
+                    view.root.setTag(R.string.app_name, tag)
+                }
+            }
+        }
+        view.etToDate.setOnClickListener {
+            openDataPicker(view.etToDate) {
+                view.root.getTag(R.string.app_name)?.let { tag ->
+                    (tag as InstallationPeriod).to = view.etToDate.text.toString()
+                    view.root.setTag(R.string.app_name, tag)
+                }
+            }
+
+        }
+        view.etSFT.onTextChange {
+            var number = it.toString()
+            if (number.isEmpty())
+                number = "0.0"
+            view.root.getTag(R.string.app_name)?.let { tag ->
+                (tag as InstallationPeriod).sqrft = number.toDouble()
+                view.root.setTag(R.string.app_name, tag)
+            }
+            updateSFTUi()
+        }
+    }
+
+    private fun openDataPicker(etFromDate: CustomEditText, onDateSelect: (String) -> Unit) {
+        val mcurrentDate = Calendar.getInstance()
+        val mYear = mcurrentDate[Calendar.YEAR]
+        val mMonth = mcurrentDate[Calendar.MONTH]
+        val mDay = mcurrentDate[Calendar.DAY_OF_MONTH]
+        val mDatePicker = DatePickerDialog(
+            this@CreateClientProjectActivity,
+            { datepicker, selectedyear, selectedmonth, selectedday ->
+                val sel_month = selectedmonth + 1
+                var sday = selectedday.toString()
+                var smonth: String? = null
+                smonth = if (sel_month < 10) "0$sel_month" else sel_month.toString()
+                sday = if (selectedday < 10) "0$selectedday" else selectedday.toString()
+                etFromDate.setText(Common.getDatenewFormat("$selectedyear-$smonth-$sday")[0])
+                etFromDate.setTag("$selectedyear-$smonth-$sday")
+                onDateSelect("$selectedyear-$smonth-$sday")
+            },
+            mYear,
+            mMonth,
+            mDay
+        )
+        mDatePicker.show()
     }
 
 
@@ -574,7 +528,6 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
 //                viewHolder.etRemarks.setText(projectHeadRemarks.get(i).remark)
 //            }
             bindingrow.removelayoutPr.setOnClickListener {
-                removeInList(i)
                 binding.llAddProducts.removeViewAt(i)
                 addProducts()
             }
@@ -584,61 +537,63 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                     productAndSubseries.divisionId = divisionIds
                     productAndSubseries.subSeriesId = subSeriesIds
                     productAndSubseries.productSft = bindingrow.etSFT.text.toString()
-                    addInList(productAndSubseries)
                     sftTotalCal += Integer.parseInt(bindingrow.etSFT.text.toString())
                     binding.etTotalSFT.setText(Integer.toString(sftTotalCal))
                     bindingrow = DataBindingUtil.inflate(
-                            layoutInflater,
-                            R.layout.clientproject_product1_row,
-                            null,
-                            false
+                        layoutInflater,
+                        R.layout.clientproject_product1_row,
+                        null,
+                        false
                     )
                     binding.llAddProducts.addView(bindingrow.root)
                     addProducts()
                 }
             }
-//            products
             val productList = ArrayList<mListString>()
-            productList.add(mListString(0, "Select"))
+            products.map { mListString(it.divisionMasterId.toInt(), it.divisionName) }
             for (j in products.indices) {
-                productList.add(mListString(products.get(j).divisionMasterId.toInt(), products.get(j).divisionName))
-//                if (leadInsertReqVo != null && leadInsertReqVo.contactId.equalsIgnoreCase(associateContacts.get(j).contactId)) {
-//                    associateContactsSelect = j + 1
-//                }
+                productList.add(
+                    mListString(
+                        products.get(j).divisionMasterId.toInt(),
+                        products.get(j).divisionName
+                    )
+                )
             }
-
             bindingrow.tvProducts.setAdapter(productList, 1, 1)
-            bindingrow.tvProducts.setOnItemSelectedListener(object :
-                    AdapterView.OnItemSelectedListener {
+            bindingrow.tvProducts.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                        adapterView: AdapterView<*>?,
-                        view: View,
-                        i: Int,
-                        l: Long
+                    adapterView: AdapterView<*>?,
+                    view: View,
+                    i: Int,
+                    l: Long
                 ) {
                     subseriesList.clear()
                     if (i > 0) {
-                        divisionIds = products[i - 1].divisionMasterId
-                        subseriesList.addAll(products[i - 1].productList)
-                        Log.d("Selected Product:", products[i - 1].divisionName)
+                        divisionIds = products[i].divisionMasterId
+                        subseriesList.addAll(products[i].productList)
                         loadSubseries(subseriesList)
                     }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
                 }
 
-            })
+            }
             var instantTotal: Int
             bindingrow.etSFT.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                     if (!bindingrow.etSFT.text.toString().isEmpty()) {
-                        instantTotal = sftTotalCal + Integer.parseInt(bindingrow.etSFT.text.toString())
+                        instantTotal =
+                            sftTotalCal + Integer.parseInt(bindingrow.etSFT.text.toString())
                         binding.etTotalSFT.setText(Integer.toString(instantTotal))
                     }
                 }
@@ -651,31 +606,21 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
         }
     }
 
-    private fun removeInList(i: Int) {
-        if(newList.size>i){
-            newList.removeAt(i)
-        }
-    }
 
-    private fun addInList(productAndSubseries: ProductAndSubseries) {
-        newList.add(productAndSubseries)
-        Log.d("newList size", newList.size.toString())
-    }
-
-    private fun isValidateInstallPeriod(): Boolean {
+    private fun isValidateInstallPeriod(bindingInstallPeriod: ClientprojectInstallationRowBinding): Boolean {
         var isFilled = true
         bindingInstallPeriod.apply {
             if (etFromDate.text?.length == 0) {
                 etFromDate.requestFocus()
-                etFromDate.setError("Please add From Date")
+                toast("Please add From Date")
                 isFilled = false
             } else if (etToDate.text?.length == 0) {
                 etToDate.requestFocus()
-                etToDate.setError("Please add To Date")
+                toast("Please add To Date")
                 isFilled = false
             } else if (etSFT.text?.length == 0) {
                 etSFT.requestFocus()
-                etSFT.setError("Please add SFT")
+                toast("Please add SFT")
                 isFilled = false
             }
         }
@@ -687,16 +632,16 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
         bindingrow.apply {
             if (tvProducts.selectedItemPosition == 0) {
                 Toast.makeText(
-                        this@CreateClientProjectActivity,
-                        "Please select product",
-                        Toast.LENGTH_SHORT
+                    this@CreateClientProjectActivity,
+                    "Please select product",
+                    Toast.LENGTH_SHORT
                 ).show()
                 isFilled = false
             } else if (tvSubseriesList.selectedItemPosition == 0) {
                 Toast.makeText(
-                        this@CreateClientProjectActivity,
-                        "Please select Subseries",
-                        Toast.LENGTH_SHORT
+                    this@CreateClientProjectActivity,
+                    "Please select Subseries",
+                    Toast.LENGTH_SHORT
                 ).show()
                 isFilled = false
             } else if (etSFT.text?.length == 0) {
@@ -709,32 +654,33 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     }
 
     private fun loadSubseries(subseriesList: List<ProductList>) {
-        //            subseries
         val subsList = ArrayList<mListString>()
-        subsList.add(mListString(0, "Select"))
         for (k in subseriesList.indices) {
-            subsList.add(mListString(subseriesList.get(k).productId.toInt(), subseriesList.get(k).productName))
+            subsList.add(
+                mListString(
+                    subseriesList[k].productId.toInt(),
+                    subseriesList[k].productName
+                )
+            )
         }
         bindingrow.tvSubseriesList.setAdapter(subsList, 1, 1)
-        bindingrow.tvSubseriesList.setOnItemSelectedListener(object :
-                AdapterView.OnItemSelectedListener {
+        bindingrow.tvSubseriesList.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                    adapterView: AdapterView<*>?,
-                    view: View,
-                    i: Int,
-                    l: Long
+                adapterView: AdapterView<*>?,
+                view: View,
+                i: Int,
+                l: Long
             ) {
                 if (i > 0) {
-                    subSeriesIds = subseriesList[i - 1].productId
-                    Log.d("Selected Subseries:", subseriesList[i - 1].productName)
+                    subSeriesIds = subseriesList[i].productId
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
             }
 
-        })
+        }
     }
 
     internal class AddProductsViewHolder(rowView: View?) {
@@ -781,46 +727,76 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
 //                )
 //            }.toList()
 
-            val productAndSubseries = ProductAndSubseries()
-            productAndSubseries.divisionId = divisionIds
-            productAndSubseries.subSeriesId = subSeriesIds
-            productAndSubseries.productSft = bindingrow.etSFT.text.toString()
-            addInList(productAndSubseries)
+            var productList: MutableList<ProductAndSubseries> = mutableListOf()
+            var installedSftDetails: MutableList<InstalledSftDetails> = mutableListOf()
+            binding.llProducts.children.forEach {
+                it.getTag(R.string.app_name)?.let {
+                    var project = (it as ProjectItem)
+                    if (project.productPos != -1 && project.subSeriesPos != -1) {
+                        var productId = products[project.productPos].divisionMasterId
+                        var subSeriesId =
+                            products[project.productPos].productList[project.subSeriesPos].productId
+                        println("productId : $productId , subseries : $subSeriesId  sqrtft: ${project.sqrft}")
+                        productList.add(ProductAndSubseries().apply {
+                            this.divisionId = productId
+                            this.subSeriesId = subSeriesId
+                            this.productSft = project.sqrft.toString()
+                        })
+                    }
+                }
+            }
+            binding.llInstallation.children.forEach {
+                it.getTag(R.string.app_name)?.let {
+                    var installationPeriod = (it as InstallationPeriod)
+                    if (installationPeriod.from.isNotEmpty() && installationPeriod.to.isNotEmpty()) {
+                        installedSftDetails.add(
+                            InstalledSftDetails(
+                                installationPeriodFromDate = installationPeriod.from,
+                                installationPeriodToDate = installationPeriod.to,
+                                installationSft = installationPeriod.sqrft.toString()
+                            )
+                        )
+                    }
+                }
+            }
 
             val request = ClientProject(
-                    requestName = ADD_CLIENT_PROJECT,
-                    requesterId = "" + Common.getUserIdFromSP(this@CreateClientProjectActivity),
-                    customerProjectId = customerProjectIdValue,
-                    oaNumber = binding.etOANumber.text.toString(),
-                    materialDispatchDate = binding.etMaterialDispatch.text.toString(),
-                    anyShortage = when (anyShortageselected) {
-                        true -> "YES"
-                        false -> "NO"
-                    },
-                    shortageRemarks = binding.etClientRemarks.text.toString(),
-                    remarkDate = binding.etRemarkDate.text.toString(),
-                    shortageMaterialReceived = binding.etShortagesMaterialReceivedon.text.toString(),
-                    workStartDate = binding.etWorkStartDate.text.toString(),
-                    totalSft = binding.etTotalSFT.text.toString(),
-                    installedSft = binding.etInstalledSFT.text.toString(),
-                    balanceToInstall = binding.etBalanceTobeInstall.text.toString(),
-                    installationCompletionDate = binding.etInstallCompDate.text.toString(),
-                    noOfDaysForInstallation = binding.etNoOfDaysInstall.text.toString(),
-                    handingOverDone = binding.etHandingOver.text.toString(),
-                    balanceHandingOver = binding.etBalanceHandingOver.text.toString(),
-                    workCompletionCertificateImagePath = "",
-                    workCompletionCertificate = binding.tvWorkCompletion.text.toString(),
-                    workCompletionCertificateReceivedDate = binding.etWCCReceiveDate.text.toString(),
-                    noOfDaysForHandingOver = binding.etNoOfDaysHandingOver.text.toString(),
-                    workStatus = binding.tvWorkStatusSelect.text.toString(),
-                    noOfDaysForInstallationAndHandingOver = binding.etInstallAndHandingOver.text.toString(),
-                    clientProjectDate = binding.etDate.text.toString(),
-                    Remarks = binding.etRemarks.text.toString(),
-                    products = newList
+                requestName = ADD_CLIENT_PROJECT,
+                requesterId = "" + Common.getUserIdFromSP(this@CreateClientProjectActivity),
+                customerProjectId = customerProjectIdValue,
+                oaNumber = binding.etOANumber.text.toString(),
+                materialDispatchDate = binding.etMaterialDispatch.text.toString(),
+                anyShortage = when (anyShortageselected) {
+                    true -> "YES"
+                    false -> "NO"
+                },
+                shortageRemarks = binding.etClientRemarks.text.toString(),
+                remarkDate = binding.etRemarkDate.text.toString(),
+                shortageMaterialReceived = binding.etShortagesMaterialReceivedon.text.toString(),
+                workStartDate = binding.etWorkStartDate.text.toString(),
+                totalSft = binding.etTotalSFT.text.toString(),
+                installedSft = binding.etInstalledSFT.text.toString(),
+                balanceToInstall = binding.etBalanceTobeInstall.text.toString(),
+                installationCompletionDate = binding.etInstallCompDate.text.toString(),
+                noOfDaysForInstallation = binding.etNoOfDaysInstall.text.toString(),
+                handingOverDone = binding.etHandingOver.text.toString(),
+                balanceHandingOver = binding.etBalanceHandingOver.text.toString(),
+                workCompletionCertificateImagePath = "",
+                workCompletionCertificate = binding.tvWorkCompletion.text.toString(),
+                workCompletionCertificateReceivedDate = binding.etWCCReceiveDate.text.toString(),
+                noOfDaysForHandingOver = binding.etNoOfDaysHandingOver.text.toString(),
+                workStatus = binding.tvWorkStatusSelect.text.toString(),
+                noOfDaysForInstallationAndHandingOver = binding.etInstallAndHandingOver.text.toString(),
+                clientProjectDate = binding.etDate.text.toString(),
+                Remarks = binding.etRemarks.text.toString(),
+                products = productList,
+                installedSftDetails = installedSftDetails
+
             )
             if (isEdit) {
                 request.requestName = EDIT_CLIENT_PROJECT
-                request.csCustomerprojectClientProjectDetailsId = customerprojectClientProjectDetailsId
+                request.csCustomerprojectClientProjectDetailsId =
+                    customerprojectClientProjectDetailsId
             }
             uploadImage(request)
         } catch (e: Exception) {
@@ -833,11 +809,11 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
         val muPartList: MutableList<MultipartBody.Part> = ArrayList()
         if (wc_certificate_file != null && wc_certificate_file!!.length() > 5) {
             muPartList.add(
-                    prepareFilePart(
-                            "work_completion_certificate_image_path[]",
-                            Uri.fromFile(wc_certificate_file),
-                            wc_certificate_file!!
-                    )!!
+                prepareFilePart(
+                    "work_completion_certificate_image_path[]",
+                    Uri.fromFile(wc_certificate_file),
+                    wc_certificate_file!!
+                )!!
             )
         }
         Common.Log.i("Request obj " + request.toString())
@@ -849,46 +825,46 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
 
             val fileParts = muPartList.toTypedArray()
             val abc = MyApplication.getInstance().apiInterface.uploadPaymentCollection(
-                    Constants.API,
-                    fileParts,
-                    request
+                Constants.API,
+                fileParts,
+                request
             )
             abc.enqueue(object : Callback<ResponseBody?> {
                 override fun onResponse(
-                        call: Call<ResponseBody?>,
-                        response: Response<ResponseBody?>
+                    call: Call<ResponseBody?>,
+                    response: Response<ResponseBody?>
                 ) {
                     if (response.body() == null) {
                         Toast.makeText(
-                                this@CreateClientProjectActivity,
-                                "Intenal Server Error",
-                                Toast.LENGTH_SHORT
+                            this@CreateClientProjectActivity,
+                            "Intenal Server Error",
+                            Toast.LENGTH_SHORT
                         ).show()
                         progressD!!.dismiss()
                         return
                     }
                     Toast.makeText(
-                            this@CreateClientProjectActivity,
-                            "New contact inserted successfully.",
-                            Toast.LENGTH_SHORT
+                        this@CreateClientProjectActivity,
+                        "New contact inserted successfully.",
+                        Toast.LENGTH_SHORT
                     ).show()
                     var apiResponseController: ApiResponseController? = null
                     try {
                         apiResponseController = Gson().fromJson(
-                                response.body()!!.string(),
-                                ApiResponseController::class.java
+                            response.body()!!.string(),
+                            ApiResponseController::class.java
                         )
                         val clientProjectResVO = Common.getSpecificDataObject(
-                                apiResponseController.result,
-                                ClientProjectResponse::class.java
+                            apiResponseController.result,
+                            ClientProjectResponse::class.java
                         )
                         setResult(
-                                Activity.RESULT_OK,
-                                Intent().apply { putExtra("args", clientProjectResVO) })
+                            Activity.RESULT_OK,
+                            Intent().apply { putExtra("args", clientProjectResVO) })
 
                         if (clientProjectResVO != null) {
                             val clientProjectList: List<ClientProject> =
-                                    clientProjectResVO.clientProjects
+                                clientProjectResVO.clientProjects
                             if (clientProjectList.size > 0) {
                                 Common.Log.i(clientProjectList.toString())
 //                                db.commonDao().insertContractorContact(contactContractorList)
@@ -915,8 +891,8 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
 
     private fun prepareFilePart(file_i: String, uri: Uri, file: File): MultipartBody.Part? {
         val requestFile = RequestBody.create(
-                MediaType.parse(getMimeType(this@CreateClientProjectActivity, uri)),
-                file
+            MediaType.parse(getMimeType(this@CreateClientProjectActivity, uri)),
+            file
         )
 
         // MultipartBody.Part is used to send also the actual file name
@@ -938,62 +914,116 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
         return extension
     }
 
-    fun setProducts(
-            selectedProducts: LinkedHashSet<Int>,
-            selectedSubseries: MutableMap<String, MutableList<Int>>
-    ) {
-        binding.llProducts.removeAllViews()
-        selectedProducts.forEach { pos ->
-            var obj = products[pos]
-            var view: ClientprojectProductRowBinding = DataBindingUtil.inflate(
-                    layoutInflater,
-                    R.layout.clientproject_product_row,
-                    null,
-                    false
-            )
-            view.tvProducts.setText(obj.divisionName ?: "Select")
-            view.tvSubseriesList.setText(selectedSubseries[obj.divisionMasterId]?.map { obj.productList[it].productName }
-                    ?.joinToString { it }
-                    ?: "Select Subseries")
-            view.tvProducts.setOnClickListener {
-                MultiSelectionDialog(
-                        context = this@CreateClientProjectActivity,
-                        list = products,
-                        mapper = { it.divisionName },
-                        selectedPosition = listOf(pos).toMutableList(),
-                        isSingleSelection = true,
-                ) {
-                    selectedProducts.remove(pos)
-                    var selectedProduct = products[it.first()]
-                    selectedProducts.add(it.first())
-                    view.root.setTag(R.string.app_name, selectedProduct)
-                    view.tvSubseriesList.setText("Select Subseries")
-                    view.tvProducts.setText(selectedProduct.divisionName)
-                }.show()
+    data class ProjectItem(
+        var productPos: Int = -1,
+        var subSeriesPos: Int = -1,
+        var sqrft: Double = 0.0
+    )
 
-            }
-            view.root.setTag(R.string.app_name, obj)
-            view.tvSubseriesList.setOnClickListener {
-                var product = view.root.getTag(R.string.app_name) as DivisionList
-                MultiSelectionDialog(
-                        context = this@CreateClientProjectActivity,
-                        list = product.productList,
-                        mapper = { it.productName },
-                        selectedPosition = selectedSubseries[product.divisionMasterId]
-                                ?: mutableListOf(),
-                        isSingleSelection = true,
-                ) {
-                    selectedSubseries.put(product.divisionMasterId, it.toMutableList())
-                    view.tvSubseriesList.setText(
-                            it.toMutableSet().map { product.productList[it].productName }
-                                    ?.joinToString { it }
-                    )
-                }.show()
-            }
-            binding.llProducts.addView(view.root)
+    fun getNewItem(): ClientprojectProductRowBinding {
+        return DataBindingUtil.inflate<ClientprojectProductRowBinding?>(
+            layoutInflater,
+            R.layout.clientproject_product_row,
+            null,
+            false
+        ).apply {
+            root.setTag(R.string.app_name, ProjectItem())
         }
     }
 
+    fun setProducts() {
+        var view = getNewItem()
+        binding.llProducts.addView(view.root)
+        view.tvProducts.text = "Select"
+        view.llRemove.show()
+        view.tvProducts.setOnClickListener {
+            MultiSelectionDialog(
+                context = this@CreateClientProjectActivity,
+                list = products,
+                mapper = { it.divisionName },
+                selectedPosition = mutableListOf(),
+                isSingleSelection = true,
+            ) {
+                var selectedProduct = products[it.first()]
+                view.root.getTag(R.string.app_name)?.let { tag ->
+                    (tag as ProjectItem).productPos = it.first()
+                    view.root.setTag(R.string.app_name, tag)
+                }
+                view.tvSubseriesList.text = "Select Subseries"
+                view.etSFT.setText("")
+                view.tvProducts.setText(selectedProduct.divisionName)
+                view.tvSubseriesList.setOnClickListener {
+                    val product =
+                        products[(view.root.getTag(R.string.app_name) as ProjectItem).productPos]
+                    MultiSelectionDialog(
+                        context = this@CreateClientProjectActivity,
+                        list = product.productList,
+                        mapper = { it.productName },
+                        selectedPosition = mutableListOf(),
+                        isSingleSelection = true,
+                    ) {
+                        var selectedPosition = it.first()
+                        view.root.getTag(R.string.app_name)?.let { tag ->
+                            (tag as ProjectItem).subSeriesPos = selectedPosition
+                            view.root.setTag(R.string.app_name, tag)
+                        }
+                        selectedSubseries.put(product.divisionMasterId, it.toMutableList())
+                        view.tvSubseriesList.setText(product.productList[selectedPosition].productName)
+                    }.show()
+                }
+            }.show()
+
+        }
+        view.llAdd.setOnClickListener {
+            if (view.tvProducts.text == "Select") {
+                toast("Please select Product")
+            } else if (view.tvSubseriesList.text == "Select Subseries") {
+                toast("Please select subseries")
+            } else if (view.etSFT.text.toString().isEmpty())
+                toast("Please enter Sft ")
+            else
+                setProducts()
+
+        }
+        view.llRemove.setOnClickListener {
+            view.root.setTag(R.string.app_name, null)
+            var parent = view.root.parent as ViewGroup
+            for (i in (parent.childCount - 1) downTo 0)
+                if (parent.getChildAt(i).getTag(R.string.app_name) == null)
+                    parent.removeViewAt(i)
+            updateSFTUi()
+            if (parent.childCount == 0) {
+                setProducts()
+            }
+        }
+        view.etSFT.onTextChange {
+            var number = it.toString()
+            if (number.isEmpty())
+                number = "0.0"
+            view.root.getTag(R.string.app_name)?.let { tag ->
+                (tag as ProjectItem).sqrft = number.toDouble()
+                view.root.setTag(R.string.app_name, tag)
+            }
+            updateSFTUi()
+        }
+    }
+
+    private fun updateSFTUi() {
+        var totalSqrFt = binding.llProducts.children.mapNotNull { it.getTag(R.string.app_name) }
+            .map { (it as ProjectItem).sqrft }.sum()
+        binding.etTotalSFT.setText(totalSqrFt.toString())
+        var totalInstallationSqrFt =
+            binding.llInstallation.children.mapNotNull { it.getTag(R.string.app_name) }
+                .map { (it as InstallationPeriod).sqrft }.sum()
+        binding.etInstalledSFT.setText(totalInstallationSqrFt.toString())
+        binding.etBalanceTobeInstall.setText((totalSqrFt - totalInstallationSqrFt).toString())
+        var handlingOverDone = try {
+            binding.etHandingOver.text.toString().toDouble()
+        } catch (e: java.lang.Exception) {
+            0.0
+        }
+        binding.etBalanceHandingOver.setText((totalSqrFt - handlingOverDone).toString())
+    }
 
     private fun isValidate(): Boolean {
         var isFilled = true
@@ -1004,30 +1034,30 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 isFilled = false
             } else if (etMaterialDispatch.text?.length == 0) {
                 Toast.makeText(
-                        this@CreateClientProjectActivity,
-                        "Please add Date of Material Dispatch",
-                        Toast.LENGTH_SHORT
+                    this@CreateClientProjectActivity,
+                    "Please add Date of Material Dispatch",
+                    Toast.LENGTH_SHORT
                 ).show()
                 isFilled = false
             } else if (etWorkStartDate.text?.length == 0) {
                 Toast.makeText(
-                        this@CreateClientProjectActivity,
-                        "Please add Work Start Date",
-                        Toast.LENGTH_SHORT
+                    this@CreateClientProjectActivity,
+                    "Please add Work Start Date",
+                    Toast.LENGTH_SHORT
                 ).show()
                 isFilled = false
             } else if (etTotalSFT.text?.length == 0) {
                 Toast.makeText(
-                        this@CreateClientProjectActivity,
-                        "Please add Total SFT",
-                        Toast.LENGTH_SHORT
+                    this@CreateClientProjectActivity,
+                    "Please add Total SFT",
+                    Toast.LENGTH_SHORT
                 ).show()
                 isFilled = false
             } else if (etInstalledSFT.text?.length == 0) {
                 Toast.makeText(
-                        this@CreateClientProjectActivity,
-                        "Please add Installed SFT",
-                        Toast.LENGTH_SHORT
+                    this@CreateClientProjectActivity,
+                    "Please add Installed SFT",
+                    Toast.LENGTH_SHORT
                 ).show()
                 isFilled = false
             } else if (etBalanceTobeInstall.text?.length == 0) {
@@ -1040,9 +1070,9 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 isFilled = false
             } else if (etWCCReceiveDate.text?.length == 0) {
                 Toast.makeText(
-                        this@CreateClientProjectActivity,
-                        "Please add Work completion date",
-                        Toast.LENGTH_SHORT
+                    this@CreateClientProjectActivity,
+                    "Please add Work completion date",
+                    Toast.LENGTH_SHORT
                 ).show()
                 isFilled = false
             } else if (etInstallAndHandingOver.text?.length == 0) {
@@ -1052,9 +1082,9 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             } else if (anyShortageselected) {
                 if (etShortagesMaterialReceivedon.text?.length == 0) {
                     Toast.makeText(
-                            this@CreateClientProjectActivity,
-                            "Please add Shortage Material Received",
-                            Toast.LENGTH_SHORT
+                        this@CreateClientProjectActivity,
+                        "Please add Shortage Material Received",
+                        Toast.LENGTH_SHORT
                     ).show()
                     isFilled = false
                 } else if (etClientRemarks.text?.length == 0) {
@@ -1064,9 +1094,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 }
             }
         }
-
         return isFilled
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -1074,7 +1102,8 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
         if (resultCode == Activity.RESULT_OK && data != null) {
             val file = getFile(data)
             val firstlink1 =
-                    file!!.absolutePath.subSequence(0, file.absolutePath.lastIndexOf('/')).toString()
+                file!!.absolutePath.subSequence(0, file.absolutePath.lastIndexOf('/'))
+                    .toString()
             wc_certificate_file = File(file.absolutePath) // Assuming it is in Internal Storage
             println("## firstlink:$firstlink1")
             binding.wcCertifFileName.setText(file.name)
@@ -1082,16 +1111,16 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     }
 
     override fun onResponseSuccess(
-            objectResponse: ApiResponseController,
-            objectRequest: ApiRequestController,
-            progressDialog: ProgressDialog
+        objectResponse: ApiResponseController,
+        objectRequest: ApiRequestController,
+        progressDialog: ProgressDialog
     ) {
         try {
             when (objectResponse.requestname) {
                 Constants.RequestNames.DROP_DOWN_LIST -> {
                     val dropDownData: DropDownData = Common.getSpecificDataObject<DropDownData>(
-                            objectResponse.result,
-                            DropDownData::class.java
+                        objectResponse.result,
+                        DropDownData::class.java
                     )
                     products = dropDownData.divisionList
                     loadProductsUI()
@@ -1106,11 +1135,13 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             getArguments<Args>()?.let {
                 isEdit = it.isEdit
                 customerProjectIdValue = it.customerProjectId
-                customerprojectClientProjectDetailsId = it.clientProject!!.csCustomerprojectClientProjectDetailsId
+                customerprojectClientProjectDetailsId =
+                    it.clientProject!!.csCustomerprojectClientProjectDetailsId
                 it.clientProject?.products?.forEachIndexed { pos, client ->
                     val key = client.divisionMasterId
                     if (arrProjectId.contains(key)) {
-                        var productPosition = products.indexOfFirst { it.divisionMasterId == key }
+                        var productPosition =
+                            products.indexOfFirst { it.divisionMasterId == key }
                         if (productPosition >= 0)
                             selectedProducts.add(productPosition)
 
@@ -1119,11 +1150,11 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                             list = mutableListOf()
                         selectedSubseries[key] = list
                         var subSeriesPosition =
-                                hmProducts[key]?.indexOfFirst { it.productCode == client.productCode }
+                            hmProducts[key]?.indexOfFirst { it.productCode == client.productCode }
                         subSeriesPosition?.let { list.add(it) }
                     }
                 }
-                setProducts(selectedProducts, selectedSubseries)
+                setProducts(/*selectedProducts, selectedSubseries*/)
                 it.clientProject?.let { setUI(it) }
             }
             Common.dismissProgressDialog(progressDialog)
@@ -1160,19 +1191,27 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     }
 
     data class Args(
-            var clientProject: ClientProject?,
-            var customerProjectId: String,
-            var isEdit: Boolean = false
+        var clientProject: ClientProject?,
+        var customerProjectId: String,
+        var isEdit: Boolean = false
     ) : Serializable
 
     companion object {
         fun open(context: Context, args: Args? = null) {
-            context.startActivity(Intent(context, CreateClientProjectActivity::class.java).apply {
-                putExtra("args", args)
-            })
+            context.startActivity(
+                Intent(
+                    context,
+                    CreateClientProjectActivity::class.java
+                ).apply {
+                    putExtra("args", args)
+                })
         }
 
-        fun launch(launcher: ActivityResultLauncher<Intent>, context: Context, args: Args? = null) {
+        fun launch(
+            launcher: ActivityResultLauncher<Intent>,
+            context: Context,
+            args: Args? = null
+        ) {
             launcher.launch(Intent(context, CreateClientProjectActivity::class.java).apply {
                 putExtra("args", args)
             })

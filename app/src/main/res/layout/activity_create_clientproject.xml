@@ -107,15 +107,17 @@
                     android:text="Select"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <LinearLayout
                     android:id="@+id/llSelectYesAnyShrt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_bg_white"
-                    android:padding="@dimen/_5sdp"
-                    android:visibility="gone"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:orientation="vertical">
+                    android:background="@drawable/button_bg_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="gone">
+
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
                         android:id="@+id/tvShortagesMaterialReceivedon"
                         android:layout_width="wrap_content"
@@ -152,9 +154,9 @@
                         android:layout_height="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:background="@drawable/button_bg_white"
+                        android:enabled="false"
                         android:gravity="left|center"
                         android:imeOptions="actionNext"
-                        android:enabled="false"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 
@@ -206,8 +208,8 @@
                     android:id="@+id/btnProducts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:text="Add/Delete Projects" />
+                    android:text="Add/Delete Projects"
+                    android:visibility="gone" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -231,11 +233,13 @@
                     android:padding="@dimen/_5sdp"
                     android:text="ADD PROJECTS"
                     android:textAllCaps="true" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    android:scrollbarSize="@dimen/_2sdp">
+                    android:scrollbarSize="@dimen/_2sdp"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/llAddProducts"
@@ -259,11 +263,11 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:enabled="false"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:text="0"
-                    android:enabled="false"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
@@ -280,13 +284,14 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:enabled="false"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:text="0"
-                    android:enabled="false"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -295,6 +300,7 @@
                     android:padding="@dimen/_5sdp"
                     android:text="Installation Period"
                     android:textAllCaps="true" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -308,6 +314,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:orientation="vertical" />
                 </HorizontalScrollView>
+
                 <com.ncl.nclcustomerservice.customviews.CustomTextView
                     android:id="@+id/tvBalanceTobeInstall"
                     android:layout_width="wrap_content"
@@ -321,11 +328,11 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:enabled="false"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:text="0"
-                    android:enabled="false"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
@@ -405,11 +412,11 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:background="@drawable/button_bg_white"
+                    android:enabled="false"
                     android:gravity="left|center"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:text="0"
-                    android:enabled="false"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
@@ -565,9 +572,9 @@
                     android:background="@drawable/button_bg_white"
                     android:drawableLeft="@drawable/calendar"
                     android:drawablePadding="@dimen/_2sdp"
+                    android:enabled="false"
                     android:focusable="false"
                     android:gravity="left|center"
-                    android:enabled="false"
                     android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:textColor="@color/black"
