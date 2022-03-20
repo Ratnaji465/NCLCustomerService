@@ -186,8 +186,8 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
 
     @OnClick(R.id.btn_login)
     void setBtn_login() {
-        username.setText("venkatesh.k@nclbuildtek.com");
-        password.setText("1234");
+//        username.setText("venkatesh.k@nclbuildtek.com");
+//        password.setText("1234");
         if (username.getText().toString().trim().length() == 0) {
             username.setError("Please Enter Email/User Name");
             username.requestFocus();
