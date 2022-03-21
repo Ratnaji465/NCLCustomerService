@@ -154,6 +154,8 @@
                         android:layout_height="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:background="@drawable/button_bg_white"
+                        android:drawableLeft="@drawable/calendar"
+                        android:drawablePadding="@dimen/_2sdp"
                         android:enabled="false"
                         android:gravity="left|center"
                         android:imeOptions="actionNext"
@@ -210,7 +212,14 @@
                     android:layout_height="wrap_content"
                     android:text="Add/Delete Projects"
                     android:visibility="gone" />
-
+                <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/grey"
+                    android:padding="@dimen/_5sdp"
+                    android:text="ADD PROJECTS"
+                    android:textAllCaps="true" />
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -225,14 +234,7 @@
                         android:orientation="vertical" />
                 </HorizontalScrollView>
 
-                <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@color/grey"
-                    android:padding="@dimen/_5sdp"
-                    android:text="ADD PROJECTS"
-                    android:textAllCaps="true" />
+
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"

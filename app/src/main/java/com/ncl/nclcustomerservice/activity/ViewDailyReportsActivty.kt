@@ -46,10 +46,29 @@ private lateinit var dailyReportsList:DailyReportsAddVO
         }
         binding.apply {
             tvRelatedTo.text=dailyReportsList.relatedTo
-            tvContractor.text=dailyReportsList.contractorName
-            tvMobileNo.text=dailyReportsList.contractorMobileNo
-            tvCalltype.text=dailyReportsList.callType
-            tvOANo.text=dailyReportsList.oaNumbers
+            if(dailyReportsList.relatedTo.equals("New Project")){
+                tvDescriptionOfWork.visibility=View.GONE
+                llDescriptionWork.visibility=View.GONE
+                llOne.visibility=View.GONE
+                tvProjectName.text=dailyReportsList.newprojectName
+                tvContactName.text=dailyReportsList.newprojectContactName
+                tvMobileNo.text=dailyReportsList.mobileNo
+                tvCalltype.text=dailyReportsList.callType
+
+            }else if(dailyReportsList.relatedTo.equals("Existing Project")){
+                llTwo.visibility=View.GONE
+                llThree.visibility=View.GONE
+                tvDescriptionOfWork.visibility=View.VISIBLE
+                llDescriptionWork.visibility=View.VISIBLE
+                tvClientProject.text=dailyReportsList.csCustomerprojectClientprojectDetailsid
+                tvProjectHeadName.text=dailyReportsList.projectHeadName
+                if(dailyReportsList.descriptionOfWorks!=null && dailyReportsList.descriptionOfWorks!!.size>0){
+                    for(i in 0..dailyReportsList.descriptionOfWorks!!.size-1){
+                        addDesWork(dailyReportsList.descriptionOfWorks!!.get(i))
+                    }
+                }
+            }
+
             if(dailyReportsList.checkInTime==null){
                 tvCheckIn.text="--"
             }else{
@@ -70,11 +89,7 @@ private lateinit var dailyReportsList:DailyReportsAddVO
                 btnCheckIn.visibility=View.GONE
                 btnCheckOut.visibility=View.GONE
             }
-            if(dailyReportsList.descriptionOfWorks!=null && dailyReportsList.descriptionOfWorks!!.size>0){
-                for(i in 0..dailyReportsList.descriptionOfWorks!!.size-1){
-                    addDesWork(dailyReportsList.descriptionOfWorks!!.get(i))
-                }
-            }
+
             btnEdit.setOnClickListener {
                 CreateDailyReportsActivity.open(
                         this@ViewDailyReportsActivty,
@@ -178,7 +193,7 @@ private lateinit var dailyReportsList:DailyReportsAddVO
                                     objectResponse.result,
                                     DailyReportsResObjVO::class.java
                             )
-                    val callStatus=dailyReportsAddVO.dailyReportsResObjVO?.callStatus
+                    val callStatus=dailyReportsAddVO.dailyReportsResObjVO?.get(0)?.callStatus
                     binding.apply {
                         if(callStatus==0){
                             btnCheckIn.visibility=View.VISIBLE
@@ -191,15 +206,15 @@ private lateinit var dailyReportsList:DailyReportsAddVO
                             btnCheckOut.visibility=View.GONE
                         }
 
-                        if(dailyReportsAddVO.dailyReportsResObjVO?.checkInTime==null){
+                        if(dailyReportsAddVO.dailyReportsResObjVO?.get(0)?.checkInTime==null){
                             tvCheckIn.text="--"
                         }else{
-                            tvCheckIn.text=dailyReportsAddVO.dailyReportsResObjVO?.checkInTime
+                            tvCheckIn.text=dailyReportsAddVO.dailyReportsResObjVO?.get(0)?.checkInTime
                         }
-                        if(dailyReportsAddVO.dailyReportsResObjVO?.checkoutTime==null){
+                        if(dailyReportsAddVO.dailyReportsResObjVO?.get(0)?.checkoutTime==null){
                             tvCheckOut.text="--"
                         }else{
-                            tvCheckOut.text=dailyReportsAddVO.dailyReportsResObjVO?.checkoutTime
+                            tvCheckOut.text=dailyReportsAddVO.dailyReportsResObjVO?.get(0)?.checkoutTime
                         }
                     }
 

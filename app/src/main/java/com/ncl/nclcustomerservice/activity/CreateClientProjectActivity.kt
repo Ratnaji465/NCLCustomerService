@@ -143,9 +143,7 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                 Common.setSppanableText("* Remark")
 
 //            set today date
-            val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
-            Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
-            etRemarkDate.setText(parseDateToddMMyyyy(currentDateTimeString).toString())
+            etRemarkDate.setText(SimpleDateFormat("yyyy-MM-dd").format(Date()))
 
             val dropDownDataReqVo = DropDownDataReqVo().apply {
                 teamId = Common.getTeamUserIdFromSP(this@CreateClientProjectActivity)
@@ -517,8 +515,6 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     private fun addProducts() {
         for (i in 0 until binding.llAddProducts.getChildCount()) {
             val ll_AddProducts_view: View = binding.llAddProducts.getChildAt(i)
-            val viewHolder = AddProductsViewHolder(ll_AddProducts_view)
-
             if (binding.llAddProducts.getChildCount() > 1) {
                 bindingrow.removelayoutPr.visibility = View.VISIBLE
             } else {

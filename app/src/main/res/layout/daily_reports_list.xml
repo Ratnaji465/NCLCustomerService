@@ -58,7 +58,7 @@
                         android:textColor="@color/gray" />
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/et_project_name"
+                        android:id="@+id/et_related_to"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -67,6 +67,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llProjectName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.25"
@@ -76,11 +77,11 @@
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name"
+                        android:text="Project Name"
                         android:textColor="@color/gray" />
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/et_address"
+                        android:id="@+id/et_project_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -104,13 +105,14 @@
                     android:orientation="vertical">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tvContactName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Project Owner"
+                        android:text="Contact Name"
                         android:textColor="@color/gray" />
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/et_project_owner"
+                        android:id="@+id/et_contact_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -126,6 +128,7 @@
                     android:orientation="vertical">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tvCallType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Call Type"

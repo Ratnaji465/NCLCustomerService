@@ -9,7 +9,7 @@ class DailyReportsResObjVO : Serializable {
     @JvmField
     @SerializedName("daily_report_info")
     @Expose
-    var dailyReportsResObjVO: DailyReportsAddVO ? = null
+    var dailyReportsResObjVO: List<DailyReportsAddVO> ? = null
     override fun toString(): String {
         return ToStringBuilder(this)
                 .append("dailyReportsResVOList", dailyReportsResObjVO).toString()

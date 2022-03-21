@@ -34,6 +34,7 @@ import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResponseListener {
     override fun onInternetConnected() {
@@ -50,7 +51,6 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
     private lateinit var contractorContactList: List<CustomerContactResponseVo.ContactContractorList>
     lateinit var selectedCCId: String
     lateinit var selectedCPId: String
-    private var clientProjectList: MutableList<ClientProject> = mutableListOf()
     private var selectedSubseries: MutableList<String> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +63,13 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             toolbar.backButton.setOnClickListener {
                 finish()
             }
-            tvRelatedTo.text = Common.setSppanableText("* Related To")
+            tvProjectName.text=Common.setSppanableText("* Project Name")
+            tvContactName.text=Common.setSppanableText("* Contact Name")
+            tvMobileNo.text=Common.setSppanableText("* Mobile No")
             tvCallType.text = Common.setSppanableText("* Call Type")
-            tvOANo.text = Common.setSppanableText("* OA No")
-            for (i in 0..customerProjectList.size - 1) {
-                clientProjectList.addAll(customerProjectList.get(i).clientProjects)
-            }
-            Log.d("clientProjectList", clientProjectList.size.toString())
+            tvClientProject.text = Common.setSppanableText("* Client Project")
+            tvProjectHeadName.text = Common.setSppanableText("* Project Head Name")
+
             getArguments<Args>()?.let {
                 isEdit = true
                  dailyReport = it.dailyReport!!
@@ -82,55 +82,37 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 
     private fun setUI(reportObj: DailyReportsAddVO) {
         binding.apply {
-            etRelatedTo.setText(reportObj.relatedTo.orEmpty())
-            etCallType.setText(reportObj.callType.orEmpty())
-            etOANo.setText(reportObj.oaNumbers.orEmpty())
-            if (reportObj.relatedTo.equals("Contractor")) {
-                llSelectRelatedTo.visibility = View.VISIBLE
-                tvClientProject.text = Common.setSppanableText("* Contractor")
-                tvProjectHeadName.text = Common.setSppanableText("* Mobile No")
-                etClientProject.setText(reportObj.contractorName)
-                etProjectHeadName.setText(reportObj.contractorMobileNo)
-                loadContractorDetails()
-            } else if (reportObj.relatedTo.equals("Client Project")) {
-                llSelectRelatedTo.visibility = View.VISIBLE
-                tvClientProject.text = Common.setSppanableText("* Client Project")
-                tvProjectHeadName.text = Common.setSppanableText("* Project Head Name")
+            if (reportObj.relatedTo.equals("New Project")) {
+                llNewProject.visibility=View.VISIBLE
+                etProjectName.setText(reportObj.newprojectName)
+                etContactName.setText(reportObj.newprojectContactName)
+                etMobileNo.setText(reportObj.mobileNo)
+                etCallType.setText(reportObj.callType.orEmpty())
+//                loadContractorDetails()
+            } else if (reportObj.relatedTo.equals("Existing Project")) {
+                llExistingProject.visibility=View.VISIBLE
+                selectedCPId=""+reportObj.csCustomerprojectClientprojectDetailsid
                 etClientProject.setText(reportObj.projectName)
                 etProjectHeadName.setText(reportObj.projectHeadName)
-                loadClientProjectDetails()
+                reportObj.descriptionOfWorks?.forEach {
+                    addDescriptionItem(it)
+                }
+//                loadClientProjectDetails()
             }
-            reportObj.descriptionOfWorks?.forEach {
-                addDescriptionItem(it)
-            }
+
         }
     }
 
     private fun setClickListeners() {
         binding.apply {
-            etRelatedTo.setOnClickListener {
-                var list = listOf<String>("Contractor", "Client Project")
-                MultiSelectionDialog(
-                    context = this@CreateDailyReportsActivity,
-                    list = list,
-                    mapper = { it },
-                    selectedPosition = null,
-                    isSingleSelection = true,
-                        isSearchable=false
-                ) {
-                    etRelatedTo.setText(list[it.first()])
-                    if (list[it.first()].equals("Contractor")) {
-                        llSelectRelatedTo.visibility = View.VISIBLE
-                        tvClientProject.text = Common.setSppanableText("* Contractor")
-                        tvProjectHeadName.text = Common.setSppanableText("* Mobile No")
-                        loadContractorDetails()
-                    } else if (list[it.first()].equals("Client Project")) {
-                        llSelectRelatedTo.visibility = View.VISIBLE
-                        tvClientProject.text = Common.setSppanableText("* Client Project")
-                        tvProjectHeadName.text = Common.setSppanableText("* Project Head Name")
-                        loadClientProjectDetails()
-                    }
-                }.show()
+            loadClientProjectDetails()
+            rbNewProject.setOnClickListener {
+                llNewProject.visibility=View.VISIBLE
+                llExistingProject.visibility=View.GONE
+            }
+            rbExistingProject.setOnClickListener {
+                llNewProject.visibility=View.GONE
+                llExistingProject.visibility=View.VISIBLE
             }
             etCallType.setOnClickListener {
                 var list = listOf<String>("Visit", "Call")
@@ -145,53 +127,49 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                     etCallType.setText(list[it.first()])
                 }.show()
             }
-            etOANo.setOnClickListener {
-                MultiSelectionDialog(
-                    context = this@CreateDailyReportsActivity,
-                    list = clientProjectList,
-                    mapper = { it.oaNumber },
-                    selectedPosition = null,
-                    isSingleSelection = false
-                ) {
-
-                    selectedSubseries.add(clientProjectList[it[0]].csCustomerprojectClientProjectDetailsId)
-                    etOANo.setText(
-                        it.toMutableSet().map { clientProjectList[it].oaNumber }
-                            .joinToString { it }
-                    )
-                }.show()
-            }
 //            {"requesterid":529,"requestname":"daily_report_checkin_checkout","requestparameters":
 //            {"cs_dailyreport_id":"12","type":"checkin","datetime":"2022-01-17 20:10:10"}}
             btnAdd.setOnClickListener {
                 addDescriptionItem(null)
             }
             save.setOnClickListener {
-                if (isValidate()) {
-                    if (etRelatedTo.text?.toString().equals("Select")) {
-                        Toast.makeText(
-                            this@CreateDailyReportsActivity,
-                            "Please Select Related to",
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                if (isValidate()) {
+
+                if(rbNewProject.isChecked){
+                    if(etProjectName.text?.length==0){
+                        etProjectName.requestFocus()
+                        etProjectName.setError("Please add Project Name")
                         return@setOnClickListener
-                    } else if (etCallType.text?.toString().equals("Select")) {
-                        Toast.makeText(
-                            this@CreateDailyReportsActivity,
-                            "Please Select Call type",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    }else if(etContactName.text?.length==0){
+                        etContactName.requestFocus()
+                        etContactName.setError("Please add Contact Name")
                         return@setOnClickListener
-                    } else if (etOANo.text?.toString().equals("Select")) {
+                    }else if(etMobileNo.text?.length==0){
+                        etMobileNo.requestFocus()
+                        etMobileNo.setError("Please add Mobile No")
+                        return@setOnClickListener
+                    }else if (etCallType.text?.toString().equals("Select")) {
                         Toast.makeText(
-                            this@CreateDailyReportsActivity,
-                            "Please Select OA No",
-                            Toast.LENGTH_SHORT
+                                this@CreateDailyReportsActivity,
+                                "Please Select Call type",
+                                Toast.LENGTH_SHORT
                         ).show()
                         return@setOnClickListener
                     }
-                    callAddReportsApi(getWorksData())
+                }else if(rbExistingProject.isChecked) {
+                    if (etClientProject.text.toString().equals("Select")) {
+                        Toast.makeText(
+                                this@CreateDailyReportsActivity,
+                                "Please Select Client project",
+                                Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    } else if (getWorksData().size == 0) {
+                        toast("Please add Description of works")
+                        return@setOnClickListener
+                    }
                 }
+                    callAddReportsApi(getWorksData())
             }
 
         }
@@ -227,35 +205,39 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
 
     private fun callAddReportsApi(worksData: MutableList<String>) {
         try {
+
+
             binding.apply {
                 val dailyReportsAddVO = DailyReportsAddVO().apply {
-                    csCustomerprojectClientprojectDetails = selectedSubseries.map {
-                        CustomerprojectClientprojectDetails(it)
-                    }
-                    if (csCustomerprojectClientprojectDetails!!.size==0){
-                        toast("Please select OA No")
-                        return
-                    }
-                    descriptionOfWorks = worksData.map {
-                        DailyReportsAddVO.DescriptionOfWork().apply {
-                            descriptionOfWorks = it
+                    if(rbNewProject.isChecked){
+                        callType = etCallType.text.toString()
+                        newprojectName=etProjectName.text.toString()
+                        newprojectContactName=etContactName.text.toString()
+                        mobileNo=etMobileNo.text.toString()
+                        relatedTo="New Project"
+                    }else if(rbExistingProject.isChecked){
+                        csCustomerprojectClientprojectDetailsid =selectedCPId
+                        projectHeadName=etProjectHeadName.text.toString()
+                        descriptionOfWorks = worksData.map {
+                            DailyReportsAddVO.DescriptionOfWork().apply {
+                                descriptionOfWorks = it
+                            }
                         }
+                        relatedTo="Existing Project"
                     }
-                    relatedTo = etRelatedTo.text.toString()
-                    callType = etCallType.text.toString()
                     callDate = ""
                     callTime = ""
                     callStatus = 0
 
                 }
                 if(isEdit){
-                    if (etRelatedTo.text.toString().equals("Contractor")) {
-                        dailyReportsAddVO.contactContractorId = dailyReport.contactContractorId
-                        dailyReportsAddVO.customerProjectId = "0"
-                    } else if (etRelatedTo.text.toString() == "Client Project") {
-                        dailyReportsAddVO.contactContractorId = "0"
-                        dailyReportsAddVO.customerProjectId = dailyReport.customerProjectId
-                    }
+//                    if (etRelatedTo.text.toString().equals("Contractor")) {
+//                        dailyReportsAddVO.contactContractorId = dailyReport.contactContractorId
+//                        dailyReportsAddVO.customerProjectId = "0"
+//                    } else if (etRelatedTo.text.toString() == "Client Project") {
+//                        dailyReportsAddVO.contactContractorId = "0"
+//                        dailyReportsAddVO.customerProjectId = dailyReport.customerProjectId
+//                    }
                     dailyReportsAddVO.csDailyreportId= dailyReport.csDailyreportId
                     println(Gson().toJson(dailyReportsAddVO))
                     RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
@@ -264,13 +246,13 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                             true
                     )
                 }else{
-                    if (etRelatedTo.text.toString().equals("Contractor")) {
-                        dailyReportsAddVO.contactContractorId = selectedCCId
-                        dailyReportsAddVO.customerProjectId = "0"
-                    } else if (etRelatedTo.text.toString() == "Client Project") {
-                        dailyReportsAddVO.contactContractorId = "0"
-                        dailyReportsAddVO.customerProjectId = selectedCPId
-                    }
+//                    if (etRelatedTo.text.toString().equals("Contractor")) {
+//                        dailyReportsAddVO.contactContractorId = selectedCCId
+//                        dailyReportsAddVO.customerProjectId = "0"
+//                    } else if (etRelatedTo.text.toString() == "Client Project") {
+//                        dailyReportsAddVO.contactContractorId = "0"
+//                        dailyReportsAddVO.customerProjectId = selectedCPId
+//                    }
                     println(Gson().toJson(dailyReportsAddVO))
                     RetrofitRequestController(this@CreateDailyReportsActivity).sendRequest(
                             Constants.RequestNames.ADD_DAILY_REPORTS,
@@ -302,11 +284,11 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                                     objectResponse.result,
                                     DailyReportsResObjVO::class.java
                             )
-                    if (dailyReportsAddVO != null && dailyReportsAddVO.dailyReportsResObjVO!=null ) {
-                        db.commonDao().insertDailyReports(dailyReportsAddVO.dailyReportsResObjVO)
+                    if (dailyReportsAddVO != null && dailyReportsAddVO.dailyReportsResObjVO!=null) {
+                        db.commonDao().insertDailyReports(dailyReportsAddVO.dailyReportsResObjVO?.get(0))
                         ViewDailyReportsActivty.open(
                                 this@CreateDailyReportsActivity,
-                                dailyReportsAddVO.dailyReportsResObjVO!!
+                                dailyReportsAddVO.dailyReportsResObjVO?.get(0)!!
                         )
                         finish()
                     }
@@ -316,16 +298,6 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
         } catch (e: Exception) {
             Common.disPlayExpection(e, progressDialog)
         }
-    }
-    private fun isValidate(): Boolean {
-        var isFilled = false
-        binding.apply {
-            if (getWorksData().size == 0) {
-                toast("Description of works are missed")
-            } else
-                isFilled = true
-        }
-        return isFilled
     }
 
     fun getWorksData(): MutableList<String> {

@@ -50,6 +50,18 @@ class DailyReportsAddVO : Serializable {
     @Expose
     var callType: String? = null
 
+    @SerializedName("newproject_name")
+    @Expose
+    var newprojectName : String?=null
+
+    @SerializedName("newproject_contact_name")
+    @Expose
+    var newprojectContactName : String?=null
+
+    @SerializedName("mobile_no")
+    @Expose
+    var mobileNo : String?=null
+
     @SerializedName("call_date")
     @Expose
     var callDate: String? = null

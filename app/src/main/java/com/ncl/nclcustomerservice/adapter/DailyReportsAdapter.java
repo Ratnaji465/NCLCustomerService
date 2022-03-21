@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,15 +44,32 @@ public class DailyReportsAdapter extends RecyclerView.Adapter<DailyReportsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(dailyReportsResVOList.get(position).getRelatedTo()!=null)
-        holder.project_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getRelatedTo()));
-        if(dailyReportsResVOList.get(position).getContractorName()!=null){
-            holder.et_address.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getContractorName()));
+        if(dailyReportsResVOList.get(position).getRelatedTo()!=null){
+            holder.et_related_to.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getRelatedTo()));
+        }
+        if(dailyReportsResVOList.get(position).getRelatedTo().equalsIgnoreCase("New Project")){
+            holder.llProjectName.setVisibility(View.VISIBLE);
+            holder.tvContactName.setText("Contact Name");
+            holder.tvCallType.setText("Call Type");
+            if(dailyReportsResVOList.get(position).getNewprojectName()!=null){
+                holder.et_project_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getNewprojectName()));
+            }
+            if(dailyReportsResVOList.get(position).getNewprojectContactName()!=null){
+                holder.et_contact_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getNewprojectContactName()));
+            }
+            holder.et_call_type.setText(dailyReportsResVOList.get(position).getCallType());
+        }else if(dailyReportsResVOList.get(position).getRelatedTo().equalsIgnoreCase("Existing Project")){
+            holder.llProjectName.setVisibility(View.INVISIBLE);
+            holder.tvContactName.setText("Client Project");
+            holder.tvCallType.setText("Project Head Name");
+            if(dailyReportsResVOList.get(position).getCsCustomerprojectClientprojectDetailsid()!=null){
+                holder.et_contact_name.setText(dailyReportsResVOList.get(position).getCsCustomerprojectClientprojectDetailsid());
+            }
+            if(dailyReportsResVOList.get(position).getProjectHeadName()!=null){
+                holder.et_call_type.setText(dailyReportsResVOList.get(position).getProjectHeadName());
+            }
         }
 
-        if(dailyReportsResVOList.get(position).getUserName()!=null)
-        holder.et_project_owner.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getUserName()));
-        holder.et_call_type.setText(dailyReportsResVOList.get(position).getCallType());
         if(dailyReportsResVOList.get(position).getCheckInTime()!=null){
             holder.et_checkin.setText(dailyReportsResVOList.get(position).getCheckInTime());
         }else {
@@ -72,12 +90,18 @@ public class DailyReportsAdapter extends RecyclerView.Adapter<DailyReportsAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.et_related_to)
+        TextView et_related_to;
         @BindView(R.id.et_project_name)
-        TextView project_name;
-        @BindView(R.id.et_address)
-        TextView et_address;
-        @BindView(R.id.et_project_owner)
-        TextView et_project_owner;
+        TextView et_project_name;
+        @BindView(R.id.llProjectName)
+        LinearLayout llProjectName;
+        @BindView(R.id.tvContactName)
+        TextView tvContactName;
+        @BindView(R.id.et_contact_name)
+        TextView et_contact_name;
+        @BindView(R.id.tvCallType)
+        TextView tvCallType;
         @BindView(R.id.et_call_type)
         TextView et_call_type;
         @BindView(R.id.et_checkin)
