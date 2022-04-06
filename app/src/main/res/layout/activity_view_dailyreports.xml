@@ -254,8 +254,7 @@
                     android:background="@color/grey"
                     android:padding="@dimen/_5sdp"
                     android:text="DESCRIPTION OF WORKS"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
+                    android:textAllCaps="true" />
 
                 <LinearLayout
                     android:id="@+id/llDescriptionWork"
@@ -263,8 +262,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:orientation="vertical"
-                    android:visibility="gone" />
+                    android:orientation="vertical" />
             </LinearLayout>
         </ScrollView>
 

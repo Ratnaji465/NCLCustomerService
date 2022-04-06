@@ -118,6 +118,17 @@
                 android:hint="No file chosen"
                 />
         </LinearLayout>
+        <TextView
+            android:id="@+id/adhar_cc_editview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/background_red"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:gravity="center_vertical"
+            android:text="View Image"
+            />
 
         <com.ncl.nclcustomerservice.customviews.CustomTextView
             android:id="@+id/tvPanNo"
@@ -163,6 +174,17 @@
                 android:hint="No file chosen"
                 />
         </LinearLayout>
+        <TextView
+            android:id="@+id/pan_cc_editview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/background_red"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:gravity="center_vertical"
+            android:text="View Image"
+            />
         <com.ncl.nclcustomerservice.customviews.CustomTextView
             android:id="@+id/tvGSTNo"
             android:layout_width="wrap_content"
@@ -278,7 +300,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_2sdp"
-            android:background="@drawable/button_bg_white"
+            android:background="@drawable/edittext_bg_grey"
             android:gravity="left|center"
             android:imeOptions="actionNext"
             android:inputType="text"

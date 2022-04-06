@@ -141,7 +141,10 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
     Button btn_cc_pan;
     @BindView(R.id.pan_cc_FileName)
     TextView pan_cc_FileName;
-
+    @BindView(R.id.adhar_cc_editview)
+    TextView adhar_cc_editview;
+    @BindView(R.id.pan_cc_editview)
+    TextView pan_cc_editview;
     @BindView(R.id.tvCCRemarks)
     TextView tvCCRemarks;
     @BindView(R.id.ll_CCRemarks)
@@ -194,8 +197,6 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
     EditText etPHpincode;
     @BindView(R.id.tvPHRemarks)
     TextView tvPHRemarks;
-    @BindView(R.id.etPHRemarks)
-    EditText etPHRemarks;
     @BindView(R.id.ll_PHRemarks)
     LinearLayout ll_PHRemarks;
 
@@ -220,7 +221,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
     File con_pan_file, con_aadha_file;
     List<File> tm_aadhar_file_list = new ArrayList<>();
     private List<StatesList> statesLists;
-    String stateId,departmentId;
+    String stateId, departmentId;
     CustomerContactResponseVo.ContactContractorList contactContractorList;
     ProjectHeadReqVo projectHeadReqVo;
 
@@ -363,37 +364,37 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                         return;
                     }
 //                    if (arePhAssociateContactsItemsValidated()) {
-                        if (Common.haveInternet(getApplication())) {
-                            ProjectHeadReqVo projectHeadReq = new ProjectHeadReqVo();
-                            projectHeadReq.category = "Project Head";
-                            projectHeadReq.projectHeadName = etProjectHeadName.getText().toString().trim();
-                            projectHeadReq.projectName=etProjectName.getText().toString().trim();
-                            projectHeadReq.clientCode=etClientCode.getText().toString().trim();
-                            projectHeadReq.companyOrClientName = etCompanyName.getText().toString().trim();
-                            projectHeadReq.projectHeadMobile = etMobile.getText().toString().trim();
-                            projectHeadReq.projectHeadDepartment = departmentId;
-                            projectHeadReq.projectHeadAddress = etAddress.getText().toString().trim();
-                            projectHeadReq.projectHeadState = stateId;
-                            projectHeadReq.projectHeadCountry = etPHcountry.getText().toString().trim();
-                            projectHeadReq.projectHeadPincode = etPHpincode.getText().toString().trim();
-                            projectHeadReq.remarksListVOS = getPHRemarks();
-                            projectHeadReq.projectHeadEmail = etEmail.getText().toString().trim();
-                            List<ProjectHeadReqVo.AssociateContact> associateContactList = getAssociateContactList();
+                    if (Common.haveInternet(getApplication())) {
+                        ProjectHeadReqVo projectHeadReq = new ProjectHeadReqVo();
+                        projectHeadReq.category = "Project Head";
+                        projectHeadReq.projectHeadName = etProjectHeadName.getText().toString().trim();
+                        projectHeadReq.projectName = etProjectName.getText().toString().trim();
+                        projectHeadReq.clientCode = etClientCode.getText().toString().trim();
+                        projectHeadReq.companyOrClientName = etCompanyName.getText().toString().trim();
+                        projectHeadReq.projectHeadMobile = etMobile.getText().toString().trim();
+                        projectHeadReq.projectHeadDepartment = departmentId;
+                        projectHeadReq.projectHeadAddress = etAddress.getText().toString().trim();
+                        projectHeadReq.projectHeadState = stateId;
+                        projectHeadReq.projectHeadCountry = etPHcountry.getText().toString().trim();
+                        projectHeadReq.projectHeadPincode = etPHpincode.getText().toString().trim();
+                        projectHeadReq.remarksListVOS = getPHRemarks();
+                        projectHeadReq.projectHeadEmail = etEmail.getText().toString().trim();
+                        List<ProjectHeadReqVo.AssociateContact> associateContactList = getAssociateContactList();
 //                            if (associateContactList == null || associateContactList.size() == 0) {
 //                                Toast.makeText(CreateNewContactActivity.this, "Please add Associate Contact Details", Toast.LENGTH_SHORT).show();
 //                                return;
 //                            }
-                            projectHeadReq.associateContacts = associateContactList;
-                            if (form_type.equalsIgnoreCase("edit")) {
-                                projectHeadReq.contactId = projectHeadReqVo.contactId;
-                                projectHeadReq.contactProjectHeadId = projectHeadReqVo.contactProjectHeadId;
-                                new RetrofitRequestController(CreateNewContactActivity.this).sendRequest(Constants.RequestNames.EDIT_CONTACT_PROJECT_HEAD, projectHeadReq, true);
-                            } else {
-                                new RetrofitRequestController(CreateNewContactActivity.this).sendRequest(Constants.RequestNames.ADD_CONTACT_PROJECT_HEAD, projectHeadReq, true);
-                            }
+                        projectHeadReq.associateContacts = associateContactList;
+                        if (form_type.equalsIgnoreCase("edit")) {
+                            projectHeadReq.contactId = projectHeadReqVo.contactId;
+                            projectHeadReq.contactProjectHeadId = projectHeadReqVo.contactProjectHeadId;
+                            new RetrofitRequestController(CreateNewContactActivity.this).sendRequest(Constants.RequestNames.EDIT_CONTACT_PROJECT_HEAD, projectHeadReq, true);
                         } else {
-                            Toast.makeText(getApplication(), "Please check internet connection", Toast.LENGTH_LONG).show();
+                            new RetrofitRequestController(CreateNewContactActivity.this).sendRequest(Constants.RequestNames.ADD_CONTACT_PROJECT_HEAD, projectHeadReq, true);
                         }
+                    } else {
+                        Toast.makeText(getApplication(), "Please check internet connection", Toast.LENGTH_LONG).show();
+                    }
 //                    }
                 }
 
@@ -439,6 +440,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 
         }
     }
+
     private void addPHRemarks(List<RemarksListVO> projectHeadRemarks) {
         for (int i = 0; i < ll_PHRemarks.getChildCount(); i++) {
             View ll_PHRemarks_view = ll_PHRemarks.getChildAt(i);
@@ -448,7 +450,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             } else {
                 viewHolder.removelayout_remarks.setVisibility(View.GONE);
             }
-            if(projectHeadRemarks!=null){
+            if (projectHeadRemarks != null) {
                 viewHolder.etRemarks.setText(projectHeadRemarks.get(i).remark);
             }
             int finalI = i;
@@ -479,7 +481,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             } else {
                 viewHolder.removelayout_remarks.setVisibility(View.GONE);
             }
-            if(ccRemarks!=null){
+            if (ccRemarks != null) {
                 viewHolder.etRemarks.setText(ccRemarks.get(i).remark);
             }
             int finalI = i;
@@ -513,12 +515,16 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etPHcountry.setText(projectHeadReqVo.projectHeadCountry);
             etPHpincode.setText(projectHeadReqVo.projectHeadPincode);
             ll_PHRemarks.removeAllViews();
-            if(projectHeadReqVo.remarksListVOS!=null && projectHeadReqVo.remarksListVOS.size()>0){
-                for(int i=0; i<projectHeadReqVo.remarksListVOS.size(); i++){
-                    View rowView = getLayoutInflater().inflate(R.layout.remarks_row,null);
+            if (projectHeadReqVo.remarksListVOS != null && projectHeadReqVo.remarksListVOS.size() > 0) {
+                for (int i = 0; i < projectHeadReqVo.remarksListVOS.size(); i++) {
+                    View rowView = getLayoutInflater().inflate(R.layout.remarks_row, null);
                     ll_PHRemarks.addView(rowView);
                 }
                 addPHRemarks(projectHeadReqVo.remarksListVOS);
+            } else {
+                View rowView = getLayoutInflater().inflate(R.layout.remarks_row, null);
+                ll_PHRemarks.addView(rowView);
+                addPHRemarks(null);
             }
 
             if (projectHeadReqVo.associateContacts != null && projectHeadReqVo.associateContacts.size() > 0) {
@@ -528,6 +534,10 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
 
                 }
                 addAssociateContacts(projectHeadReqVo.associateContacts);
+            } else {
+                View rowAssociateContacts = getLayoutInflater().inflate(R.layout.associate_contacts_row, null);
+                ll_associate_contacts.addView(rowAssociateContacts);
+                addAssociateContacts(null);
             }
         }
     }
@@ -545,9 +555,9 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etCity.setText(contactContractorList.contractorCity);
             etPincode.setText(contactContractorList.contractorPincode);
             ll_CCRemarks.removeAllViews();
-            if(contactContractorList.remarksListVOS!=null && contactContractorList.remarksListVOS.size()>0){
-                for(int i=0; i<contactContractorList.remarksListVOS.size(); i++){
-                    View rowView = getLayoutInflater().inflate(R.layout.remarks_row,null);
+            if (contactContractorList.remarksListVOS != null && contactContractorList.remarksListVOS.size() > 0) {
+                for (int i = 0; i < contactContractorList.remarksListVOS.size(); i++) {
+                    View rowView = getLayoutInflater().inflate(R.layout.remarks_row, null);
                     ll_CCRemarks.addView(rowView);
                 }
                 addCCRemarks(contactContractorList.remarksListVOS);
@@ -557,11 +567,29 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             if (aadharPath != null) {
                 String aadharFilename = aadharPath.substring(aadharPath.lastIndexOf("/") + 1);
                 adhar_cc_FileName.setText(aadharFilename);
+                adhar_cc_editview.setVisibility(View.VISIBLE);
+                adhar_cc_editview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(CreateNewContactActivity.this, ViewImageActivity.class);
+                        intent.putExtra("ImagePath", contactContractorList.contractorAadharImagePath);
+                        startActivity(intent);
+                    }
+                });
             }
             String panPath = contactContractorList.contractorPanImagePath;
             if (panPath != null) {
                 String panFilename = panPath.substring(panPath.lastIndexOf("/") + 1);
                 pan_cc_FileName.setText(panFilename);
+                pan_cc_editview.setVisibility(View.VISIBLE);
+                pan_cc_editview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(CreateNewContactActivity.this, ViewImageActivity.class);
+                        intent.putExtra("ImagePath", contactContractorList.contractorPanImagePath);
+                        startActivity(intent);
+                    }
+                });
             }
             if (contactContractorList.teamMembers != null && contactContractorList.teamMembers.size() > 0) {
                 for (int i = 0; i < contactContractorList.teamMembers.size(); i++) {
@@ -578,7 +606,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
         progressD = new ProgressDialog(this);
         progressD.setMessage("Please Wait....");
         progressD.setCancelable(false);
-        progressD.show();
+
         List<MultipartBody.Part> muPartList = new ArrayList<>();
         if (con_aadha_file != null && con_aadha_file.length() > 5) {
             muPartList.add(prepareFilePart("contractor_aadhar_image_path[]", Uri.fromFile(con_aadha_file), con_aadha_file));
@@ -592,50 +620,96 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             }
         }
         Common.Log.i("Request obj " + new Gson().toJson(obj));
-        if (muPartList.size() > 0) {
-            MultipartBody.Part[] fileParts = muPartList.toArray(new MultipartBody.Part[muPartList.size()]);
-            Call<ResponseBody> abc = MyApplication.getInstance().getAPIInterface().uploadPaymentCollection(Constants.API, fileParts, obj);
-            abc.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.body() == null) {
-                        Toast.makeText(CreateNewContactActivity.this, "Intenal Server Error", Toast.LENGTH_SHORT).show();
-                        progressD.dismiss();
-                        return;
-                    }
-                    Toast.makeText(CreateNewContactActivity.this, "New contact inserted successfully.", Toast.LENGTH_SHORT).show();
+       if(!form_type.equalsIgnoreCase("edit")) {
+           if (muPartList.size() > 0) {
+               progressD.show();
+               MultipartBody.Part[] fileParts = muPartList.toArray(new MultipartBody.Part[muPartList.size()]);
+               Call<ResponseBody> abc = MyApplication.getInstance().getAPIInterface().uploadPaymentCollection(Constants.API, fileParts, obj);
+               abc.enqueue(new Callback<ResponseBody>() {
+                   @Override
+                   public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                       if (response.body() == null) {
+                           Toast.makeText(CreateNewContactActivity.this, "Intenal Server Error", Toast.LENGTH_SHORT).show();
+                           progressD.dismiss();
+                           return;
+                       }
+                       Toast.makeText(CreateNewContactActivity.this, "New contact inserted successfully.", Toast.LENGTH_SHORT).show();
 
-                    ApiResponseController apiResponseController = null;
-                    try {
-                        apiResponseController = new Gson().fromJson(response.body().string(), ApiResponseController.class);
-                        CustomerContactResponseVo customerContactResponseVo = Common.getSpecificDataObject(apiResponseController.result, CustomerContactResponseVo.class);
-                        if (customerContactResponseVo != null) {
-                            List<CustomerContactResponseVo.ContactContractorList> contactContractorList = customerContactResponseVo.contactList;
-                            if (contactContractorList != null && contactContractorList.size() > 0) {
-                                db.commonDao().insertContractorContact(contactContractorList);
-                                Intent intent = new Intent(CreateNewContactActivity.this, NewContactViewActivity.class);
-                                intent.putExtra("contactContractorList", contactContractorList.get(0));
-                                intent.putExtra("type", "Contractor");
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
+                       ApiResponseController apiResponseController = null;
+                       try {
+                           apiResponseController = new Gson().fromJson(response.body().string(), ApiResponseController.class);
+                           CustomerContactResponseVo customerContactResponseVo = Common.getSpecificDataObject(apiResponseController.result, CustomerContactResponseVo.class);
+                           if (customerContactResponseVo != null) {
+                               List<CustomerContactResponseVo.ContactContractorList> contactContractorList = customerContactResponseVo.contactList;
+                               if (contactContractorList != null && contactContractorList.size() > 0) {
+                                   db.commonDao().insertContractorContact(contactContractorList);
+                                   Intent intent = new Intent(CreateNewContactActivity.this, NewContactViewActivity.class);
+                                   intent.putExtra("contactContractorList", contactContractorList.get(0));
+                                   intent.putExtra("type", "Contractor");
+                                   startActivity(intent);
+                                   finish();
+                               }
+                           }
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    progressD.dismiss();
-                    finish();
-                }
+                       } catch (IOException e) {
+                           e.printStackTrace();
+                       }
+                       progressD.dismiss();
+                       finish();
+                   }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    progressD.dismiss();
-                }
-            });
-        } else {
-            Toast.makeText(CreateNewContactActivity.this, "Please upload required files.", Toast.LENGTH_SHORT).show();
-        }
+                   @Override
+                   public void onFailure(Call<ResponseBody> call, Throwable t) {
+                       progressD.dismiss();
+                   }
+               });
+           } else {
+               Toast.makeText(CreateNewContactActivity.this, "Please upload required files.", Toast.LENGTH_SHORT).show();
+           }
+       }else {
+           progressD.show();
+           MultipartBody.Part[] fileParts = muPartList.toArray(new MultipartBody.Part[muPartList.size()]);
+           Call<ResponseBody> abc = MyApplication.getInstance().getAPIInterface().uploadPaymentCollection(Constants.API, fileParts, obj);
+           abc.enqueue(new Callback<ResponseBody>() {
+               @Override
+               public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                   if (response.body() == null) {
+                       Toast.makeText(CreateNewContactActivity.this, "Intenal Server Error", Toast.LENGTH_SHORT).show();
+                       progressD.dismiss();
+                       return;
+                   }
+                   Toast.makeText(CreateNewContactActivity.this, "New contact inserted successfully.", Toast.LENGTH_SHORT).show();
+
+                   ApiResponseController apiResponseController = null;
+                   try {
+                       apiResponseController = new Gson().fromJson(response.body().string(), ApiResponseController.class);
+                       CustomerContactResponseVo customerContactResponseVo = Common.getSpecificDataObject(apiResponseController.result, CustomerContactResponseVo.class);
+                       if (customerContactResponseVo != null) {
+                           List<CustomerContactResponseVo.ContactContractorList> contactContractorList = customerContactResponseVo.contactList;
+                           if (contactContractorList != null && contactContractorList.size() > 0) {
+                               db.commonDao().insertContractorContact(contactContractorList);
+                               Intent intent = new Intent(CreateNewContactActivity.this, NewContactViewActivity.class);
+                               intent.putExtra("contactContractorList", contactContractorList.get(0));
+                               intent.putExtra("type", "Contractor");
+                               startActivity(intent);
+                               finish();
+                           }
+                       }
+
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                   }
+                   progressD.dismiss();
+                   finish();
+               }
+
+               @Override
+               public void onFailure(Call<ResponseBody> call, Throwable t) {
+                   progressD.dismiss();
+               }
+           });
+       }
+
 
     }
 
@@ -686,45 +760,52 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             associateContact.contactProjectHeadAssociateContactMobile = loopHolder.etACMobile.getText().toString().trim();
             associateContactList.add(associateContact);
         }
-
+        if (associateContactList.size() == 1) {
+            if (associateContactList.get(0).contactProjectHeadAssociateContactName.isEmpty()) {
+                return new ArrayList<>();
+            }
+        }
         return associateContactList;
     }
-    private ArrayList<RemarksListVO> getPHRemarks(){
-        ArrayList<RemarksListVO> remarkslist=new ArrayList<>();
+
+    private ArrayList<RemarksListVO> getPHRemarks() {
+        ArrayList<RemarksListVO> remarkslist = new ArrayList<>();
         for (int i = 0; i < ll_PHRemarks.getChildCount(); i++) {
             View childView = ll_PHRemarks.getChildAt(i);
-            RemarksViewHolder loopHolder=new RemarksViewHolder(childView);
-            RemarksListVO remarksListVO=new RemarksListVO();
+            RemarksViewHolder loopHolder = new RemarksViewHolder(childView);
+            RemarksListVO remarksListVO = new RemarksListVO();
             if (form_type.equalsIgnoreCase("edit")) {
                 if (projectHeadReqVo.remarksListVOS.size() > i) {
-                   remarksListVO.id=projectHeadReqVo.remarksListVOS.get(i).id;
+                    remarksListVO.id = projectHeadReqVo.remarksListVOS.get(i).id;
                 }
             }
-            if(loopHolder.etRemarks.getText().toString().length()>0){
-                remarksListVO.remark=loopHolder.etRemarks.getText().toString();
+            if (loopHolder.etRemarks.getText().toString().length() > 0) {
+                remarksListVO.remark = loopHolder.etRemarks.getText().toString();
                 remarkslist.add(remarksListVO);
             }
         }
         return remarkslist;
     }
-    private ArrayList<RemarksListVO> getCCRemarks(){
-        ArrayList<RemarksListVO> remarkslist=new ArrayList<>();
+
+    private ArrayList<RemarksListVO> getCCRemarks() {
+        ArrayList<RemarksListVO> remarkslist = new ArrayList<>();
         for (int i = 0; i < ll_CCRemarks.getChildCount(); i++) {
             View childView = ll_CCRemarks.getChildAt(i);
-            RemarksViewHolder loopHolder=new RemarksViewHolder(childView);
-            RemarksListVO remarksListVO=new RemarksListVO();
+            RemarksViewHolder loopHolder = new RemarksViewHolder(childView);
+            RemarksListVO remarksListVO = new RemarksListVO();
             if (form_type.equalsIgnoreCase("edit")) {
                 if (contactContractorList.remarksListVOS.size() > i) {
-                    remarksListVO.id=contactContractorList.remarksListVOS.get(i).id;
+                    remarksListVO.id = contactContractorList.remarksListVOS.get(i).id;
                 }
             }
-            if(loopHolder.etRemarks.getText().toString().length()>0){
-                remarksListVO.remark=loopHolder.etRemarks.getText().toString();
+            if (loopHolder.etRemarks.getText().toString().length() > 0) {
+                remarksListVO.remark = loopHolder.etRemarks.getText().toString();
                 remarkslist.add(remarksListVO);
             }
         }
         return remarkslist;
     }
+
     private List<CustomerContractorInsertReqVo.TeamMember> getTeamMemberList() {
         addTeamMemberList.clear();
         for (int i = 0; i < ll_contractor_team_member_details.getChildCount(); i++) {
@@ -785,15 +866,15 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                 loopHolder.etTeamMemberMobileNo.requestFocus();
                 isFilled = false;
             }
-            if (loopHolder.etCoAadharNo.getText().toString().trim().length() == 0 || loopHolder.etCoAadharNo.getText().toString().trim().length() < 12) {
-                loopHolder.etCoAadharNo.setError("please enter valid Aadhar No.");
-                loopHolder.etCoAadharNo.requestFocus();
-                isFilled = false;
-            }
-            if (loopHolder.tv_file_name.getText().toString().trim().length() == 0) {
-                Toast.makeText(CreateNewContactActivity.this, "Please upload Aadhar card", Toast.LENGTH_SHORT).show();
-                isFilled = false;
-            }
+//            if (loopHolder.etCoAadharNo.getText().toString().trim().length() == 0 || loopHolder.etCoAadharNo.getText().toString().trim().length() < 12) {
+//                loopHolder.etCoAadharNo.setError("please enter valid Aadhar No.");
+//                loopHolder.etCoAadharNo.requestFocus();
+//                isFilled = false;
+//            }
+//            if (loopHolder.tv_file_name.getText().toString().trim().length() == 0) {
+//                Toast.makeText(CreateNewContactActivity.this, "Please upload Aadhar card", Toast.LENGTH_SHORT).show();
+//                isFilled = false;
+//            }
 //            return isFilled;
         }
         return isFilled;
@@ -805,15 +886,15 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etCompanyName.requestFocus();
             etCompanyName.setError("Please add Company Name");
             isFilled = false;
-        }else if (etProjectName.getText().toString().trim().length() == 0) {
+        } else if (etProjectName.getText().toString().trim().length() == 0) {
             etProjectName.requestFocus();
             etProjectName.setError("Please add Project Name");
             isFilled = false;
-        }else if (etClientCode.getText().toString().trim().length() == 0) {
+        } else if (etClientCode.getText().toString().trim().length() == 0) {
             etClientCode.requestFocus();
             etClientCode.setError("Please add Client code");
             isFilled = false;
-        }else if (etProjectHeadName.getText().toString().trim().length() == 0) {
+        } else if (etProjectHeadName.getText().toString().trim().length() == 0) {
             etProjectHeadName.requestFocus();
             etProjectHeadName.setError("Please add Project Head Name");
             isFilled = false;
@@ -840,11 +921,6 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etPHpincode.setError("Please add Pincode");
             isFilled = false;
         }
-//        else if (etPHRemarks.getText().toString().trim().length() == 0) {
-//            etPHRemarks.requestFocus();
-//            etPHRemarks.setError("Please add Remarks");
-//            isFilled = false;
-//        }
         return isFilled;
     }
 
@@ -894,7 +970,7 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             etPincode.requestFocus();
             etPincode.setError("Please add Pincode");
             isFilled = false;
-        } else if (con_aadha_file == null || con_aadha_file.length() < 5) {
+        } else if (!form_type.equalsIgnoreCase("edit") && (con_aadha_file == null || con_aadha_file.length() < 5)) {
             isFilled = false;
             Toast.makeText(CreateNewContactActivity.this, "Please upload your Aadhar", Toast.LENGTH_SHORT).show();
         } else if (!form_type.equalsIgnoreCase("edit") && (con_pan_file == null || con_pan_file.length() < 5)) {
@@ -1020,6 +1096,15 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                 if (path != null) {
                     String filename = path.substring(path.lastIndexOf("/") + 1);
                     viewHolder.tv_file_name.setText(filename);
+                    viewHolder.adhar_tm_editview.setVisibility(View.VISIBLE);
+                    viewHolder.adhar_tm_editview.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(CreateNewContactActivity.this, ViewImageActivity.class);
+                            intent.putExtra("ImagePath", path);
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
             int finalI = i;
@@ -1044,7 +1129,9 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
                 @Override
                 public void onClick(View v) {
                     ll_contractor_team_member_details.removeViewAt(finalI);
-                    tm_aadhar_file_list.remove(finalI);
+                    if (tm_aadhar_file_list.size() >= finalI) {
+                        tm_aadhar_file_list.remove(finalI);
+                    }
                     addContractorTeamMemberLayout(null);
                 }
             });
@@ -1090,15 +1177,15 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
             viewHolder.etTeamMemberMobileNo.requestFocus();
             return false;
         }
-        if (viewHolder.etCoAadharNo.getText().toString().trim().length() == 0 || viewHolder.etCoAadharNo.getText().toString().trim().length() < 12) {
-            viewHolder.etCoAadharNo.setError("please enter valid Aadhar No.");
-            viewHolder.etCoAadharNo.requestFocus();
-            return false;
-        }
-        if (viewHolder.tv_file_name.getText().toString().trim().length() == 0) {
-            Toast.makeText(CreateNewContactActivity.this, "Please upload Aadhar card", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        if (viewHolder.etCoAadharNo.getText().toString().trim().length() == 0 || viewHolder.etCoAadharNo.getText().toString().trim().length() < 12) {
+//            viewHolder.etCoAadharNo.setError("please enter valid Aadhar No.");
+//            viewHolder.etCoAadharNo.requestFocus();
+//            return false;
+//        }
+//        if (viewHolder.tv_file_name.getText().toString().trim().length() == 0) {
+//            Toast.makeText(CreateNewContactActivity.this, "Please upload Aadhar card", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         return true;
     }
 
@@ -1274,6 +1361,8 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
     }
 
     static class RemarksViewHolder {
+        @BindView(R.id.etDate)
+        EditText etDate;
         @BindView(R.id.etRemarks)
         EditText etRemarks;
         @BindView(R.id.addlayout_remarks)
@@ -1326,6 +1415,8 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
         Button btn_choose_file;
         @BindView(R.id.tv_file_name)
         TextView tv_file_name;
+        @BindView(R.id.adhar_tm_editview)
+        TextView adhar_tm_editview;
         @BindView(R.id.addlayout)
         LinearLayout addLayout;
         @BindView(R.id.removelayout)

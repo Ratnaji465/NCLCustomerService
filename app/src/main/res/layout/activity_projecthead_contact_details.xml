@@ -206,7 +206,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_2sdp"
-            android:background="@drawable/button_bg_white"
+            android:background="@drawable/edittext_bg_grey"
             android:gravity="left|center"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -275,18 +275,6 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:text="Remarks" />
 
-        <com.ncl.nclcustomerservice.customviews.CustomEditText
-            android:id="@+id/etPHRemarks"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:background="@drawable/button_bg_white"
-            android:gravity="left|center"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:visibility="gone"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
         <LinearLayout
             android:id="@+id/ll_PHRemarks"
             android:layout_width="match_parent"

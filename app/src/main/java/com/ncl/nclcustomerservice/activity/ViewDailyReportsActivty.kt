@@ -34,6 +34,7 @@ class ViewDailyReportsActivty : AppCompatActivity(), RetrofitResponseListener {
 private lateinit var binding:ActivityViewDailyreportsBinding
 private lateinit var dailyReportsList:DailyReportsAddVO
     private var nextTag = 0
+    var df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_dailyreports)
@@ -47,8 +48,6 @@ private lateinit var dailyReportsList:DailyReportsAddVO
         binding.apply {
             tvRelatedTo.text=dailyReportsList.relatedTo
             if(dailyReportsList.relatedTo.equals("New Project")){
-                tvDescriptionOfWork.visibility=View.GONE
-                llDescriptionWork.visibility=View.GONE
                 llOne.visibility=View.GONE
                 tvProjectName.text=dailyReportsList.newprojectName
                 tvContactName.text=dailyReportsList.newprojectContactName
@@ -58,14 +57,12 @@ private lateinit var dailyReportsList:DailyReportsAddVO
             }else if(dailyReportsList.relatedTo.equals("Existing Project")){
                 llTwo.visibility=View.GONE
                 llThree.visibility=View.GONE
-                tvDescriptionOfWork.visibility=View.VISIBLE
-                llDescriptionWork.visibility=View.VISIBLE
-                tvClientProject.text=dailyReportsList.csCustomerprojectClientprojectDetailsid
+                tvClientProject.text=dailyReportsList.projectName
                 tvProjectHeadName.text=dailyReportsList.projectHeadName
-                if(dailyReportsList.descriptionOfWorks!=null && dailyReportsList.descriptionOfWorks!!.size>0){
-                    for(i in 0..dailyReportsList.descriptionOfWorks!!.size-1){
-                        addDesWork(dailyReportsList.descriptionOfWorks!!.get(i))
-                    }
+            }
+            if(dailyReportsList.descriptionOfWorks!=null && dailyReportsList.descriptionOfWorks!!.size>0){
+                for(i in 0..dailyReportsList.descriptionOfWorks!!.size-1){
+                    addDesWork(dailyReportsList.descriptionOfWorks!!.get(i))
                 }
             }
 
@@ -97,12 +94,16 @@ private lateinit var dailyReportsList:DailyReportsAddVO
                 )
             }
             btnCheckIn.setOnClickListener {
-                val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
-                Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
+               val calendar:Calendar = Calendar.getInstance();
+                val currentDateTimeString = df.format(calendar.getTime())
+//                val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
+//                Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
+                Log.d("localTime11", currentDateTimeString)
                 var checkInCheckOutVO=CheckInCheckOutVO().apply {
                     csDailyreportId=dailyReportsList.csDailyreportId
                     type="checkin"
-                    datetime=parseDateToddMMyyyy(currentDateTimeString)
+//                    datetime=parseDateToddMMyyyy(currentDateTimeString)
+                    datetime=currentDateTimeString
                 }
                 RetrofitRequestController(this@ViewDailyReportsActivty).sendRequest(
                         Constants.RequestNames.DAILY_REPORTS_CHECKIN_CHECKOUT,
@@ -111,12 +112,14 @@ private lateinit var dailyReportsList:DailyReportsAddVO
                 )
             }
             btnCheckOut.setOnClickListener {
-                val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
-                Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
+                val calendar:Calendar = Calendar.getInstance();
+                val currentDateTimeString = df.format(calendar.getTime())
+//                val currentDateTimeString: String = DateFormat.getDateTimeInstance().format(Date())
+//                Log.d("localTime", parseDateToddMMyyyy(currentDateTimeString).toString())
                 var checkInCheckOutVO=CheckInCheckOutVO().apply {
                     csDailyreportId=dailyReportsList.csDailyreportId
                     type="checkout"
-                    datetime=parseDateToddMMyyyy(currentDateTimeString)
+                    datetime=currentDateTimeString
                 }
                 RetrofitRequestController(this@ViewDailyReportsActivty).sendRequest(
                         Constants.RequestNames.DAILY_REPORTS_CHECKIN_CHECKOUT,

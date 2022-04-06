@@ -50,6 +50,7 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
     lateinit var depLists: MutableList<DepartmentList>
     var stateId: String? = null
     var departmentId: String? = null
+    var head =CustomerProjectResVO()
 
     override fun onInternetConnected() {}
     override fun onInternetDisconnected() {}
@@ -91,30 +92,33 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         )
         getArguments<Args>()?.let {
             isEdit = true
-            val head = it.customerProjectResVO
+             head = it.customerProjectResVO
             customerProjectId = head.customerProjectId
             selectedHeadPosition =
                     projectHeadReqVoList.indexOfFirst { it.contactProjectHeadId == head.projectHead[0].contactProjectHeadId }
             selectedAssociates.clear()
-            companyFromEdit= projectHeadReqVoList[selectedHeadPosition].companyOrClientName
-            projectNameFromEdit= projectHeadReqVoList[selectedHeadPosition].projectName
+            if(selectedHeadPosition>=0 && projectHeadReqVoList.size>=selectedHeadPosition){
+                companyFromEdit= projectHeadReqVoList[selectedHeadPosition].companyOrClientName
+                projectNameFromEdit= projectHeadReqVoList[selectedHeadPosition].projectName
 //            loadSpinnerFromEdit()
-            projectHeadReqVoList[selectedHeadPosition].associateContacts.forEachIndexed { index, associateContact ->
-                var position =
-                        head.projectHead[0].associateContacts.indexOfFirst { it.contactProjectheadAssociatecontactId == associateContact.contactProjectheadAssociatecontactId }
-                if (position >= 0) {
-                    selectedAssociates.add(index)
+                projectHeadReqVoList[selectedHeadPosition].associateContacts.forEachIndexed { index, associateContact ->
+                    var position =
+                            head.projectHead[0].associateContacts.indexOfFirst { it.contactProjectheadAssociatecontactId == associateContact.contactProjectheadAssociatecontactId }
+                    if (position >= 0) {
+                        selectedAssociates.add(index)
+                    }
                 }
+                setAssociateContact(
+                        selectedAssociates,
+                        projectHeadReqVoList[selectedHeadPosition].associateContacts
+                )
             }
             setProjectHeadUI(head.toProjectReq())
 //            binding.etProjectName.setText(head.projectName)
             binding.etProjectAddress.setText(head.projectAddress)
             binding.etCountry.setText(head.country)
             binding.etPincode.setText(head.pincode)
-            setAssociateContact(
-                    selectedAssociates,
-                    projectHeadReqVoList[selectedHeadPosition].associateContacts
-            )
+
 //            binding.ProjectHeadNameSpinner.setSelection(selectedHeadPosition)
             contactContractorLists.forEachIndexed { index, contactContractorList ->
                 var position = head.contractors.indexOfFirst {
@@ -449,7 +453,17 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
 
                                     override fun onNothingSelected(adapterView: AdapterView<*>?) {}
                                 })
+
+                                if (isEdit) {
+                                    for (i in statesLists.indices) {
+                                        if (Common.nullChecker(head.state).equals(statesLists[i].stateName, ignoreCase = true)) {
+                                            binding.stateSpinner.setSelection(i)
+                                            break
+                                        }
+                                    }
+                                }
                             }
+
                             if (companyLists != null) {
                                 val cl = CompanyList()
                                 cl.companyOrClientName = "Select Company"
@@ -525,43 +539,43 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
 
     private fun loadProjectNames(projectList: List<ProjectList>) {
         try {
-            if (projectList != null) {
-                var projectLists: MutableList<ProjectList> = ArrayList()
-                projectLists = projectList.toMutableList()
-                val pl = ProjectList()
-                pl.projectName = "Select Project"
-                projectLists.add(0, pl)
-                val projects: MutableList<SpinnerModel> = ArrayList()
-                val stringProjects = java.util.ArrayList<mListString>()
-                var i = 0
-                while (i < projectLists.size) {
-                    val spinnerModel = SpinnerModel()
-                    spinnerModel.title = projectLists[i].projectName
-                    projects.add(spinnerModel)
-                    stringProjects.add(mListString(i, projectLists[i].projectName))
-                    i++
-                }
-                binding.spinnerProjectName.setAdapter(stringProjects, 1, 1)
-                binding.spinnerProjectName.setOnItemSelectedListener(object :
-                        AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                            adapterView: AdapterView<*>?,
-                            view: View,
-                            i: Int,
-                            l: Long
-                    ) {
-                        binding.etProjectAddress.setText(projectLists[i-1].projectHeadAddress)
+            var projectLists: MutableList<ProjectList> = ArrayList()
+            projectLists = projectList.toMutableList()
+            val pl = ProjectList()
+            pl.projectName = "Select Project"
+            projectLists.add(0, pl)
+            val projects: MutableList<SpinnerModel> = ArrayList()
+            val stringProjects = java.util.ArrayList<mListString>()
+            var i = 0
+            while (i < projectLists.size) {
+                val spinnerModel = SpinnerModel()
+                spinnerModel.title = projectLists[i].projectName
+                projects.add(spinnerModel)
+                stringProjects.add(mListString(i, projectLists[i].projectName))
+                i++
+            }
+            binding.spinnerProjectName.setAdapter(stringProjects, 1, 1)
+            binding.spinnerProjectName.setOnItemSelectedListener(object :
+                    AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                        adapterView: AdapterView<*>?,
+                        view: View,
+                        i: Int,
+                        l: Long
+                ) {
+                    if(i>0 && projectList.size>=i){
+                        binding.etProjectAddress.setText(projectList[i-1].projectHeadAddress)
                         for (i1 in statesLists.indices) {
-                            if (Common.nullChecker(projectLists[i-1].projectHeadState).equals(statesLists[i1].stateName, ignoreCase = true)) {
+                            if (Common.nullChecker(projectList[i-1].projectHeadState).equals(statesLists[i1].stateName, ignoreCase = true)) {
                                 binding.stateSpinner.setSelection(i1)
                                 break
                             }
                         }
-                        binding.etPincode.setText(projectLists[i-1].projectHeadPincode)
+                        binding.etPincode.setText(projectList[i-1].projectHeadPincode)
                         selectedAssociates.clear()
-                        if (projectLists[i-1].projectHeadName != null) {
+                        if (projectList[i-1].projectHeadName != null) {
                             for (i1 in projectHeadReqVoList.indices) {
-                                if (Common.nullChecker(projectLists[i-1].projectHeadName).equals(projectHeadReqVoList[i1].projectHeadName, ignoreCase = true)) {
+                                if (Common.nullChecker(projectList[i-1].projectHeadName).equals(projectHeadReqVoList[i1].projectHeadName, ignoreCase = true)) {
                                     selectedHeadPosition = i1
                                     setProjectHeadUI(projectHeadReqVoList[selectedHeadPosition])
                                     for (j in projectHeadReqVoList[selectedHeadPosition].associateContacts.withIndex()) {
@@ -573,26 +587,27 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
                                 }
                             }
                         }
-                        Log.d("Project list data:", projectLists[i-1].toString())
+                        Log.d("Project list data:", projectList[i-1].toString())
                     }
 
-                    override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-                })
+                }
 
-                if (isEdit) {
-                    for (j in projectHeadReqVoList.indices) {
-                        if (Common.nullChecker(projectNameFromEdit).equals(projectHeadReqVoList[j].projectName, ignoreCase = true)) {
-                            binding.spinnerProjectName.setSelection(j+1)
-                            binding.etProjectAddress.setText(projectHeadReqVoList[i].projectHeadAddress)
-                            for (i1 in statesLists.indices) {
-                                if (Common.nullChecker(projectHeadReqVoList[i].projectHeadState).equals(statesLists[i1].stateName, ignoreCase = true)) {
-                                    binding.stateSpinner.setSelection(i1)
-                                    break
-                                }
+                override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+            })
+
+            if (isEdit) {
+                for (j in projectHeadReqVoList.indices) {
+                    if (Common.nullChecker(projectNameFromEdit).equals(projectHeadReqVoList[j].projectName, ignoreCase = true)) {
+                        binding.spinnerProjectName.setSelection(j+1)
+                        binding.etProjectAddress.setText(projectHeadReqVoList[i].projectHeadAddress)
+                        for (i1 in statesLists.indices) {
+                            if (Common.nullChecker(projectHeadReqVoList[i].projectHeadState).equals(statesLists[i1].stateName, ignoreCase = true)) {
+                                binding.stateSpinner.setSelection(i1)
+                                break
                             }
-                            binding.etPincode.setText(projectHeadReqVoList[i].projectHeadPincode)
-                            break
                         }
+                        binding.etPincode.setText(projectHeadReqVoList[i].projectHeadPincode)
+                        break
                     }
                 }
             }
@@ -716,7 +731,7 @@ class CreateCustomerProjectActivity : NetworkChangeListenerActivity(), RetrofitR
         val customerProjectReqVO = CustomerProjectReqVO().apply {
             projectName = (binding.spinnerProjectName.selectedItem as mListString).nilai1
             projectAddress = binding.etProjectAddress.text.toString()
-            state = binding.stateSpinner.selectedItemId.toString()
+            state = (binding.stateSpinner.selectedItem as mListString).nilai1
             country = binding.etCountry.text.toString()
             pincode = binding.etPincode.text.toString()
             contractorTeamSize = binding.etTeamSizeNo.text.toString()

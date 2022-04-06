@@ -83,21 +83,24 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
     private fun setUI(reportObj: DailyReportsAddVO) {
         binding.apply {
             if (reportObj.relatedTo.equals("New Project")) {
+                rbNewProject.isChecked=true
                 llNewProject.visibility=View.VISIBLE
+                llDescriptionWork.visibility=View.VISIBLE
                 etProjectName.setText(reportObj.newprojectName)
                 etContactName.setText(reportObj.newprojectContactName)
                 etMobileNo.setText(reportObj.mobileNo)
                 etCallType.setText(reportObj.callType.orEmpty())
-//                loadContractorDetails()
+
             } else if (reportObj.relatedTo.equals("Existing Project")) {
+                rbExistingProject.isChecked=true
                 llExistingProject.visibility=View.VISIBLE
+                llDescriptionWork.visibility=View.VISIBLE
                 selectedCPId=""+reportObj.csCustomerprojectClientprojectDetailsid
                 etClientProject.setText(reportObj.projectName)
                 etProjectHeadName.setText(reportObj.projectHeadName)
-                reportObj.descriptionOfWorks?.forEach {
-                    addDescriptionItem(it)
-                }
-//                loadClientProjectDetails()
+            }
+            reportObj.descriptionOfWorks?.forEach {
+                addDescriptionItem(it)
             }
 
         }
@@ -108,12 +111,22 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
             loadClientProjectDetails()
             rbNewProject.setOnClickListener {
                 llNewProject.visibility=View.VISIBLE
+                llDescriptionWork.visibility=View.VISIBLE
                 llExistingProject.visibility=View.GONE
             }
             rbExistingProject.setOnClickListener {
                 llNewProject.visibility=View.GONE
+                llDescriptionWork.visibility=View.VISIBLE
                 llExistingProject.visibility=View.VISIBLE
             }
+            var view: ItemDescriptionWorkBinding = DataBindingUtil.inflate(
+                    LayoutInflater.from(this@CreateDailyReportsActivity),
+                    R.layout.item_description_work,
+                    null,
+                    false
+            )
+            view.root.setTag(nextTag)
+            llDesWork.addView(view.root)
             etCallType.setOnClickListener {
                 var list = listOf<String>("Visit", "Call")
                 MultiSelectionDialog(
@@ -154,6 +167,9 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                                 "Please Select Call type",
                                 Toast.LENGTH_SHORT
                         ).show()
+                        return@setOnClickListener
+                    }else if (getWorksData().size == 0) {
+                        toast("Please add Description of works")
                         return@setOnClickListener
                     }
                 }else if(rbExistingProject.isChecked) {
@@ -216,14 +232,14 @@ class CreateDailyReportsActivity : NetworkChangeListenerActivity(), RetrofitResp
                         mobileNo=etMobileNo.text.toString()
                         relatedTo="New Project"
                     }else if(rbExistingProject.isChecked){
-                        csCustomerprojectClientprojectDetailsid =selectedCPId
+                        customerProjectId =selectedCPId
                         projectHeadName=etProjectHeadName.text.toString()
-                        descriptionOfWorks = worksData.map {
-                            DailyReportsAddVO.DescriptionOfWork().apply {
-                                descriptionOfWorks = it
-                            }
-                        }
                         relatedTo="Existing Project"
+                    }
+                    descriptionOfWorks = worksData.map {
+                        DailyReportsAddVO.DescriptionOfWork().apply {
+                            descriptionOfWorks = it
+                        }
                     }
                     callDate = ""
                     callTime = ""

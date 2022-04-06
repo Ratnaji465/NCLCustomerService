@@ -212,18 +212,24 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:layout_marginTop="@dimen/_2sdp"
-                            android:background="@drawable/button_bg_white"
+                            android:background="@drawable/edittext_bg_grey"
                             android:enabled="false"
                             android:gravity="left|center"
                             android:imeOptions="actionNext"
                             android:inputType="text"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
-
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/llDescriptionWork"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:orientation="vertical">
                         <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:background="@color/grey"
                             android:padding="@dimen/_5sdp"
                             android:text="Description Of Works"

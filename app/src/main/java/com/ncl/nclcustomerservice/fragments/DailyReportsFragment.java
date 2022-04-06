@@ -135,7 +135,6 @@ public class DailyReportsFragment extends BaseFragment implements RetrofitRespon
                         if (dailyReportsResListVO != null && dailyReportsResListVO.dailyReportsResVOList != null) {
                             db.commonDao().deleteDailyReportsList();
                             db.commonDao().insertDailyReportsList(dailyReportsResListVO.dailyReportsResVOList);
-                            Collections.reverse(dailyReportsResListVO.dailyReportsResVOList);
                             setOnAdapter(rvList, dailyReportsResListVO.dailyReportsResVOList);
                         }
                     } else {

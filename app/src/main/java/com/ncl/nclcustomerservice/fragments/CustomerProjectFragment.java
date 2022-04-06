@@ -136,7 +136,7 @@ public class CustomerProjectFragment extends BaseFragment implements RetrofitRes
                         if (customerProjectResListVO != null && customerProjectResListVO.customerProjectResVOList != null) {
                             db.commonDao().deleteCustomerProjectList();
                             db.commonDao().insertCustomerProjectList(customerProjectResListVO.customerProjectResVOList);
-                            Collections.reverse(customerProjectResListVO.customerProjectResVOList);
+//                            Collections.reverse(customerProjectResListVO.customerProjectResVOList);
                             setOnAdapter(rvList, customerProjectResListVO.customerProjectResVOList);
                         }
                     } else {

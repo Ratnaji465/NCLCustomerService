@@ -57,7 +57,7 @@ import com.ncl.nclcustomerservice.typeconverter.ProjectHeadAssociateContactTC;
         OpportunitiesList.class, SalesOrderList.class, DailyReportsAddVO.class,
         TadaList.class, Geo_Tracking_POJO.class, QuotationList.class,
         PaymentCollectionList.class, LeadInsertReqVo.class, CustomerContactResponseVo.ContactContractorList.class,
-        ProjectHeadReqVo.class, CustomerProjectResVO.class}, version = 5, exportSchema = false)
+        ProjectHeadReqVo.class, CustomerProjectResVO.class}, version = 2, exportSchema = false)
 
 @TypeConverters({ LeadAssociatedTC.class, LeadActionTOTC.class, ContractorTeamMemberTC.class,
         ProjectHeadAssociateContactTC.class, CusAssociateContactTC.class, CusContractorTC.class,

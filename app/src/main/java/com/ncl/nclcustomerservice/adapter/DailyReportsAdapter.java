@@ -46,28 +46,29 @@ public class DailyReportsAdapter extends RecyclerView.Adapter<DailyReportsAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(dailyReportsResVOList.get(position).getRelatedTo()!=null){
             holder.et_related_to.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getRelatedTo()));
-        }
-        if(dailyReportsResVOList.get(position).getRelatedTo().equalsIgnoreCase("New Project")){
-            holder.llProjectName.setVisibility(View.VISIBLE);
-            holder.tvContactName.setText("Contact Name");
-            holder.tvCallType.setText("Call Type");
-            if(dailyReportsResVOList.get(position).getNewprojectName()!=null){
-                holder.et_project_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getNewprojectName()));
+            if( dailyReportsResVOList.get(position).getRelatedTo().equalsIgnoreCase("New Project")){
+                holder.llProjectName.setVisibility(View.VISIBLE);
+                holder.tvContactName.setText("Contact Name");
+                holder.tvCallType.setText("Call Type");
+                if(dailyReportsResVOList.get(position).getNewprojectName()!=null){
+                    holder.et_project_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getNewprojectName()));
+                }
+                if(dailyReportsResVOList.get(position).getNewprojectContactName()!=null){
+                    holder.et_contact_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getNewprojectContactName()));
+                }
+                holder.et_call_type.setText(dailyReportsResVOList.get(position).getCallType());
+            }else if(dailyReportsResVOList.get(position).getRelatedTo().equalsIgnoreCase("Existing Project")){
+                holder.llProjectName.setVisibility(View.INVISIBLE);
+                holder.tvContactName.setText("Client Project");
+                holder.tvCallType.setText("Project Head Name");
+                if(dailyReportsResVOList.get(position).getProjectName()!=null){
+                    holder.et_contact_name.setText(dailyReportsResVOList.get(position).getProjectName());
+                }
+                if(dailyReportsResVOList.get(position).getProjectHeadName()!=null){
+                    holder.et_call_type.setText(dailyReportsResVOList.get(position).getProjectHeadName());
+                }
             }
-            if(dailyReportsResVOList.get(position).getNewprojectContactName()!=null){
-                holder.et_contact_name.setText(Common.toCamelCase(dailyReportsResVOList.get(position).getNewprojectContactName()));
-            }
-            holder.et_call_type.setText(dailyReportsResVOList.get(position).getCallType());
-        }else if(dailyReportsResVOList.get(position).getRelatedTo().equalsIgnoreCase("Existing Project")){
-            holder.llProjectName.setVisibility(View.INVISIBLE);
-            holder.tvContactName.setText("Client Project");
-            holder.tvCallType.setText("Project Head Name");
-            if(dailyReportsResVOList.get(position).getCsCustomerprojectClientprojectDetailsid()!=null){
-                holder.et_contact_name.setText(dailyReportsResVOList.get(position).getCsCustomerprojectClientprojectDetailsid());
-            }
-            if(dailyReportsResVOList.get(position).getProjectHeadName()!=null){
-                holder.et_call_type.setText(dailyReportsResVOList.get(position).getProjectHeadName());
-            }
+
         }
 
         if(dailyReportsResVOList.get(position).getCheckInTime()!=null){

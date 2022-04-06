@@ -115,7 +115,7 @@
                             android:id="@+id/item_mobile_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mobile"
+                            android:text="Contact Owner"
                             android:textColor="@color/gray" />
 
                         <com.ncl.nclcustomerservice.customviews.CustomTextView
@@ -138,7 +138,7 @@
                             android:id="@+id/item_team_size_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Team Size"
+                            android:text="Created Date"
                             android:textColor="@color/gray" />
 
                         <com.ncl.nclcustomerservice.customviews.CustomTextView

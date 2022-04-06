@@ -46,6 +46,9 @@ class TabbedContractorListFragment : BaseFragment(), RetrofitResponseListener, O
             }
         }
         loginResponse = Common.getLoginResponse(requireContext())
+        if(loginResponse.usersTeam.size>1){
+            binding.ivFilter.visibility=View.VISIBLE
+        }
     }
 
     override fun onCreateView(
@@ -67,6 +70,7 @@ class TabbedContractorListFragment : BaseFragment(), RetrofitResponseListener, O
         binding.etSearch.onTextChange {
             it?.let { filterList(it.toString()) }
         }
+
         binding.ivFilter.setOnClickListener {
             var list = loginResponse.usersTeam.map { it }.toMutableList()
             list.apply {

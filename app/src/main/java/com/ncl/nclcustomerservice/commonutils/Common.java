@@ -2126,7 +2126,25 @@ public class Common {
         }
         return date;
     }
+    public static String getDiffenceBetweenDates(String fromDate,String toDate){
+        Date date1;
+        Date date2;
+        String dayDifference = null;
+        SimpleDateFormat dates = new SimpleDateFormat("yyyy-MM-dd");
 
+        try {
+            date1 = dates.parse(fromDate);
+            date2 = dates.parse(toDate);
+            if(date1!=null && date2!=null){
+                long difference = Math.abs(date1.getTime() - date2.getTime());
+                long differenceDates = difference / (24 * 60 * 60 * 1000);
+                dayDifference = Long.toString(differenceDates);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dayDifference;
+    }
     public static List<String> getBetweenDates(String dateString1, String dateString2) {
         ArrayList<String> dates = new ArrayList<String>();
         DateFormat df1 = new SimpleDateFormat("dd-MM-yyyy");

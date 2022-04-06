@@ -68,8 +68,8 @@ class ProjectHeadAdapter(
                         filteredList[position].category
                     )
                 )
-                binding.cntMobile.setText(filteredList[position].projectHeadMobile)
-                binding.cntTeamSize.setText(filteredList[position].companyOrClientName)
+                binding.cntMobile.setText(filteredList[position].ownerName)
+                binding.cntTeamSize.setText(filteredList[position].createdDatetime)
                 binding.root.setOnClickListener {
                     onClick(filteredList[position])
                 }

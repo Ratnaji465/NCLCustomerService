@@ -116,6 +116,12 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
     @BindView(R.id.ll_project_head_contact)
     View ll_project_head_contact;
 
+    @BindView(R.id.ll_parent_associate_contact)
+    LinearLayout ll_parent_associate_contact;
+
+    @BindView(R.id.ll_parent_remarks)
+    LinearLayout ll_parent_remarks;
+
     CustomerContactResponseVo.ContactContractorList contactContractorList;
     ProjectHeadReqVo projectHeadReqVo;
     String checkType;
@@ -147,10 +153,10 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                 }
             }
             try {
-                String aadharPath=contactContractorList.contractorAadharImagePath;
-                if(aadharPath!=null){
+                String aadharPath = contactContractorList.contractorAadharImagePath;
+                if (aadharPath != null) {
                     String aadharFilename = aadharPath.substring(aadharPath.lastIndexOf("/") + 1);
-                    if(!aadharFilename.contains(".pdf")){
+                    if (!aadharFilename.contains(".pdf")) {
                         iv_aadhar.setVisibility(View.VISIBLE);
                         Glide.with(this)
                                 .load(aadharPath)
@@ -159,26 +165,26 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                         iv_aadhar.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent=new Intent(NewContactViewActivity.this,ViewImageActivity.class);
-                                intent.putExtra("ImagePath",aadharPath);
+                                Intent intent = new Intent(NewContactViewActivity.this, ViewImageActivity.class);
+                                intent.putExtra("ImagePath", aadharPath);
                                 startActivity(intent);
                             }
                         });
-                    }else {
+                    } else {
                         pv_aadhar.setVisibility(View.VISIBLE);
                         new RetriveAadharPDFfromUrl().execute(aadharPath);
                     }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
 
             try {
-                String panPath=contactContractorList.contractorPanImagePath;
-                if(panPath!=null){
+                String panPath = contactContractorList.contractorPanImagePath;
+                if (panPath != null) {
                     String panFilename = panPath.substring(panPath.lastIndexOf("/") + 1);
-                    if(!panFilename.contains(".pdf")){
+                    if (!panFilename.contains(".pdf")) {
                         iv_pan.setVisibility(View.VISIBLE);
                         Glide.with(this)
                                 .load(panPath)
@@ -187,17 +193,17 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                         iv_pan.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent=new Intent(NewContactViewActivity.this,ViewImageActivity.class);
-                                intent.putExtra("ImagePath",panPath);
+                                Intent intent = new Intent(NewContactViewActivity.this, ViewImageActivity.class);
+                                intent.putExtra("ImagePath", panPath);
                                 startActivity(intent);
                             }
                         });
-                    }else {
+                    } else {
                         pv_pan.setVisibility(View.VISIBLE);
                         new RetrivePanPDFfromUrl().execute(panPath);
                     }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             coAddress.setText(contactContractorList.contractorAddress);
@@ -231,12 +237,14 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                 phPincode.setText(projectHeadReqVo.projectHeadPincode);
 //                phRemarks.setText(projectHeadReqVo.projectHeadContactRemarks);
                 if (projectHeadReqVo.remarksListVOS != null && projectHeadReqVo.remarksListVOS.size() > 0) {
+                    ll_parent_remarks.setVisibility(View.VISIBLE);
                     for (int i = 0; i < projectHeadReqVo.remarksListVOS.size(); i++) {
                         View rowView = getLayoutInflater().inflate(R.layout.remarks_row, null);
                         addPHRemarks(rowView, projectHeadReqVo.remarksListVOS.get(i));
                     }
                 }
                 if (projectHeadReqVo.associateContacts != null && projectHeadReqVo.associateContacts.size() > 0) {
+                    ll_parent_associate_contact.setVisibility(View.VISIBLE);
                     for (int i = 0; i < projectHeadReqVo.associateContacts.size(); i++) {
                         View rowView = getLayoutInflater().inflate(R.layout.associate_contacts_row, null);
                         addPHAssociateContacts(rowView, projectHeadReqVo.associateContacts.get(i));
@@ -263,7 +271,7 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
                     editintent.putExtra("form_key", "edit");
                     editintent.putExtra("contactContractorList", contactContractorList);
                     startActivity(editintent);
-                }else if (checkType.equalsIgnoreCase("ProjectHead")) {
+                } else if (checkType.equalsIgnoreCase("ProjectHead")) {
                     Intent editintent = new Intent(NewContactViewActivity.this, CreateNewContactActivity.class);
                     editintent.putExtra("form_key", "edit");
                     editintent.putExtra("contactProjectHeadList", projectHeadReqVo);
@@ -293,7 +301,8 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
 //            }
 //        });
     }
-    class RetriveAadharPDFfromUrl extends AsyncTask<String, Void, InputStream>{
+
+    class RetriveAadharPDFfromUrl extends AsyncTask<String, Void, InputStream> {
         @Override
         protected InputStream doInBackground(String... strings) {
             InputStream inputStream = null;
@@ -317,6 +326,7 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
             }
             return inputStream;
         }
+
         @Override
         protected void onPostExecute(InputStream inputStream) {
             // after the execution of our async
@@ -324,7 +334,8 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
             pv_aadhar.fromStream(inputStream).load();
         }
     }
-    class RetrivePanPDFfromUrl extends AsyncTask<String, Void, InputStream>{
+
+    class RetrivePanPDFfromUrl extends AsyncTask<String, Void, InputStream> {
 
         @Override
         protected InputStream doInBackground(String... strings) {
@@ -349,6 +360,7 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
             }
             return inputStream;
         }
+
         @Override
         protected void onPostExecute(InputStream inputStream) {
             // after the execution of our async
@@ -356,10 +368,11 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
             pv_pan.fromStream(inputStream).load();
         }
     }
-    private void addCCRemarks(View rowView,RemarksListVO CCRemarks) {
+
+    private void addCCRemarks(View rowView, RemarksListVO CCRemarks) {
         ll_CCRemarks.addView(rowView);
         CreateNewContactActivity.RemarksViewHolder viewHolder = new CreateNewContactActivity.RemarksViewHolder(rowView);
-        if(CCRemarks!=null){
+        if (CCRemarks != null) {
             viewHolder.removelayout_remarks.setVisibility(View.GONE);
             viewHolder.addlayout_remarks.setVisibility(View.GONE);
             viewHolder.etRemarks.setEnabled(false);
@@ -367,17 +380,19 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
         }
 
     }
-    private void addPHRemarks(View rowView,RemarksListVO projectHeadRemarks) {
-            ll_PHRemarks.addView(rowView);
-            CreateNewContactActivity.RemarksViewHolder viewHolder = new CreateNewContactActivity.RemarksViewHolder(rowView);
-            if(projectHeadRemarks!=null){
-                viewHolder.removelayout_remarks.setVisibility(View.GONE);
-                viewHolder.addlayout_remarks.setVisibility(View.GONE);
-                viewHolder.etRemarks.setEnabled(false);
-                viewHolder.etRemarks.setText(projectHeadRemarks.remark);
-            }
+
+    private void addPHRemarks(View rowView, RemarksListVO projectHeadRemarks) {
+        ll_PHRemarks.addView(rowView);
+        CreateNewContactActivity.RemarksViewHolder viewHolder = new CreateNewContactActivity.RemarksViewHolder(rowView);
+        if (projectHeadRemarks != null) {
+            viewHolder.removelayout_remarks.setVisibility(View.GONE);
+            viewHolder.addlayout_remarks.setVisibility(View.GONE);
+            viewHolder.etRemarks.setEnabled(false);
+            viewHolder.etRemarks.setText(projectHeadRemarks.remark);
+        }
 
     }
+
     private void addPHAssociateContacts(View rowView, ProjectHeadReqVo.AssociateContact associateContact) {
         ll_associate_details.addView(rowView);
         CreateNewContactActivity.AssociateContactViewHolder associateContactViewHolder = new CreateNewContactActivity.AssociateContactViewHolder(rowView);
@@ -403,8 +418,20 @@ public class NewContactViewActivity extends NetworkChangeListenerActivity implem
             loopHolder.etTeamMemberName.setText(teamMemberResVo.teamMemberName);
             loopHolder.etTeamMemberMobileNo.setText(teamMemberResVo.teamMemberMobileNo);
             loopHolder.etCoAadharNo.setText(teamMemberResVo.teammemberAadharNumber);
-            loopHolder.btn_choose_file.setVisibility(View.GONE);
-            loopHolder.tv_file_name.setVisibility(View.GONE);
+            loopHolder.btn_choose_file.setText("View Image");
+            String path = teamMemberResVo.teamMemberAadharImagePath;
+            if (path != null) {
+                String filename = path.substring(path.lastIndexOf("/") + 1);
+                loopHolder.tv_file_name.setText(filename);
+            }
+            loopHolder.btn_choose_file.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(NewContactViewActivity.this, ViewImageActivity.class);
+                    intent.putExtra("ImagePath", teamMemberResVo.teamMemberAadharImagePath);
+                    startActivity(intent);
+                }
+            });
             loopHolder.addLayout.setVisibility(View.GONE);
             loopHolder.removeLayout.setVisibility(View.GONE);
         }

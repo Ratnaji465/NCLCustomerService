@@ -80,6 +80,9 @@ public class ProjectHeadReqVo implements Serializable {
     @SerializedName("modified_datetime")
     @Expose
     public String modifiedDatetime;
+    @SerializedName("owner_name")
+    @Expose
+    public String ownerName;
     @SerializedName("associate_contacts")
     @Expose
     @TypeConverters(ProjectHeadAssociateContactTC.class)

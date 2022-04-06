@@ -52,6 +52,9 @@ class TabbedProjectHeadListFragment : BaseFragment(), RetrofitResponseListener, 
             }
         }
         loginResponse = Common.getLoginResponse(requireContext())
+        if(loginResponse.usersTeam.size>1){
+            binding.ivFilter.visibility=View.VISIBLE
+        }
     }
 
     override fun onCreateView(
@@ -71,6 +74,7 @@ class TabbedProjectHeadListFragment : BaseFragment(), RetrofitResponseListener, 
         binding.etSearch.onTextChange {
             projectHeadAdapter.filter(it?.toString() ?: "")
         }
+
         binding.ivFilter.setOnClickListener {
             var list = loginResponse.usersTeam.map { it }.toMutableList()
             list.apply {
@@ -153,6 +157,7 @@ class TabbedProjectHeadListFragment : BaseFragment(), RetrofitResponseListener, 
                             .insertProjectHeadContact(projectHeadContactListResVo.projectHeadListResVo.projectHeadReqVoList)
                         projectHeads =
                             projectHeadContactListResVo.projectHeadListResVo.projectHeadReqVoList
+
                         setOnAdapter(
                             binding.contactRecycler,
                             projectHeads

@@ -11,6 +11,9 @@ public class RemarksListVO implements Serializable {
     @SerializedName("id")
     @Expose
     public String id;
+    @SerializedName("remark_date")
+    @Expose
+    public String remarkDate;
     @SerializedName("remark")
     @Expose
     public String remark;
@@ -19,6 +22,7 @@ public class RemarksListVO implements Serializable {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
+                .append("remakDate",remarkDate)
                 .append("remark", remark).toString();
     }
 }

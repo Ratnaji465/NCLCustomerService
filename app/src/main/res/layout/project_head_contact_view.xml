@@ -330,60 +330,14 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <com.ncl.nclcustomerservice.customviews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remarks" />
-                <LinearLayout
-                    android:id="@+id/ll_PHRemarks"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:orientation="vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="invisible"
-                android:orientation="vertical">
-
-                <com.ncl.nclcustomerservice.customviews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PINCODE" />
-
-                <com.ncl.nclcustomerservice.customviews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/ll_parent_associate_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/_12sdp"
         android:orientation="vertical">
 
@@ -409,6 +363,36 @@
                 android:orientation="vertical" />
 
         </HorizontalScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_parent_remarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remarks" />
+            <LinearLayout
+                android:id="@+id/ll_PHRemarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="vertical"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

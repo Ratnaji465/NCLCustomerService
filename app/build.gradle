@@ -31,8 +31,8 @@ android {
         applicationId "com.ncl.nclcustomerservice"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 03
-        versionName "1.0.2"
+        versionCode 04
+        versionName "1.0.3"
         multiDexEnabled true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         vectorDrawables.useSupportLibrary = true
@@ -55,10 +55,10 @@ android {
 
     flavorDimensions "version"
     productFlavors {
-        flavorTest {
-            buildConfigField("String", "BASE_URL", '"http://183.82.122.35:8080/ncldeven_test/"')
-
-        }
+//        flavorTest {
+//            buildConfigField("String", "BASE_URL", '"http://183.82.122.35:8080/ncldeven_test/"')
+//
+//        }
         flavorDevelopment {
             buildConfigField("String", "BASE_URL", '"http://183.82.122.35:8080/nclcscrm/"')
 //            buildConfigField("String", "BASE_URL", '"http://183.82.122.35:8080/nclcscrm_dev/"')

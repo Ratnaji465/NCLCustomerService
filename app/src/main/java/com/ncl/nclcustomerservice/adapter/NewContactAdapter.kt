@@ -66,12 +66,12 @@ class NewContactAdapter(
                 )
                 binding.cntMobile.setText(
                     Common.nullChecker(
-                        filteredList[position].contractorMobileNo
+                        filteredList[position].ownerName
                     )
                 )
                 binding.cntTeamSize.setText(
                     Common.nullChecker(
-                        filteredList[position].contractorTeamSize
+                        filteredList[position].createdDatetime
                     )
                 )
                 binding.root.setOnClickListener {

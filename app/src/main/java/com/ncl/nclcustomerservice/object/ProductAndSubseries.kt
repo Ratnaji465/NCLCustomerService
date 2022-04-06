@@ -57,6 +57,9 @@ data class ProductAndSubseries(
 //request
 
 data class InstalledSftDetails(
+        @SerializedName("clientproject_installed_sft_id")
+        @Expose
+        var clientprojectInstalledSftId: String="",
         @SerializedName("installation_period_from_date")
         @Expose
         var installationPeriodFromDate: String = "",
@@ -98,11 +101,14 @@ data class ClientProject(
         @SerializedName("work_status") var workStatus: String = "",
         @SerializedName("no_of_days_for_installation_and_handing_over") var noOfDaysForInstallationAndHandingOver: String = "",
         @SerializedName("client_project_date") var clientProjectDate: String = "",
-        @SerializedName("Remarks") var Remarks: String = "",
         @SerializedName("created_by") var createdBy: String = "",
         @SerializedName("modified_by") var modifiedBy: String = "",
         @SerializedName("created_datetime") var createdDatetime: String = "",
         @SerializedName("modified_datetime") var modifiedDatetime: String = "",
+        @SerializedName("remarks")
+        @Expose
+//        @TypeConverters(ProductAndSubseriesTC::class)
+        public var remarksList: List<RemarksListVO> = listOf(),
         @SerializedName("products")
         @Expose
         @TypeConverters(ProductAndSubseriesTC::class)
