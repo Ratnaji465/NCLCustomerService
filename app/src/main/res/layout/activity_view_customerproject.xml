@@ -337,7 +337,9 @@
                     android:background="@color/different_green"
                     android:gravity="end"
                     android:padding="@dimen/_5sdp"
-                    android:text="ADD CLIENT PROJECT" />
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="ADD OA" />
 
                 <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
                     android:layout_width="match_parent"

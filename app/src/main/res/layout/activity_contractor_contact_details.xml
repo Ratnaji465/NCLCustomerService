@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:background="@color/grey"
             android:padding="@dimen/_5sdp"
-            android:text="CONTRACTOR CONTACT DETAILS"
+            android:text="INSTALLATION CONTRACTOR DETAILS"
             android:textAllCaps="true" />
         <com.ncl.nclcustomerservice.customviews.CustomTextView
             android:id="@+id/tvContractorName"

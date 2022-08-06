@@ -60,7 +60,7 @@ class NewContactsFragment : BaseFragment(), RetrofitResponseListener, OnRefreshL
         ButterKnife.bind(this, view)
         tabLayout = view.findViewById<View>(R.id.tabs) as TabLayout
         val firstTab = tabLayout.newTab()
-        firstTab.text = "Contractor"
+        firstTab.text = "Installation Contractor"
         tabLayout.addTab(firstTab)
         val secondTab = tabLayout.newTab()
         secondTab.text = "Project contact details"

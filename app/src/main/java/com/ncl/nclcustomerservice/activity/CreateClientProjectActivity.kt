@@ -123,15 +123,15 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
             tvOANumber.text = Common.setSppanableText("* OA Number")
             tvMaterialDispatch.text =
                     Common.setSppanableText("* Date of Material dispatch from factory")
-            tvWorkStartDate.text = Common.setSppanableText("* Work start date")
+//            tvWorkStartDate.text = Common.setSppanableText("* Work start date")
             tvTotalSFT.text = Common.setSppanableText("* Total SFT")
             tvInstalledSFT.text = Common.setSppanableText("* Installed SFT")
             tvBalanceTobeInstall.text = Common.setSppanableText("* Balance to be installed")
 //            tvWCCReceiveDate.text =
 //                Common.setSppanableText("* Work Completion certificate received date")
             tvWorkStatus.text = Common.setSppanableText("* Work Status")
-            tvShortagesMaterialReceivedon.text =
-                    Common.setSppanableText("* Shortage Material Receivedon")
+//            tvShortagesMaterialReceivedon.text =
+//                    Common.setSppanableText("* Shortage Material Receivedon")
             tvRemarkDate.text =
                     Common.setSppanableText("* Remark Date")
             tvClientRemarks.text =
@@ -429,6 +429,9 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                     }
                     callApi()
                 }
+            }
+            cancel.setOnClickListener {
+                finish()
             }
             etHandingOver.onTextChange {
                 updateSFTUi()
@@ -1108,14 +1111,16 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
                         Toast.LENGTH_SHORT
                 ).show()
                 isFilled = false
-            } else if (etWorkStartDate.text?.length == 0) {
-                Toast.makeText(
-                        this@CreateClientProjectActivity,
-                        "Please add Work Start Date",
-                        Toast.LENGTH_SHORT
-                ).show()
-                isFilled = false
-            } else if (etTotalSFT.text?.length == 0) {
+            }
+//            else if (etWorkStartDate.text?.length == 0) {
+//                Toast.makeText(
+//                        this@CreateClientProjectActivity,
+//                        "Please add Work Start Date",
+//                        Toast.LENGTH_SHORT
+//                ).show()
+//                isFilled = false
+//            }
+            else if (etTotalSFT.text?.length == 0) {
                 Toast.makeText(
                         this@CreateClientProjectActivity,
                         "Please add Total SFT",
@@ -1143,14 +1148,15 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
 //                isFilled = false
 //            }
             else if (anyShortageselected) {
-                if (etShortagesMaterialReceivedon.text?.length == 0) {
-                    Toast.makeText(
-                            this@CreateClientProjectActivity,
-                            "Please add Shortage Material Received",
-                            Toast.LENGTH_SHORT
-                    ).show()
-                    isFilled = false
-                } else if (etClientRemarks.text?.length == 0) {
+//                if (etShortagesMaterialReceivedon.text?.length == 0) {
+//                    Toast.makeText(
+//                            this@CreateClientProjectActivity,
+//                            "Please add Shortage Material Received",
+//                            Toast.LENGTH_SHORT
+//                    ).show()
+//                    isFilled = false
+//                } else
+                    if (etClientRemarks.text?.length == 0) {
                     etClientRemarks.requestFocus()
                     etClientRemarks.setError("Please add Shortage Remark")
                     isFilled = false
