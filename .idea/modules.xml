@@ -4,8 +4,17 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/NCLCustomerService.iml" filepath="$PROJECT_DIR$/.idea/modules/NCLCustomerService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NCLCustomerService.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NCLCustomerService.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NCLCustomerService.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NCLCustomerService.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NCLCustomerService.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NCLCustomerService.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NCLCustomerService.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NCLCustomerService.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/duo-navigation-drawer/NCLCustomerService.duo-navigation-drawer.iml" filepath="$PROJECT_DIR$/.idea/modules/duo-navigation-drawer/NCLCustomerService.duo-navigation-drawer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/duo-navigation-drawer/NCLCustomerService.duo-navigation-drawer.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/duo-navigation-drawer/NCLCustomerService.duo-navigation-drawer.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/duo-navigation-drawer/NCLCustomerService.duo-navigation-drawer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/duo-navigation-drawer/NCLCustomerService.duo-navigation-drawer.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/duo-navigation-drawer/NCLCustomerService.duo-navigation-drawer.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/duo-navigation-drawer/NCLCustomerService.duo-navigation-drawer.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/searchablespinnerlibrary/NCLCustomerService.searchablespinnerlibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/searchablespinnerlibrary/NCLCustomerService.searchablespinnerlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/searchablespinnerlibrary/NCLCustomerService.searchablespinnerlibrary.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/searchablespinnerlibrary/NCLCustomerService.searchablespinnerlibrary.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/searchablespinnerlibrary/NCLCustomerService.searchablespinnerlibrary.main.iml" filepath="$PROJECT_DIR$/.idea/modules/searchablespinnerlibrary/NCLCustomerService.searchablespinnerlibrary.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/searchablespinnerlibrary/NCLCustomerService.searchablespinnerlibrary.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/searchablespinnerlibrary/NCLCustomerService.searchablespinnerlibrary.unitTest.iml" />
     </modules>
   </component>
 </project>

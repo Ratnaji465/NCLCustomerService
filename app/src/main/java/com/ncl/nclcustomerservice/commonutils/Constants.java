@@ -113,6 +113,7 @@ public class Constants {
         String CONTACTS = "Contacts";
         String CUSTOMER_PROJECT = "Customer Project";
         String DAILY_REPORT = "Daily Report";
+        String COMPLAINT_REGISTER = "Complaint Register";
         String FINAL_REPORT = "Final Report";
         String LOGOUT="logout";
     }

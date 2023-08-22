@@ -60,8 +60,8 @@ android {
 //
 //        }
         flavorDevelopment {
-            buildConfigField("String", "BASE_URL", '"http://183.82.122.35:8080/nclcscrm/"')
-//            buildConfigField("String", "BASE_URL", '"http://183.82.122.35:8080/nclcscrm_dev/"')
+//            buildConfigField("String", "BASE_URL", '"http://183.82.122.35:8080/nclcscrm/"')
+            buildConfigField("String", "BASE_URL", '"http://183.82.122.35:8080/nclcscrm_dev/"')
         }
 
         flavorProduction {

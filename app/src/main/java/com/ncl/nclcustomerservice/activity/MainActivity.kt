@@ -32,6 +32,7 @@ import com.ncl.nclcustomerservice.checkinout.LocationUpdatesService
 import com.ncl.nclcustomerservice.commonutils.Common
 import com.ncl.nclcustomerservice.commonutils.Constants
 import com.ncl.nclcustomerservice.database.DatabaseHandler
+import com.ncl.nclcustomerservice.fragments.ComplaintsFragment
 import com.ncl.nclcustomerservice.fragments.CustomerProjectFragment
 import com.ncl.nclcustomerservice.fragments.DailyReportsFragment
 import com.ncl.nclcustomerservice.fragments.NewContactsFragment
@@ -139,6 +140,14 @@ class MainActivity : NetworkChangeListenerActivity(), OnMenuClickListener {
         daily_report.create = "3"
         daily_report.drawable = R.drawable.dailyreports
         leftNavs.add(daily_report)
+        val complaints = LeftNav()
+        complaints.methodName = Constants.New_MethodNames.COMPLAINT_REGISTER
+        complaints.name = Constants.New_MethodNames.COMPLAINT_REGISTER
+        complaints.id = "4"
+        complaints.read = "4"
+        complaints.create = "4"
+        complaints.drawable = R.drawable.dailyreports
+        leftNavs.add(complaints)
         val final_report = LeftNav()
         final_report.methodName = Constants.New_MethodNames.FINAL_REPORT
         final_report.name = Constants.New_MethodNames.FINAL_REPORT
@@ -333,6 +342,10 @@ class MainActivity : NetworkChangeListenerActivity(), OnMenuClickListener {
             Constants.New_MethodNames.DAILY_REPORT -> {
                 val dailyReportsFragment = DailyReportsFragment()
                 goToFragment(dailyReportsFragment, true)
+            }
+            Constants.New_MethodNames.COMPLAINT_REGISTER -> {
+                val complaintRegisterFragment = ComplaintsFragment()
+                goToFragment(complaintRegisterFragment, true)
             }
         }
         mViewHolder!!.mDuoDrawerLayout.closeDrawer()
