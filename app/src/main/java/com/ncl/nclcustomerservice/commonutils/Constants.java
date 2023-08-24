@@ -78,6 +78,9 @@ public class Constants {
         String LIST = "user_id";
         String USER = "users_team";
         String DIVISIONS_LIST = "divisions_list";
+        String AREA_OFFICE="area_office";
+        String USER_TYPE="user_type";
+
 
 
         String LEFTNAV = "left_nav";
@@ -131,6 +134,7 @@ public class Constants {
         String ADD_DAILY_REPORTS="daily_report_add";
         String EDIT_DAILY_REPORTS="daily_report_edit";
         String DAILY_REPORTS_CHECKIN_CHECKOUT="daily_report_checkin_checkout";
+        String COMPLAINT_REGISTER_MASTERS="get_complaint_register_masters";
 
         String DASHBOARD = "dashboard";
         String GET_RECORDS_BY_TABLE = "get_records_by_table";

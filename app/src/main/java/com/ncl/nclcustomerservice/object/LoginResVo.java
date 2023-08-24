@@ -54,6 +54,12 @@ public class LoginResVo implements Serializable
     @SerializedName("price_list_area")
     @Expose
     public String price_list_area;
+    @SerializedName("area_offcie")
+    @Expose
+    public String area_offcie;
+    @SerializedName("user_type")
+    @Expose
+    public String user_type;
     @SerializedName("left_nav")
     @Expose
     public List<LeftNav> leftNav = null;

@@ -24,6 +24,7 @@ import com.ncl.nclcustomerservice.network.RetrofitRequestController;
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener;
 import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
+import com.ncl.nclcustomerservice.object.ComplaintRegisterMasterVo;
 import com.ncl.nclcustomerservice.object.ContactList;
 import com.ncl.nclcustomerservice.object.ContractList;
 import com.ncl.nclcustomerservice.object.CustomerList;
@@ -242,6 +243,8 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                             Common.saveImageIntoSP(loginResVo.profileImg);
                             Common.savePriceListIdIntoSP(loginResVo.price_list_id);
                             Common.savePriceAreaNameIntoSP(loginResVo.price_list_area);
+                            Common.saveAreaOfficeIntoSP(loginResVo.area_offcie);
+                            Common.saveUserTypeIntoSP(loginResVo.user_type);
 
                             StringBuilder sb = new StringBuilder();
                             for (int i = 0; i < usersTeam.size(); i++) {
@@ -260,22 +263,42 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
 //                                team.teamId = Common.getTeamUserIdFromSP(this);
 //                                team.roleId = String.valueOf(Common.getRoleIdFromSP(this));
                             //  new RetrofitRequestController(this).sendRequest(Constants.RequestNames.MASTERS_LIST, team, true);
-
-                            if (Common.haveInternet(this)) {
-                                Intent mIntent = new Intent(this, OffLineDataUploadService.class);
-                                OffLineDataUploadService.enqueueWork(this, mIntent);
-                            }
-
-                            Common.dismissProgressDialog(progressDialog);
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("profileid", loginResVo.profileId);
-                            intent.putExtra("leftnav", (Serializable) leftNavs);
-                            startActivity(intent);
-                            finish();
-
-
+                            new RetrofitRequestController(LoginActivity.this).sendRequest(Constants.RequestNames.COMPLAINT_REGISTER_MASTERS, "", true);
                         }
                     }
+                    break;
+                case Constants.RequestNames.COMPLAINT_REGISTER_MASTERS:
+                    if (objectResponse.result != null) {
+                        ComplaintRegisterMasterVo complaintRegisterMasterVo = Common.getSpecificDataObject(objectResponse.result, ComplaintRegisterMasterVo.class);
+                        if (complaintRegisterMasterVo != null) {
+                            if(complaintRegisterMasterVo.projectTypeLists!=null){
+                                db.commonDao().deleteProjectTypeList();
+                                db.commonDao().insertProjectTypeList(complaintRegisterMasterVo.projectTypeLists);
+                            }
+                            if(complaintRegisterMasterVo.divisionMasterLists!=null){
+                                db.commonDao().deleteDivisionMasteList();
+                                db.commonDao().insertDivisionMasterList(complaintRegisterMasterVo.divisionMasterLists);
+                            }
+                            if(complaintRegisterMasterVo.fabUnitLists!=null){
+                                db.commonDao().deleteFabUnitList();
+                                db.commonDao().insertFabUnitList(complaintRegisterMasterVo.fabUnitLists);
+                            }
+                            if(complaintRegisterMasterVo.natureOfComplaintLists!=null){
+                                db.commonDao().deleteNatureOfComplaintList();
+                                db.commonDao().insertNatureOfComplaint(complaintRegisterMasterVo.natureOfComplaintLists);
+                            }
+                        }
+                    }
+                    if (Common.haveInternet(this)) {
+                        Intent mIntent = new Intent(this, OffLineDataUploadService.class);
+                        OffLineDataUploadService.enqueueWork(this, mIntent);
+                    }
+                    Common.dismissProgressDialog(progressDialog);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("profileid", loginResVo.profileId);
+                    intent.putExtra("leftnav", (Serializable) leftNavs);
+                    startActivity(intent);
+                    finish();
                     break;
                 case Constants.RequestNames.MASTERS_LIST:
                     if (objectResponse.result != null) {
@@ -321,10 +344,10 @@ public class LoginActivity extends NetworkChangeListenerActivity implements Retr
                         Common.dismissProgressDialog(progressDialog);
                     } else {
                         Common.dismissProgressDialog(progressDialog);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("profileid", loginResVo.profileId);
-                        intent.putExtra("leftnav", (Serializable) leftNavs);
-                        startActivity(intent);
+                        Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                        intent1.putExtra("profileid", loginResVo.profileId);
+                        intent1.putExtra("leftnav", (Serializable) leftNavs);
+                        startActivity(intent1);
                         finish();
 
 //                        Team team = new Team();

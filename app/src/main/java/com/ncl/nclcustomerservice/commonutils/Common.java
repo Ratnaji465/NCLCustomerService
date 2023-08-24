@@ -1134,7 +1134,14 @@ public class Common {
 
     public static void savePriceAreaNameIntoSP(String divisionName) {
         getDefaultSP(MyApplication.getInstance().getApplicationContext()).edit().putString(Constants.SharedPreferencesKeys.PRICE_LIST_NAME, divisionName).commit();
+    }
 
+    public static void saveAreaOfficeIntoSP(String areaOffice) {
+        getDefaultSP(MyApplication.getInstance().getApplicationContext()).edit().putString(Constants.SharedPreferencesKeys.AREA_OFFICE, areaOffice).commit();
+    }
+
+    public static void saveUserTypeIntoSP(String userType) {
+        getDefaultSP(MyApplication.getInstance().getApplicationContext()).edit().putString(Constants.SharedPreferencesKeys.USER_TYPE, userType).commit();
     }
 
     public static void saveProfileIdIntoSP(String profileId) {
@@ -2126,7 +2133,8 @@ public class Common {
         }
         return date;
     }
-    public static String getDiffenceBetweenDates(String fromDate,String toDate){
+
+    public static String getDiffenceBetweenDates(String fromDate, String toDate) {
         Date date1;
         Date date2;
         String dayDifference = null;
@@ -2135,7 +2143,7 @@ public class Common {
         try {
             date1 = dates.parse(fromDate);
             date2 = dates.parse(toDate);
-            if(date1!=null && date2!=null){
+            if (date1 != null && date2 != null) {
                 long difference = Math.abs(date1.getTime() - date2.getTime());
                 long differenceDates = difference / (24 * 60 * 60 * 1000);
                 dayDifference = Long.toString(differenceDates);
@@ -2145,6 +2153,7 @@ public class Common {
         }
         return dayDifference;
     }
+
     public static List<String> getBetweenDates(String dateString1, String dateString2) {
         ArrayList<String> dates = new ArrayList<String>();
         DateFormat df1 = new SimpleDateFormat("dd-MM-yyyy");

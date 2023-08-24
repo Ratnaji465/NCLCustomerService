@@ -109,7 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
-                            android:text="OA NO" />
+                            android:text="OA NO *" />
 
                         <com.ncl.nclcustomerservice.customviews.CustomEditText
                             android:id="@+id/et_oa_no"
@@ -160,7 +160,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
-                            android:text="Client Name" />
+                            android:text="Client Name*" />
 
                         <com.ncl.nclcustomerservice.customviews.CustomEditText
                             android:id="@+id/et_client_name"
@@ -182,7 +182,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
-                            android:text="Project Type" />
+                            android:text="Project Type*" />
 
                         <Spinner
                             android:id="@+id/spnr_project_type"
@@ -210,7 +210,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"
-                            android:text="Product" />
+                            android:text="Product*" />
 
                         <Spinner
                             android:id="@+id/spnr_product"
@@ -230,7 +230,7 @@
                             android:id="@+id/tv_Marketing_officer_head"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Marketing Officer Name"
+                            android:text="Marketing Officer Name*"
                             android:textSize="12sp" />
 
                         <com.ncl.nclcustomerservice.customviews.CustomEditText
@@ -241,30 +241,6 @@
                             android:background="@drawable/button_border_black" />
 
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/other_project_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:weightSum="2">
-
-                    <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/tv_other_project_head"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Other Project type"
-                        android:textSize="12sp" />
-
-                    <com.ncl.nclcustomerservice.customviews.CustomEditText
-                        android:id="@+id/et_other_project"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_border_black" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -288,7 +264,7 @@
                             android:text="Fab Unit/ Departments" />
 
                         <Spinner
-                            android:id="@+id/et_fab_unit"
+                            android:id="@+id/spnr_fab_unit"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/custom_spinner" />
@@ -316,6 +292,30 @@
                             android:background="@drawable/custom_spinner" />
 
                     </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/other_project_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:weightSum="2">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tv_other_project_head"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Other Project type*"
+                        android:textSize="12sp" />
+
+                    <com.ncl.nclcustomerservice.customviews.CustomEditText
+                        android:id="@+id/et_other_project"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_border_black" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -350,7 +350,7 @@
                             android:textSize="14sp" />
 
                         <ImageView
-                            android:id="@+id/iv_file_preview"
+                            android:id="@+id/iv_file1_preview"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginStart="@dimen/_10sdp"
@@ -387,6 +387,86 @@
 
                         <ImageView
                             android:id="@+id/iv_file2_preview"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:padding="8dp"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Upload file 3:"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp" />
+
+                        <Button
+                            android:id="@+id/btn_file3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:text="Choose File"
+                            android:textAllCaps="false"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_file3_preview"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:padding="8dp"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Upload file 4:"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp" />
+
+                        <Button
+                            android:id="@+id/btn_file4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:text="Choose File"
+                            android:textAllCaps="false"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_file4_preview"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_marginLeft="@dimen/_10sdp"
@@ -568,7 +648,6 @@
                         android:orientation="vertical">
 
                         <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:id="@+id/tv_complaint_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_2sdp"

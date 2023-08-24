@@ -14,6 +14,7 @@ import androidx.room.Update;
 
 import com.ncl.nclcustomerservice.checkinout.EmpActivityLogsPojo;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityPojo;
+import com.ncl.nclcustomerservice.object.ComplaintRegisterMasterVo;
 import com.ncl.nclcustomerservice.object.ComplaintsTable;
 import com.ncl.nclcustomerservice.object.ContactList;
 import com.ncl.nclcustomerservice.object.ContractList;
@@ -22,11 +23,15 @@ import com.ncl.nclcustomerservice.object.CustomerContactResponseVo;
 import com.ncl.nclcustomerservice.object.CustomerList;
 import com.ncl.nclcustomerservice.object.CustomerProjectResVO;
 import com.ncl.nclcustomerservice.object.DailyReportsAddVO;
+import com.ncl.nclcustomerservice.object.DivisionMasterList;
+import com.ncl.nclcustomerservice.object.FabUnitList;
 import com.ncl.nclcustomerservice.object.Geo_Tracking_POJO;
+import com.ncl.nclcustomerservice.object.NatureOfComplaintList;
 import com.ncl.nclcustomerservice.object.OpportunitiesList;
 import com.ncl.nclcustomerservice.object.OpportunityBrandsLineItem;
 import com.ncl.nclcustomerservice.object.PaymentCollectionList;
 import com.ncl.nclcustomerservice.object.ProjectHeadReqVo;
+import com.ncl.nclcustomerservice.object.ProjectTypeList;
 import com.ncl.nclcustomerservice.object.QuotationList;
 import com.ncl.nclcustomerservice.object.QuotationProductList;
 import com.ncl.nclcustomerservice.object.SalesCallList;
@@ -169,6 +174,33 @@ public interface CommonDao {
     List<CustomerProjectResVO> getAllCustomerProjectList();
 
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertProjectTypeList(List<ProjectTypeList> projectTypeLists);
+    @Query("DELETE FROM ProjectTypeList")
+    void deleteProjectTypeList();
+    @Query("SELECT * FROM ProjectTypeList")
+    List<ProjectTypeList> getAllProjectTypeList();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertDivisionMasterList(List<DivisionMasterList> divisionMasterLists);
+    @Query("DELETE FROM DivisionMasterList")
+    void deleteDivisionMasteList();
+    @Query("SELECT * FROM DivisionMasterList")
+    List<DivisionMasterList> getAllDivisionMasterList();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertFabUnitList(List<FabUnitList> fabUnitLists);
+    @Query("DELETE FROM FabUnitList")
+    void deleteFabUnitList();
+    @Query("SELECT * FROM FabUnitList")
+    List<FabUnitList> getAllFabUnitList();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertNatureOfComplaint(List<NatureOfComplaintList> natureOfComplaintLists);
+    @Query("DELETE FROM NatureOfComplaintList")
+    void deleteNatureOfComplaintList();
+    @Query("SELECT * FROM NatureOfComplaintList")
+    List<NatureOfComplaintList> getAllNatureOfComplaintList();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDailyReports(DailyReportsAddVO dailyreportsResVO);
