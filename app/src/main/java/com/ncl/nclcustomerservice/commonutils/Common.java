@@ -897,6 +897,14 @@ public class Common {
         return getDefaultSP(context).getString(Constants.SharedPreferencesKeys.LOGINTYPE, null);
     }
 
+    public static String getAreaOffice(Context context) {
+        return getDefaultSP(context).getString(Constants.SharedPreferencesKeys.AREA_OFFICE, null);
+    }
+
+    public static String getUserType(Context context) {
+        return getDefaultSP(context).getString(Constants.SharedPreferencesKeys.USER_TYPE, null);
+    }
+
     public static String getProfileId(Context context) {
         return getDefaultSP(context).getString(Constants.SharedPreferencesKeys.PROFILE_ID, null);
     }

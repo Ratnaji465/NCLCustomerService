@@ -16,144 +16,118 @@ import java.util.List;
  */
 
 public class ComplaintsInsertReqVo implements Serializable {
-
-    @SerializedName("complaint_id")
+    @SerializedName("requestname")
     @Expose
-    @NonNull
-    public String complaintId;
+    public String requestName;
+    @SerializedName("requesterid")
+    @Expose
+    public String requesterId;
     @SerializedName("profile_id")
     @Expose
-    @NonNull
     public String profileId;
-    @SerializedName("customer_id")
+    @SerializedName("role_id")
     @Expose
-    public int customerId;
-    @SerializedName("CustomerName")
+    public String roleId;
+    @SerializedName("complaint_date")
     @Expose
-    public String customerName;
-    @SerializedName("salesorderdate")
+    public String complaintDate;
+    @SerializedName("client_code")
     @Expose
-    public String salesorderdate;
-    @SerializedName("salesordernumber")
+    public String clientCode;
+    @SerializedName("oa_number")
     @Expose
-    public String salesordernumber;
-    @SerializedName("feedback")
+    public String oaNumber;
+    @SerializedName("area_office")
     @Expose
-    public String feedback;
-    @SerializedName("applicationdate")
+    public String areaOffice;
+    @SerializedName("client_name")
     @Expose
-    public String applicationdate;
-    @SerializedName("feedbackother")
+    public String clientName;
+    @SerializedName("cs_project_type_id")
     @Expose
-    public String feedbackother;
-    @SerializedName("invoicedate")
+    public String csProjectTypeId;
+    @SerializedName("other_Project_type")
     @Expose
-    public String invoicedate;
-    @SerializedName("invoicenumber")
+    public String otherProjectType;
+    @SerializedName("division_master_id")
     @Expose
-    public String invoicenumber;
-    @SerializedName("batchnumber")
+    public String divisionMasterId;
+    @SerializedName("marketing_officer_name")
     @Expose
-    public String batchnumber;
-    @SerializedName("defectivesample")
+    public String marketingOfficerName;
+    @SerializedName("fab_unit_id")
     @Expose
-    public String defectivesample;
-    @SerializedName("sampleplantlab")
+    public String fabUnitId;
+    @SerializedName("nature_of_complaint_id")
     @Expose
-    public String sampleplantlab;
-    @SerializedName("sales_sitevisit")
+    public String natureOfComplaintId;
+    @SerializedName("other_nature_of_complaint")
     @Expose
-    public String salesSitevisit;
-    @Ignore
-    @SerializedName("sales_assessment")
+    public String otherNatureOfComplaint;
+    @SerializedName("closing_date")
     @Expose
-    public List<CompaintNameKey> salesAssessment;
-    @Ignore
-    @SerializedName("sales_recommendedsolution")
+    public String closingDate;
+    @SerializedName("no_days_for_resolve")
     @Expose
-    public List<CompaintNameKey> salesRecommendedsolution;
-    @SerializedName("area_sitevisit")
+    public String noDaysForResolve;
+    @SerializedName("complaint_status")
     @Expose
-    public String areaSitevisit;
-    @SerializedName("area_assessment")
+    public String complaintStatus;
+    @SerializedName("remarks")
     @Expose
-    @Ignore
-    public List<CompaintNameKey> areaAssessment;
-    @SerializedName("area_recommendedsolution")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> areaRecommendedsolution;
-    @SerializedName("regional_sitevisit")
-    @Expose
-    public String regionalSitevisit;
-    @SerializedName("regional_assessment")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> regionalAssessment;
-    @SerializedName("regional_recommendedsolution")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> regionalRecommendedsolution;
-    @SerializedName("national_sitevisit")
-    @Expose
-    public String nationalSitevisit;
-    @SerializedName("national_assessment")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> nationalAssessment;
-    @SerializedName("national_recommendedsolution")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> nationalRecommendedsolution;
-    @SerializedName("qualitytestsdone")
-    @Expose
-    public String qualitytestsdone;
-    @SerializedName("qualityassessment")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> qualityassessment;
-    @SerializedName("qualityrecommendation")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> qualityrecommendation;
-    @SerializedName("manufacturingassessment")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> manufacturingassessment;
-    @SerializedName("managementassessment")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> managementassessment;
-    @SerializedName("managementRecommendation")
-    @Expose
-    @Ignore
-    public List<CompaintNameKey> managementRecommendation;
-    @SerializedName("credit_note_given")
-    @Expose
-    public String creditNoteGiven;
-    @SerializedName("material_replaced")
-    @Expose
-    public String materialReplaced;
-    @SerializedName("comercial_remarks")
-    @Expose
-    public String comercialRemarks;
+    public List<RemarksList> remarks;
 
-    @SerializedName("sales_status")
+    @SerializedName("supervisior_remarks")
     @Expose
-    public String salesStatus;
-    @SerializedName("area_status")
+    public List<RemarksList> supervisiorRemarks;
+    @SerializedName("complaint_receiver_remarks")
     @Expose
-    public String areaStatus;
-    @SerializedName("regional_status")
+    public List<RemarksList> complaintReceiverRemarks;
+    @SerializedName("commercial_department_remarks")
     @Expose
-    public String regionalStatus;
-    @SerializedName("national_status")
+    public List<RemarksList> commercialDepartmentRemarks;
+    @SerializedName("final_remarks")
     @Expose
-    public String nationalStatus;
+    public List<RemarksList> finalRemarks;
+
+    @SerializedName("images")
+    @Expose
+    public List<ImagesList> imagesLists;
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("complaintId", complaintId).append("customerName", customerName).append("salesorderdate", salesorderdate).append("salesordernumber", salesordernumber).append("feedback", feedback).append("applicationdate", applicationdate).append("feedbackother", feedbackother).append("invoicedate", invoicedate).append("invoicenumber", invoicenumber).append("batchnumber", batchnumber).append("defectivesample", defectivesample).append("sampleplantlab", sampleplantlab).append("salesSitevisit", salesSitevisit).append("salesAssessment", salesAssessment).append("salesRecommendedsolution", salesRecommendedsolution).append("areaSitevisit", areaSitevisit).append("areaAssessment", areaAssessment).append("areaRecommendedsolution", areaRecommendedsolution).append("regionalSitevisit", regionalSitevisit).append("regionalAssessment", regionalAssessment).append("regionalRecommendedsolution", regionalRecommendedsolution).append("nationalSitevisit", nationalSitevisit).append("nationalAssessment", nationalAssessment).append("nationalRecommendedsolution", nationalRecommendedsolution).append("qualitytestsdone", qualitytestsdone).append("qualityassessment", qualityassessment).append("qualityrecommendation", qualityrecommendation).append("manufacturingassessment", manufacturingassessment).append("managementassessment", managementassessment).append("managementRecommendation", managementRecommendation).append("creditNoteGiven", creditNoteGiven).append("materialReplaced", materialReplaced).append("comercialRemarks", comercialRemarks).toString();
+        return new ToStringBuilder(this).append("requestName", requestName)
+                .append("requesterId",requesterId).append("profileId",profileId)
+                .append("roleId",roleId).append("complaintDate",complaintDate)
+                .append("clientCode",clientCode).append("oaNumber",oaNumber)
+                .append("areaOffice",areaOffice).append("clientName",clientName)
+                .append("csProjectTypeId",csProjectTypeId).append("otherProjectType",otherProjectType)
+                .append("divisionMasterId",divisionMasterId).append("marketingOfficerName",marketingOfficerName)
+                .append("fabUnitId",fabUnitId).append("natureOfComplaintId",natureOfComplaintId)
+                .append("otherNatureOfComplaint",otherNatureOfComplaint).append("closingDate",closingDate)
+                .append("noDaysForResolve",noDaysForResolve).append("complaintStatus",complaintStatus)
+                .append("remarks",remarks).toString();
     }
 
+    public class RemarksList implements Serializable{
+        @SerializedName("date")
+        @Expose
+        public String date;
+        @SerializedName("remarks_val")
+        @Expose
+        public String remarksVal;
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this).append("date", date)
+                    .append("remarksVal",remarksVal).toString();}
+    }
+
+    public class ImagesList implements Serializable{
+        @SerializedName("image_path")
+        @Expose
+        public String imagePath;
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this).append("imagePath", imagePath).toString();}
+    }
 }

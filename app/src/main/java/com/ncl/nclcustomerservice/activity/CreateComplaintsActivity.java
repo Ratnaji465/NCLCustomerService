@@ -1,22 +1,36 @@
 package com.ncl.nclcustomerservice.activity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.gson.Gson;
 import com.ncl.nclcustomerservice.R;
 import com.ncl.nclcustomerservice.abstractclasses.NetworkChangeListenerActivity;
 import com.ncl.nclcustomerservice.adapter.CustomSpinnerAdapter;
+import com.ncl.nclcustomerservice.adapter.FileDetails;
+import com.ncl.nclcustomerservice.application.MyApplication;
 import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.commonutils.Constants;
 import com.ncl.nclcustomerservice.customviews.CustomButton;
@@ -28,21 +42,34 @@ import com.ncl.nclcustomerservice.network.RetrofitResponseListener;
 import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
 import com.ncl.nclcustomerservice.object.ComplaintRegisterMasterVo;
+import com.ncl.nclcustomerservice.object.ComplaintsInsertReqVo;
 import com.ncl.nclcustomerservice.object.DivisionMasterList;
 import com.ncl.nclcustomerservice.object.DropDownData;
 import com.ncl.nclcustomerservice.object.FabUnitList;
 import com.ncl.nclcustomerservice.object.NatureOfComplaintList;
 import com.ncl.nclcustomerservice.object.ProjectTypeList;
 import com.ncl.nclcustomerservice.object.SpinnerModel;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateComplaintsActivity extends NetworkChangeListenerActivity implements RetrofitResponseListener {
 
+    private static final String TAG = "CreateComplaintsActivity";
     @BindView(R.id.title_text)
     TextView title_text;
     @BindView(R.id.back_button)
@@ -97,6 +124,13 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
     @BindView(R.id.et_other_project)
     CustomEditText et_other_project;
 
+    @BindView(R.id.other_nature_of_compl_layout)
+    LinearLayout other_nature_of_compl_layout;
+    @BindView(R.id.tv_other_nature_of_compl_head)
+    CustomTextView tv_other_nature_of_compl_head;
+    @BindView(R.id.et_other_nature_of_compl)
+    CustomEditText et_other_nature_of_compl;
+
     @BindView(R.id.btn_file1)
     Button btn_file1;
     @BindView(R.id.iv_file1_preview)
@@ -135,7 +169,15 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
     @BindView(R.id.complaints_cancel)
     CustomButton complaints_cancel;
 
-    String selectedProductType,selectedDivisionMaster,selectedFabUnit,selectedNatureOfComplaint;
+    String selectedProductType, selectedDivisionMaster, selectedFabUnit, selectedNatureOfComplaint,
+            selectedComplaintStatus;
+    String selectedProductTypeId,selectedDivisionMasterId, selectedFabUnitId, selectedNatureOfComplaintId;
+
+    private final String[] COMPLAINT_STATUS = new String[]{"Select", "Open", "Live", "Closed"};
+    int requestFileCode;
+    FileDetails fileDetails1 = null, fileDetails2 = null, fileDetails3 = null, fileDetails4 = null;
+    ComplaintsInsertReqVo complaintsInsertReqVo=new ComplaintsInsertReqVo();
+    private ProgressDialog progressD;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -155,15 +197,289 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
         });
         findViewSetHint();
         loadDataIntoFields();
-        addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null));
-        addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null));
-        addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null));
-        addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null));
+
+    }
+    @OnClick(R.id.complaints_save)
+    void saveComplaint(){
+        if(!isValidated()){
+
+        }else {
+            complaintsInsertReqVo.complaintDate=tv_complaint_date.getText().toString();
+            complaintsInsertReqVo.clientCode=et_client_code.getText().toString();
+            complaintsInsertReqVo.oaNumber=et_oa_no.getText().toString();
+            complaintsInsertReqVo.areaOffice=tv_area_office.getText().toString();
+            complaintsInsertReqVo.clientName=et_client_name.getText().toString();
+            complaintsInsertReqVo.csProjectTypeId=selectedProductTypeId;
+            complaintsInsertReqVo.otherProjectType=et_other_project.getText().toString();
+            complaintsInsertReqVo.divisionMasterId=selectedDivisionMasterId;
+            complaintsInsertReqVo.marketingOfficerName=et_Marketing_officer.getText().toString();
+            complaintsInsertReqVo.fabUnitId=selectedFabUnitId;
+            complaintsInsertReqVo.natureOfComplaintId=selectedNatureOfComplaintId;
+            complaintsInsertReqVo.otherNatureOfComplaint=et_other_nature_of_compl.getText().toString();
+            complaintsInsertReqVo.closingDate=tv_closing_date.getText().toString();
+            complaintsInsertReqVo.noDaysForResolve=et_days_took_resolve.getText().toString();
+            complaintsInsertReqVo.complaintStatus=selectedComplaintStatus;
+            complaintsInsertReqVo.remarks=new ArrayList<>();
+
+            complaintsInsertReqVo.requesterId=""+Common.getUserIdFromSP(CreateComplaintsActivity.this);
+            complaintsInsertReqVo.requestName= Constants.RequestNames.COMPLAINT_REGISTER_INSERT;
+            sendImage(complaintsInsertReqVo);
+        }
     }
 
+    private void sendImage(ComplaintsInsertReqVo complaintsInsertReqVo) {
+        progressD = new ProgressDialog(this);
+        progressD.setMessage("Please Wait....");
+        progressD.setCancelable(false);
+        progressD.show();
+        List<MultipartBody.Part> muPartList = new ArrayList<>();
+        if (fileDetails1 != null) {
+            if (fileDetails1.filePath != null && fileDetails1.filePath.length() > 5) {
+                muPartList.add(prepareFilePart("complaint_register_image[]", Uri.fromFile(new File(fileDetails1.filePath)), new File(fileDetails1.filePath)));
+            }
+        }
+        if (fileDetails2 != null) {
+            if (fileDetails2.filePath != null && fileDetails2.filePath.length() > 5) {
+                muPartList.add(prepareFilePart("complaint_register_image[]", Uri.fromFile(new File(fileDetails2.filePath)), new File(fileDetails2.filePath)));
+            }
+        }
+        if (fileDetails3 != null) {
+            if (fileDetails3.filePath != null && fileDetails3.filePath.length() > 5) {
+                muPartList.add(prepareFilePart("complaint_register_image[]", Uri.fromFile(new File(fileDetails3.filePath)), new File(fileDetails3.filePath)));
+            }
+        }
+        if (fileDetails4 != null) {
+            if (fileDetails4.filePath != null && fileDetails4.filePath.length() > 5) {
+                muPartList.add(prepareFilePart("complaint_register_image[]", Uri.fromFile(new File(fileDetails4.filePath)), new File(fileDetails4.filePath)));
+            }
+        }
+        MultipartBody.Part[] fileParts = muPartList.toArray(new MultipartBody.Part[muPartList.size()]);
+
+        Call<ResponseBody> abc = MyApplication.getInstance().getAPIInterface().uploadPaymentCollection(Constants.API, fileParts, complaintsInsertReqVo);
+        abc.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body() == null) {
+                    progressD.dismiss();
+                    Toast.makeText(CreateComplaintsActivity.this, "Intenal Server Error", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+                ApiResponseController apiResponseController = null;
+                try {
+                    apiResponseController = new Gson().fromJson(response.body().string(), ApiResponseController.class);
+                    if (apiResponseController != null) {
+                        ComplaintsInsertReqVo complaintsInsertReqVo1 = Common.getSpecificDataObject(apiResponseController.result, ComplaintsInsertReqVo.class);
+                        if (complaintsInsertReqVo1 != null) {
+                        Log.d("Response:",new Gson().toJson(complaintsInsertReqVo1).toString());
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                progressD.dismiss();
+                finish();
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+    private MultipartBody.Part prepareFilePart(String file_i, Uri uri, File file) {
+        RequestBody requestFile =
+                RequestBody.create(
+                        MediaType.parse(getMimeType(this, uri)),
+                        file
+                );
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(file_i, file.getName(), requestFile);
+    }
+    private String getMimeType(CreateComplaintsActivity context, Uri uri) {
+        String extension;
+
+        //Check uri format to avoid null
+        if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            //If scheme is a content
+            final MimeTypeMap mime = MimeTypeMap.getSingleton();
+            extension = mime.getExtensionFromMimeType(context.getContentResolver().getType(uri));
+        } else {
+            //If scheme is a File
+            //This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
+            extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString());
+
+        }
+
+        return extension;
+    }
+    private boolean isValidated() {
+        boolean Validate = true;
+        if (et_oa_no.getText().toString().trim().length() == 0) {
+            et_oa_no.setError("Please Add OA Number");
+            return false;
+        }
+        if (et_client_name.getText().toString().trim().length() == 0) {
+            et_client_name.setError("Please Add Client Name");
+            return false;
+        }
+        if (spnr_project_type.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Please select Project Type", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (spnr_product.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Please select Product", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (et_Marketing_officer.getText().toString().trim().length() == 0) {
+            et_Marketing_officer.setError("Please Add Marking office name");
+            return false;
+        }
+        if (spnr_fab_unit.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Please select Fab Unit/ Departments", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (spnr_Nature_of_compaint.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Please select Nature of complaint", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return Validate;
+    }
+
+    @OnClick(R.id.btn_file1)
+    void captureImage() {
+        ImagePicker.Companion.with(CreateComplaintsActivity.this)
+                .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
+                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
+        requestFileCode = 1001;
+    }
+    @OnClick(R.id.btn_file2)
+    void captureImage2() {
+        ImagePicker.Companion.with(CreateComplaintsActivity.this)
+                .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
+                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
+        requestFileCode = 1002;
+    }
+    @OnClick(R.id.btn_file3)
+    void captureImage3() {
+        ImagePicker.Companion.with(CreateComplaintsActivity.this)
+                .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
+                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
+        requestFileCode = 1003;
+    }
+    @OnClick(R.id.btn_file4)
+    void captureImage4() {
+        ImagePicker.Companion.with(CreateComplaintsActivity.this)
+                .compress(1024)            //Final image size will be less than 1.0 MB(Optional)
+                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
+        requestFileCode = 1004;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            File file = ImagePicker.Companion.getFile(data);
+            if (file != null) {
+                if (requestFileCode == 1001) {
+                    Picasso.with(this)
+                            .load("file:///" + file.getAbsolutePath())
+                            .resize(100, 100)
+                            .error(R.drawable.ic_upload)
+                            .into(iv_file1_preview);
+                    String firstlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
+                    System.out.println("## firstlink:" + firstlink1);
+                    fileDetails1 = new FileDetails();
+                    fileDetails1.filePath = file.getAbsolutePath();
+                }else if (requestFileCode == 1002) {
+                    Picasso.with(this)
+                            .load("file:///" + file.getAbsolutePath())
+                            .resize(100, 100)
+                            .error(R.drawable.ic_upload)
+                            .into(iv_file2_preview);
+                    String secondlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
+                    System.out.println("## secondlink:" + secondlink1);
+                    fileDetails2 = new FileDetails();
+                    fileDetails2.filePath = file.getAbsolutePath();
+                }else if (requestFileCode == 1003) {
+                    Picasso.with(this)
+                            .load("file:///" + file.getAbsolutePath())
+                            .resize(100, 100)
+                            .error(R.drawable.ic_upload)
+                            .into(iv_file3_preview);
+                    String secondlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
+                    System.out.println("## thirdlink:" + secondlink1);
+                    fileDetails3 = new FileDetails();
+                    fileDetails3.filePath = file.getAbsolutePath();
+                }else if (requestFileCode == 1004) {
+                    Picasso.with(this)
+                            .load("file:///" + file.getAbsolutePath())
+                            .resize(100, 100)
+                            .error(R.drawable.ic_upload)
+                            .into(iv_file4_preview);
+                    String secondlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
+                    System.out.println("## fouthlink:" + secondlink1);
+                    fileDetails4 = new FileDetails();
+                    fileDetails4.filePath = file.getAbsolutePath();
+                }
+            }
+        }
+    }
 
     private void loadDataIntoFields() {
         tv_complaint_date.setText(Common.getCurrentDate());
+        tv_area_office.setText(Common.getAreaOffice(this));
+        tv_closing_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(CreateComplaintsActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int day) {
+                            Calendar newDate = Calendar.getInstance();
+                            newDate.set(year, month, day);
+                            tv_closing_date.setText(Common.getDatenewFormat(Common.getOnlyDate(newDate.getTime()))[0]);
+                        }
+                    }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                    datePickerDialog.show();
+                }
+            }
+
+            ;
+        });
+        if (Common.getUserType(this).equalsIgnoreCase("Supervisior")) {
+            addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), true);
+        } else {
+            addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), false);
+        }
+
+        if (Common.getUserType(this).equalsIgnoreCase("Fabunit")) {
+            addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+        } else {
+            addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),false);
+        }
+
+        if (Common.getUserType(this).equalsIgnoreCase("Commercial")) {
+            addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+        } else {
+            addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),false);
+        }
+
+        if (Common.getUserType(this).equalsIgnoreCase("Final")) {
+            addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+        } else {
+            addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),false);
+        }
+
         List<ProjectTypeList> projectTypeLists = db.commonDao().getAllProjectTypeList();
         List<DivisionMasterList> divisionMasterLists = db.commonDao().getAllDivisionMasterList();
         List<FabUnitList> fabUnitLists = db.commonDao().getAllFabUnitList();
@@ -172,6 +488,7 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
         List<SpinnerModel> divisionMaster = new ArrayList<>();
         List<SpinnerModel> fabUnit = new ArrayList<>();
         List<SpinnerModel> natureOfComplaint = new ArrayList<>();
+        List<SpinnerModel> complaintStatus = new ArrayList<>();
         SpinnerModel sm = new SpinnerModel();
         sm.setId("0");
         sm.setTitle("Select");
@@ -205,15 +522,27 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             spinnerModel.setTitle(natureOfComplaintLists.get(i).nature_of_complaint_name);
             natureOfComplaint.add(spinnerModel);
         }
+        for (String complaint_status : COMPLAINT_STATUS) {
+            SpinnerModel spinnerModel = new SpinnerModel();
+            spinnerModel.setTitle(complaint_status);
+            complaintStatus.add(spinnerModel);
+        }
         CustomSpinnerAdapter productTypeAdapter = new CustomSpinnerAdapter(this, 0, projectType);
         spnr_project_type.setAdapter(productTypeAdapter);
         spnr_project_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    selectedProductType = projectTypeLists.get(position).project_type_name;
-                }else {
-                    selectedProductType ="";
+                    selectedProductType = projectTypeLists.get(position - 1).project_type_name;
+                    selectedProductTypeId= projectTypeLists.get(position - 1).cs_project_type_id;
+                    Log.d("selectedProductType :", selectedProductType);
+                    if (selectedProductType.equalsIgnoreCase("Others")) {
+                        other_project_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        other_project_layout.setVisibility(View.GONE);
+                    }
+                } else {
+                    selectedProductType = "";
                 }
             }
 
@@ -229,9 +558,11 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    selectedDivisionMaster = divisionMasterLists.get(position).division_name;
-                }else {
-                    selectedDivisionMaster ="";
+                    selectedDivisionMaster = divisionMasterLists.get(position - 1).division_name;
+                    selectedDivisionMasterId = divisionMasterLists.get(position - 1).division_master_id;
+                    Log.d("selectedDivision :", selectedDivisionMaster);
+                } else {
+                    selectedDivisionMaster = "";
                 }
             }
 
@@ -247,9 +578,11 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    selectedFabUnit = fabUnitLists.get(position).fab_unit_name;
-                }else {
-                    selectedFabUnit ="";
+                    selectedFabUnit = fabUnitLists.get(position - 1).fab_unit_name;
+                    selectedFabUnitId = fabUnitLists.get(position - 1).fab_unit_id;
+                    Log.d("selectedFabUnit :", selectedFabUnit);
+                } else {
+                    selectedFabUnit = "";
                 }
             }
 
@@ -265,9 +598,35 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    selectedNatureOfComplaint = natureOfComplaintLists.get(position).nature_of_complaint_name;
-                }else {
-                    selectedNatureOfComplaint ="";
+                    selectedNatureOfComplaint = natureOfComplaintLists.get(position - 1).nature_of_complaint_name;
+                    selectedNatureOfComplaintId = natureOfComplaintLists.get(position - 1).nature_of_complaint_id;
+                    Log.d("selectedNatureOf :", selectedNatureOfComplaint);
+                    if (selectedNatureOfComplaint.equalsIgnoreCase("Other")) {
+                        other_nature_of_compl_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        other_nature_of_compl_layout.setVisibility(View.GONE);
+                    }
+                } else {
+                    selectedNatureOfComplaint = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        CustomSpinnerAdapter complaintStatusAdapter = new CustomSpinnerAdapter(this, 0, complaintStatus);
+        spnr_complaint_status.setAdapter(complaintStatusAdapter);
+        spnr_complaint_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    selectedComplaintStatus = COMPLAINT_STATUS[position];
+                    Log.d("selectedComplaint :", selectedComplaintStatus);
+                } else {
+                    selectedComplaintStatus = "";
                 }
             }
 
@@ -286,106 +645,131 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
         tv_Marketing_officer_head.setText(Common.setSppanableText("* Marketing officer name"));
         tv_fab_unit_head.setText(Common.setSppanableText("* Fab Unit/ Departments"));
         tv_Nature_of_compaint_head.setText(Common.setSppanableText("* Nature of complaint"));
+        tv_other_project_head.setText(Common.setSppanableText("* Other Project type"));
+        tv_other_nature_of_compl_head.setText(Common.setSppanableText("* Other Nature of complaint"));
     }
 
-    private void addFinalRemark(View view) {
+    private void addFinalRemark(View view,boolean isEnabled) {
         final_remarks_layout.addView(view);
         ViewHolderRemarks viewHolder = new ViewHolderRemarks(view);
         viewHolder.etDate.setText(Common.getCurrentDate());
-        if (final_remarks_layout.getChildCount() > 1) {
-            viewHolder.removeLayout.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.removeLayout.setVisibility(View.GONE);
-        }
-        viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null));
+        if(isEnabled) {
+            if (final_remarks_layout.getChildCount() > 1) {
+                viewHolder.removeLayout.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.removeLayout.setVisibility(View.GONE);
             }
-        });
-        viewHolder.removeLayout.setTag(view);
-        viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final_remarks_layout.removeView((View) view.getTag());
+            viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+                }
+            });
+            viewHolder.removeLayout.setTag(view);
+            viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final_remarks_layout.removeView((View) view.getTag());
 
-            }
-        });
+                }
+            });
+        }else{
+            viewHolder.addLayout.setVisibility(View.GONE);
+            viewHolder.removeLayout.setVisibility(View.GONE);
+            viewHolder.etRemarks.setEnabled(false);
+        }
     }
 
-    private void addCommercialRemark(View view) {
+    private void addCommercialRemark(View view,boolean isEnabled) {
         commercial_department_layout.addView(view);
         ViewHolderRemarks viewHolder = new ViewHolderRemarks(view);
         viewHolder.etDate.setText(Common.getCurrentDate());
-        if (commercial_department_layout.getChildCount() > 1) {
-            viewHolder.removeLayout.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.removeLayout.setVisibility(View.GONE);
-        }
-        viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null));
+        if(isEnabled) {
+            if (commercial_department_layout.getChildCount() > 1) {
+                viewHolder.removeLayout.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.removeLayout.setVisibility(View.GONE);
             }
-        });
-        viewHolder.removeLayout.setTag(view);
-        viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                commercial_department_layout.removeView((View) view.getTag());
+            viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+                }
+            });
+            viewHolder.removeLayout.setTag(view);
+            viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    commercial_department_layout.removeView((View) view.getTag());
 
-            }
-        });
+                }
+            });
+        }else{
+            viewHolder.addLayout.setVisibility(View.GONE);
+            viewHolder.removeLayout.setVisibility(View.GONE);
+            viewHolder.etRemarks.setEnabled(false);
+        }
     }
 
-    private void addComplaintRemark(View view) {
+    private void addComplaintRemark(View view,boolean isEnabled) {
         complaint_receiver_layout.addView(view);
         ViewHolderRemarks viewHolder = new ViewHolderRemarks(view);
         viewHolder.etDate.setText(Common.getCurrentDate());
-        if (complaint_receiver_layout.getChildCount() > 1) {
-            viewHolder.removeLayout.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.removeLayout.setVisibility(View.GONE);
-        }
-        viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null));
+        if(isEnabled) {
+            if (complaint_receiver_layout.getChildCount() > 1) {
+                viewHolder.removeLayout.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.removeLayout.setVisibility(View.GONE);
             }
-        });
-        viewHolder.removeLayout.setTag(view);
-        viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                complaint_receiver_layout.removeView((View) view.getTag());
+            viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), true);
+                }
+            });
+            viewHolder.removeLayout.setTag(view);
+            viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    complaint_receiver_layout.removeView((View) view.getTag());
 
-            }
-        });
+                }
+            });
+        }else{
+            viewHolder.addLayout.setVisibility(View.GONE);
+            viewHolder.removeLayout.setVisibility(View.GONE);
+            viewHolder.etRemarks.setEnabled(false);
+        }
     }
 
-    private void addSupervisorRemark(View view) {
+    private void addSupervisorRemark(View view, boolean isEnabled) {
         by_supervisor_layout.addView(view);
         ViewHolderRemarks viewHolder = new ViewHolderRemarks(view);
         viewHolder.etDate.setText(Common.getCurrentDate());
-        if (by_supervisor_layout.getChildCount() > 1) {
-            viewHolder.removeLayout.setVisibility(View.VISIBLE);
+        if (isEnabled) {
+            if (by_supervisor_layout.getChildCount() > 1) {
+                viewHolder.removeLayout.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.removeLayout.setVisibility(View.GONE);
+            }
+            viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), true);
+                }
+            });
+            viewHolder.removeLayout.setTag(view);
+            viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    by_supervisor_layout.removeView((View) view.getTag());
+                }
+            });
         } else {
+            viewHolder.addLayout.setVisibility(View.GONE);
             viewHolder.removeLayout.setVisibility(View.GONE);
+            viewHolder.etRemarks.setEnabled(false);
         }
-        viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null));
-            }
-        });
-        viewHolder.removeLayout.setTag(view);
-        viewHolder.removeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                by_supervisor_layout.removeView((View) view.getTag());
-
-            }
-        });
     }
 
     @Override

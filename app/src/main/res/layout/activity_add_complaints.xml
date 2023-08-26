@@ -87,7 +87,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/button_border_black"
-                            android:gravity="center" />
+                            android:imeOptions="actionNext"
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -116,7 +117,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:layout_weight="1"
-                            android:background="@drawable/button_border_black" />
+                            android:background="@drawable/button_border_black"
+                            android:imeOptions="actionNext"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -137,6 +140,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/button_border_black"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -167,7 +171,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:layout_weight="1"
-                            android:background="@drawable/button_border_black" />
+                            android:background="@drawable/button_border_black"
+                            android:imeOptions="actionNext"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -190,6 +196,32 @@
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/custom_spinner" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/other_project_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:weightSum="2">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tv_other_project_head"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Other Project type*"
+                        android:textSize="12sp" />
+
+                    <com.ncl.nclcustomerservice.customviews.CustomEditText
+                        android:id="@+id/et_other_project"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_border_black"
+                        android:imeOptions="actionNext"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -238,7 +270,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:layout_weight="1"
-                            android:background="@drawable/button_border_black" />
+                            android:background="@drawable/button_border_black"
+                            android:imeOptions="actionNext"
+                            android:textSize="12sp" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -295,27 +329,29 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/other_project_layout"
+                    android:id="@+id/other_nature_of_compl_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:visibility="gone"
                     android:weightSum="2">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/tv_other_project_head"
+                        android:id="@+id/tv_other_nature_of_compl_head"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Other Project type*"
+                        android:text="Other Nature of complaint *"
                         android:textSize="12sp" />
 
                     <com.ncl.nclcustomerservice.customviews.CustomEditText
-                        android:id="@+id/et_other_project"
+                        android:id="@+id/et_other_nature_of_compl"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_weight="1"
-                        android:background="@drawable/button_border_black" />
+                        android:background="@drawable/button_border_black"
+                        android:imeOptions="actionNext"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -482,9 +518,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:background="@drawable/button_bg_white"
                     android:orientation="vertical"
-                    android:padding="@dimen/_5sdp">
+                    android:padding="@dimen/_3sdp">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
                         android:layout_width="match_parent"
@@ -495,21 +530,28 @@
                         android:textAllCaps="true"
                         android:textColor="@android:color/black" />
 
-                    <LinearLayout
-                        android:id="@+id/by_supervisor_layout"
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_6sdp"
-                        android:orientation="vertical" />
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbarSize="@dimen/_2sdp">
+
+                        <LinearLayout
+                            android:id="@+id/by_supervisor_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+                    </HorizontalScrollView>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:background="@drawable/button_bg_white"
                     android:orientation="vertical"
-                    android:padding="@dimen/_5sdp">
+                    android:padding="@dimen/_3sdp">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
                         android:layout_width="match_parent"
@@ -519,21 +561,26 @@
                         android:text="Complaint Receiver"
                         android:textAllCaps="true"
                         android:textColor="@android:color/black" />
-
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbarSize="@dimen/_2sdp">
                     <LinearLayout
                         android:id="@+id/complaint_receiver_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:orientation="vertical" />
+                    </HorizontalScrollView>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:background="@drawable/button_bg_white"
                     android:orientation="vertical"
-                    android:padding="@dimen/_5sdp">
+                    android:padding="@dimen/_3sdp">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
                         android:layout_width="match_parent"
@@ -543,14 +590,20 @@
                         android:text="Commercial Department"
                         android:textAllCaps="true"
                         android:textColor="@android:color/black" />
-
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbarSize="@dimen/_2sdp">
                     <LinearLayout
                         android:id="@+id/commercial_department_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:orientation="vertical" />
+                    </HorizontalScrollView>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -575,8 +628,8 @@
                             android:id="@+id/tv_closing_date"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
-                            android:layout_weight="1"
                             android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_weight="1"
                             android:background="@drawable/button_bg_white"
                             android:drawableLeft="@drawable/calendar"
                             android:drawablePadding="@dimen/_2sdp"
@@ -607,16 +660,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/button_border_black"
-                            android:gravity="center" />
+                            android:imeOptions="actionNext"
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:background="@drawable/button_bg_white"
                     android:orientation="vertical"
-                    android:padding="@dimen/_5sdp">
+                    android:padding="@dimen/_3sdp">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
                         android:layout_width="match_parent"
@@ -626,14 +680,20 @@
                         android:text="Final Remarks"
                         android:textAllCaps="true"
                         android:textColor="@android:color/black" />
-
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbarSize="@dimen/_2sdp">
                     <LinearLayout
                         android:id="@+id/final_remarks_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
                         android:orientation="vertical" />
+                    </HorizontalScrollView>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

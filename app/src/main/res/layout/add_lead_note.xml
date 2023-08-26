@@ -81,6 +81,8 @@
                android:layout_weight="1"
                android:inputType="text"
                android:gravity="start"
+               android:imeOptions="actionNext"
+               android:textSize="12sp"
                android:background="@drawable/button_bg_white"/>
        </LinearLayout>
 
