@@ -1,6 +1,7 @@
 package com.ncl.nclcustomerservice.activity;
 
-import android.annotation.SuppressLint;
+import static java.util.concurrent.TimeUnit.DAYS;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -8,6 +9,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -37,24 +39,24 @@ import com.ncl.nclcustomerservice.customviews.CustomButton;
 import com.ncl.nclcustomerservice.customviews.CustomEditText;
 import com.ncl.nclcustomerservice.customviews.CustomTextView;
 import com.ncl.nclcustomerservice.database.DatabaseHandler;
-import com.ncl.nclcustomerservice.network.RetrofitRequestController;
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener;
 import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
-import com.ncl.nclcustomerservice.object.ComplaintRegisterMasterVo;
 import com.ncl.nclcustomerservice.object.ComplaintsInsertReqVo;
 import com.ncl.nclcustomerservice.object.DivisionMasterList;
-import com.ncl.nclcustomerservice.object.DropDownData;
 import com.ncl.nclcustomerservice.object.FabUnitList;
 import com.ncl.nclcustomerservice.object.NatureOfComplaintList;
 import com.ncl.nclcustomerservice.object.ProjectTypeList;
 import com.ncl.nclcustomerservice.object.SpinnerModel;
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.Days;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -197,13 +199,224 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
         });
         findViewSetHint();
         loadDataIntoFields();
+        if (form!=null && form.equalsIgnoreCase("edit")) {
+            title_text.setText("Edit Complaints");
+            complaintsInsertReqVo = (ComplaintsInsertReqVo) getIntent().getSerializableExtra("complaints");
+            if(complaintsInsertReqVo!=null){
+                tv_complaint_date.setText(complaintsInsertReqVo.complaintDate);
+                et_client_code.setText(complaintsInsertReqVo.clientCode);
+                et_oa_no.setText(complaintsInsertReqVo.oaNumber);
+                tv_area_office.setText(complaintsInsertReqVo.areaOffice);
+                et_client_name.setText(complaintsInsertReqVo.clientName);
+                if(complaintsInsertReqVo.otherProjectType!=null && !TextUtils.isEmpty(complaintsInsertReqVo.otherProjectType)){
+                    other_project_layout.setVisibility(View.VISIBLE);
+                    et_other_project.setText(complaintsInsertReqVo.otherProjectType);
+                }
+                spnr_project_type.setSelection(getIndexByProjectTypeId(complaintsInsertReqVo.csProjectTypeId));
+                spnr_product.setSelection(getIndexByProductId(complaintsInsertReqVo.divisionMasterId));
+                spnr_fab_unit.setSelection(getIndexByFabUnitId(complaintsInsertReqVo.fabUnitId));
+                spnr_Nature_of_compaint.setSelection(getIndexByNatuerOfComplaintId(complaintsInsertReqVo.natureOfComplaintId));
+                spnr_complaint_status.setSelection(getSelectedComplaintStatus(complaintsInsertReqVo.complaintStatus));
+                et_Marketing_officer.setText(complaintsInsertReqVo.marketingOfficerName);
+                if(complaintsInsertReqVo.otherNatureOfComplaint!=null && !TextUtils.isEmpty(complaintsInsertReqVo.otherNatureOfComplaint)){
+                    other_nature_of_compl_layout.setVisibility(View.VISIBLE);
+                    et_other_nature_of_compl.setText(complaintsInsertReqVo.otherNatureOfComplaint);
+                }
+                tv_closing_date.setText(complaintsInsertReqVo.closingDate);
+                et_days_took_resolve.setText(complaintsInsertReqVo.noDaysForResolve);
 
+                if (complaintsInsertReqVo.supervisiorRemarks != null) {
+                    by_supervisor_layout.removeAllViews();
+                    for (int i=0; i<complaintsInsertReqVo.supervisiorRemarks.size();i++){
+                        if (Common.getUserType(this).equalsIgnoreCase("Supervisior")) {
+                            addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),complaintsInsertReqVo.supervisiorRemarks.get(i), true);
+                        } else {
+                            addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), complaintsInsertReqVo.supervisiorRemarks.get(i),false);
+                        }
+                    }
+
+                }
+                if (complaintsInsertReqVo.commercialDepartmentRemarks != null) {
+                    commercial_department_layout.removeAllViews();
+                    for (int i=0; i<complaintsInsertReqVo.commercialDepartmentRemarks.size();i++) {
+                        if (Common.getUserType(this).equalsIgnoreCase("Commercial")) {
+                            addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), complaintsInsertReqVo.commercialDepartmentRemarks.get(i), true);
+                        } else {
+                            addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), complaintsInsertReqVo.commercialDepartmentRemarks.get(i), false);
+                        }
+                    }
+                }
+                if (complaintsInsertReqVo.complaintReceiverRemarks != null) {
+                    complaint_receiver_layout.removeAllViews();
+                    for (int i=0; i<complaintsInsertReqVo.complaintReceiverRemarks.size();i++) {
+                        if (Common.getUserType(this).equalsIgnoreCase("Fabunit")) {
+                            addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), complaintsInsertReqVo.complaintReceiverRemarks.get(i), true);
+                        } else {
+                            addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), complaintsInsertReqVo.complaintReceiverRemarks.get(i), false);
+                        }
+                    }
+                }
+                if (complaintsInsertReqVo.finalRemarks != null) {
+                    final_remarks_layout.removeAllViews();
+                    for (int i=0; i<complaintsInsertReqVo.finalRemarks.size();i++) {
+                        if (Common.getUserType(this).equalsIgnoreCase("Final")) {
+                            addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), complaintsInsertReqVo.finalRemarks.get(i), true);
+                        } else {
+                            addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), complaintsInsertReqVo.finalRemarks.get(i), false);
+                        }
+                    }
+                }
+                switch (complaintsInsertReqVo.imagesLists.size()) {
+                    case 1:
+                        if ((complaintsInsertReqVo.imagesLists.get(0).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(0).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(0).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file1_preview);
+                        }
+                        break;
+                    case 2:
+                        if ((complaintsInsertReqVo.imagesLists.get(0).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(0).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(0).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file1_preview);
+                        }
+                        if ((complaintsInsertReqVo.imagesLists.get(1).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(1).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(1).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file2_preview);
+                        }
+                        break;
+                    case 3:
+                        if ((complaintsInsertReqVo.imagesLists.get(0).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(0).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(0).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file1_preview);
+                        }
+                        if ((complaintsInsertReqVo.imagesLists.get(1).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(1).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(1).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file2_preview);
+                        }
+                        if ((complaintsInsertReqVo.imagesLists.get(2).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(2).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(2).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file3_preview);
+                        }
+                        break;
+                    case 4:
+                        if ((complaintsInsertReqVo.imagesLists.get(0).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(0).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(0).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file1_preview);
+                        }
+                        if ((complaintsInsertReqVo.imagesLists.get(1).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(1).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(1).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file2_preview);
+                        }
+                        if ((complaintsInsertReqVo.imagesLists.get(2).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(2).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(2).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file3_preview);
+                        }
+                        if ((complaintsInsertReqVo.imagesLists.get(3).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(3).imagePath))) {
+                            Picasso.with(this)
+                                    .load(complaintsInsertReqVo.imagesLists.get(3).imagePath)
+                                    .resize(100, 100)
+                                    .error(R.drawable.ic_baseline_camera_alt_24)
+                                    .into(iv_file4_preview);
+                        }
+                        break;
+
+                }
+            }
+
+        }
     }
+    private int getSelectedComplaintStatus(String complaintStatus) {
+        for (int i = 0; i < COMPLAINT_STATUS.length; i++) {
+            if (COMPLAINT_STATUS[i].equalsIgnoreCase(complaintStatus)) {
+                selectedComplaintStatus=COMPLAINT_STATUS[i];
+                return i;
+            }
+        }
+        return 0;
+    }
+    private int getIndexByNatuerOfComplaintId(String natureOfComplaintId) {
+        List<NatureOfComplaintList> natureOfComplaintLists= db.commonDao().getAllNatureOfComplaintList();
+        for (int i = 0; i < natureOfComplaintLists.size(); i++) {
+            if (natureOfComplaintLists.get(i).nature_of_complaint_id.equalsIgnoreCase(natureOfComplaintId)) {
+                selectedNatureOfComplaint=natureOfComplaintLists.get(i).nature_of_complaint_name;
+                selectedNatureOfComplaintId=natureOfComplaintLists.get(i).nature_of_complaint_id;
+                return i+1;
+            }
+        }
+        return 0;
+    }
+    private int getIndexByFabUnitId(String fabUnitId) {
+        List<FabUnitList> fabUnitLists= db.commonDao().getAllFabUnitList();
+        for (int i = 0; i < fabUnitLists.size(); i++) {
+            if (fabUnitLists.get(i).fab_unit_id.equalsIgnoreCase(fabUnitId)) {
+                selectedFabUnit=fabUnitLists.get(i).fab_unit_name;
+                selectedFabUnitId=fabUnitLists.get(i).fab_unit_id;
+                return i+1;
+            }
+        }
+        return 0;
+    }
+    private int getIndexByProductId(String divisionMasterId) {
+        List<DivisionMasterList> divisionMasterLists= db.commonDao().getAllDivisionMasterList();
+        for (int i = 0; i < divisionMasterLists.size(); i++) {
+            if (divisionMasterLists.get(i).division_master_id.equalsIgnoreCase(divisionMasterId)) {
+                selectedDivisionMaster=divisionMasterLists.get(i).division_name;
+                selectedDivisionMasterId=divisionMasterLists.get(i).division_master_id;
+                return i+1;
+            }
+        }
+        return 0;
+    }
+
+    private int getIndexByProjectTypeId(String csProjectTypeId) {
+       List<ProjectTypeList> projectTypeLists= db.commonDao().getAllProjectTypeList();
+        for (int i = 0; i < projectTypeLists.size(); i++) {
+            if (projectTypeLists.get(i).cs_project_type_id.equalsIgnoreCase(csProjectTypeId)) {
+                selectedProductType=projectTypeLists.get(i).project_type_name;
+                selectedProductTypeId=projectTypeLists.get(i).cs_project_type_id;
+                return i+1;
+            }
+        }
+        return 0;
+    }
+    @OnClick({R.id.complaints_cancel})
+    void cancel() {
+        finish();
+    }
+
     @OnClick(R.id.complaints_save)
     void saveComplaint(){
         if(!isValidated()){
 
         }else {
+            complaintsInsertReqVo.roleId =String.valueOf(Common.getRoleIdFromSP(this));
+            complaintsInsertReqVo.profileId=Common.getProfileId(this);
             complaintsInsertReqVo.complaintDate=tv_complaint_date.getText().toString();
             complaintsInsertReqVo.clientCode=et_client_code.getText().toString();
             complaintsInsertReqVo.oaNumber=et_oa_no.getText().toString();
@@ -219,12 +432,40 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             complaintsInsertReqVo.closingDate=tv_closing_date.getText().toString();
             complaintsInsertReqVo.noDaysForResolve=et_days_took_resolve.getText().toString();
             complaintsInsertReqVo.complaintStatus=selectedComplaintStatus;
-            complaintsInsertReqVo.remarks=new ArrayList<>();
+            if (Common.getUserType(this).equalsIgnoreCase("Supervisior")) {
+                complaintsInsertReqVo.remarks= getRemarks(by_supervisor_layout);
+            }
+            if(Common.getUserType(this).equalsIgnoreCase("Fabunit")){
+                complaintsInsertReqVo.remarks=getRemarks(complaint_receiver_layout);
+            }
+            if (Common.getUserType(this).equalsIgnoreCase("Commercial")) {
+                complaintsInsertReqVo.remarks = getRemarks(commercial_department_layout);
+            }
+            if (Common.getUserType(this).equalsIgnoreCase("Final")) {
+                complaintsInsertReqVo.remarks = getRemarks(final_remarks_layout);
+            }
 
             complaintsInsertReqVo.requesterId=""+Common.getUserIdFromSP(CreateComplaintsActivity.this);
-            complaintsInsertReqVo.requestName= Constants.RequestNames.COMPLAINT_REGISTER_INSERT;
+            if(form!=null && form.equalsIgnoreCase("edit")){
+                complaintsInsertReqVo.requestName= Constants.RequestNames.COMPLAINT_REGISTER_UPDATE;
+            }else {
+                complaintsInsertReqVo.requestName= Constants.RequestNames.COMPLAINT_REGISTER_INSERT;
+            }
             sendImage(complaintsInsertReqVo);
         }
+    }
+
+    private List<ComplaintsInsertReqVo.RemarksList> getRemarks(LinearLayout linearLayout) {
+        List<ComplaintsInsertReqVo.RemarksList> remarksLists=new ArrayList<>();
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            View childView = linearLayout.getChildAt(i);
+            ViewHolderRemarks viewHolder = new ViewHolderRemarks(childView);
+            ComplaintsInsertReqVo.RemarksList remarksList=new ComplaintsInsertReqVo.RemarksList();
+            remarksList.date=viewHolder.etDate.getText().toString().trim();
+            remarksList.remarksVal=viewHolder.etRemarks.getText().toString().trim();
+            remarksLists.add(remarksList);
+        }
+        return remarksLists;
     }
 
     private void sendImage(ComplaintsInsertReqVo complaintsInsertReqVo) {
@@ -272,6 +513,10 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
                         ComplaintsInsertReqVo complaintsInsertReqVo1 = Common.getSpecificDataObject(apiResponseController.result, ComplaintsInsertReqVo.class);
                         if (complaintsInsertReqVo1 != null) {
                         Log.d("Response:",new Gson().toJson(complaintsInsertReqVo1).toString());
+                            Intent intent = new Intent(CreateComplaintsActivity.this, ComplaintsViewActivity.class);
+                            intent.putExtra("complaint_register_id", complaintsInsertReqVo1.csComplaintRegisterId);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                 }catch (Exception e){
@@ -447,6 +692,8 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
                             Calendar newDate = Calendar.getInstance();
                             newDate.set(year, month, day);
                             tv_closing_date.setText(Common.getDatenewFormat(Common.getOnlyDate(newDate.getTime()))[0]);
+                            long millionSeconds =   newDate.getTimeInMillis()-Calendar.getInstance().getTimeInMillis();
+                            et_days_took_resolve.setText(""+DAYS.convert(millionSeconds, TimeUnit.MILLISECONDS));
                         }
                     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                     datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
@@ -457,27 +704,27 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             ;
         });
         if (Common.getUserType(this).equalsIgnoreCase("Supervisior")) {
-            addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), true);
+            addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null, true);
         } else {
-            addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), false);
+            addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), null,false);
         }
 
         if (Common.getUserType(this).equalsIgnoreCase("Fabunit")) {
-            addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+            addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null,true);
         } else {
-            addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),false);
+            addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null,false);
         }
 
         if (Common.getUserType(this).equalsIgnoreCase("Commercial")) {
-            addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+            addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null,true);
         } else {
-            addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),false);
+            addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null,false);
         }
 
         if (Common.getUserType(this).equalsIgnoreCase("Final")) {
-            addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+            addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null,true);
         } else {
-            addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),false);
+            addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null,false);
         }
 
         List<ProjectTypeList> projectTypeLists = db.commonDao().getAllProjectTypeList();
@@ -649,10 +896,16 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
         tv_other_nature_of_compl_head.setText(Common.setSppanableText("* Other Nature of complaint"));
     }
 
-    private void addFinalRemark(View view,boolean isEnabled) {
+    private void addFinalRemark(View view,ComplaintsInsertReqVo.RemarksList remarksList,boolean isEnabled) {
         final_remarks_layout.addView(view);
         ViewHolderRemarks viewHolder = new ViewHolderRemarks(view);
         viewHolder.etDate.setText(Common.getCurrentDate());
+        if(form!=null && form.equalsIgnoreCase("edit")){
+            if(remarksList!=null){
+                viewHolder.etDate.setText(remarksList.date);
+                viewHolder.etRemarks.setText(remarksList.remarksVal);
+            }
+        }
         if(isEnabled) {
             if (final_remarks_layout.getChildCount() > 1) {
                 viewHolder.removeLayout.setVisibility(View.VISIBLE);
@@ -662,7 +915,7 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+                    addFinalRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null,true);
                 }
             });
             viewHolder.removeLayout.setTag(view);
@@ -680,10 +933,16 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
         }
     }
 
-    private void addCommercialRemark(View view,boolean isEnabled) {
+    private void addCommercialRemark(View view,ComplaintsInsertReqVo.RemarksList remarksList,boolean isEnabled) {
         commercial_department_layout.addView(view);
         ViewHolderRemarks viewHolder = new ViewHolderRemarks(view);
         viewHolder.etDate.setText(Common.getCurrentDate());
+        if(form!=null && form.equalsIgnoreCase("edit")){
+            if(remarksList!=null){
+                viewHolder.etDate.setText(remarksList.date);
+                viewHolder.etRemarks.setText(remarksList.remarksVal);
+            }
+        }
         if(isEnabled) {
             if (commercial_department_layout.getChildCount() > 1) {
                 viewHolder.removeLayout.setVisibility(View.VISIBLE);
@@ -693,7 +952,7 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),true);
+                    addCommercialRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null,true);
                 }
             });
             viewHolder.removeLayout.setTag(view);
@@ -711,10 +970,16 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
         }
     }
 
-    private void addComplaintRemark(View view,boolean isEnabled) {
+    private void addComplaintRemark(View view,ComplaintsInsertReqVo.RemarksList remarksList,boolean isEnabled) {
         complaint_receiver_layout.addView(view);
         ViewHolderRemarks viewHolder = new ViewHolderRemarks(view);
         viewHolder.etDate.setText(Common.getCurrentDate());
+        if(form!=null && form.equalsIgnoreCase("edit")){
+            if(remarksList!=null){
+                viewHolder.etDate.setText(remarksList.date);
+                viewHolder.etRemarks.setText(remarksList.remarksVal);
+            }
+        }
         if(isEnabled) {
             if (complaint_receiver_layout.getChildCount() > 1) {
                 viewHolder.removeLayout.setVisibility(View.VISIBLE);
@@ -724,7 +989,7 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), true);
+                    addComplaintRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null, true);
                 }
             });
             viewHolder.removeLayout.setTag(view);
@@ -742,10 +1007,16 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
         }
     }
 
-    private void addSupervisorRemark(View view, boolean isEnabled) {
+    private void addSupervisorRemark(View view, ComplaintsInsertReqVo.RemarksList remarksList, boolean isEnabled) {
         by_supervisor_layout.addView(view);
         ViewHolderRemarks viewHolder = new ViewHolderRemarks(view);
         viewHolder.etDate.setText(Common.getCurrentDate());
+        if(form!=null && form.equalsIgnoreCase("edit")){
+            if(remarksList!=null){
+                viewHolder.etDate.setText(remarksList.date);
+                viewHolder.etRemarks.setText(remarksList.remarksVal);
+            }
+        }
         if (isEnabled) {
             if (by_supervisor_layout.getChildCount() > 1) {
                 viewHolder.removeLayout.setVisibility(View.VISIBLE);
@@ -755,7 +1026,7 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             viewHolder.addLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null), true);
+                    addSupervisorRemark(getLayoutInflater().inflate(R.layout.add_lead_note, null),null, true);
                 }
             });
             viewHolder.removeLayout.setTag(view);

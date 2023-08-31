@@ -154,6 +154,8 @@ public class Constants {
         String CONTACT_LIST = "contact_list";
         String CUSTOMER_PROJECT_LIST="customer_project_list";
         String COMPLAINT_REGISTER_INSERT="complaint_register_insert";
+        String COMPLAINT_REGISTER_UPDATE="complaint_register_update";
+        String COMPLAINT_REGISTER_LIST="complaint_register_list";
         String CONTACT_EDIT = "contact_edit";
         String LEADS_CONVERT_CHECK = "leads_convert_check";
         String CONTACT_INSERT = "contact_insert";
@@ -187,6 +189,7 @@ public class Constants {
         String TA_DA_DROPDOWN = "tada_dropdown";
         String COMPLAINTS_LIST = "complaint_list";
         String COMPLAINTS_INSERT = "complaint_insert";
+        String COMPLAINT_REGISTER_VIEW = "complaint_register_view";
         String COMPLAINTS_DELETE = "complaint_delete";
         String COMPLAINTS_EDIT = "complaint_edit";
         String QUOTATION_INSERT = "qutation_insert";

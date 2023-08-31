@@ -15,6 +15,7 @@ import com.ncl.nclcustomerservice.checkinout.EmpActivityLogsPojo;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityPojo;
 import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.object.ComplaintRegisterMasterVo;
+import com.ncl.nclcustomerservice.object.ComplaintsInsertReqVo;
 import com.ncl.nclcustomerservice.object.ComplaintsTable;
 import com.ncl.nclcustomerservice.object.ContactList;
 import com.ncl.nclcustomerservice.object.ContractList;
@@ -61,7 +62,7 @@ import com.ncl.nclcustomerservice.typeconverter.ProjectHeadAssociateContactTC;
         PaymentCollectionList.class, LeadInsertReqVo.class, CustomerContactResponseVo.ContactContractorList.class,
         ProjectHeadReqVo.class, CustomerProjectResVO.class, ProjectTypeList.class,
         NatureOfComplaintList.class, DivisionMasterList.class,
-        FabUnitList.class}, version = 2, exportSchema = false)
+        FabUnitList.class, ComplaintsInsertReqVo.class}, version = 3, exportSchema = false)
 
 @TypeConverters({LeadAssociatedTC.class, LeadActionTOTC.class, ContractorTeamMemberTC.class,
         ProjectHeadAssociateContactTC.class, CusAssociateContactTC.class, CusContractorTC.class,

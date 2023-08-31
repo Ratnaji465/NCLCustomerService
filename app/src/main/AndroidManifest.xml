@@ -180,7 +180,7 @@
             android:name="com.ncl.nclcustomerservice.activity.NewContactViewActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".activity.ViewImageActivity" />
-
+        <activity android:name=".activity.ComplaintsViewActivity"/>
         <service
             android:name="com.ncl.nclcustomerservice.uploadfiles.FileUploadService"
             android:permission="android.permission.BIND_JOB_SERVICE" />

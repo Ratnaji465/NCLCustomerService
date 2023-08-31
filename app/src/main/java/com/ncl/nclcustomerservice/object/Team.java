@@ -19,6 +19,8 @@ public class Team implements Serializable
     @SerializedName("role_id")
     @Expose
     public String roleId;
+    @SerializedName("profile_id")
+    public String profileId;
     @SerializedName("type")
     @Expose
     public String type;

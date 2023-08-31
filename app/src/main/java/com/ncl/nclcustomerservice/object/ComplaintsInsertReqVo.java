@@ -1,10 +1,15 @@
 package com.ncl.nclcustomerservice.object;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ncl.nclcustomerservice.typeconverter.ImagesListTC;
+import com.ncl.nclcustomerservice.typeconverter.RemarksListTC;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -14,7 +19,7 @@ import java.util.List;
 /**
  * Created by sowmy on 10/9/2018.
  */
-
+@Entity
 public class ComplaintsInsertReqVo implements Serializable {
     @SerializedName("requestname")
     @Expose
@@ -22,6 +27,11 @@ public class ComplaintsInsertReqVo implements Serializable {
     @SerializedName("requesterid")
     @Expose
     public String requesterId;
+    @SerializedName("cs_complaint_register_id")
+    @Expose
+    @PrimaryKey
+    @NonNull
+    public String csComplaintRegisterId;
     @SerializedName("profile_id")
     @Expose
     public String profileId;
@@ -46,21 +56,32 @@ public class ComplaintsInsertReqVo implements Serializable {
     @SerializedName("cs_project_type_id")
     @Expose
     public String csProjectTypeId;
+    @SerializedName("project_type_name")
+    @Expose
+    public String projectTypeName;
     @SerializedName("other_Project_type")
     @Expose
     public String otherProjectType;
     @SerializedName("division_master_id")
     @Expose
     public String divisionMasterId;
+    @SerializedName("division_master_name")
+    @Expose
+    public String divisionMastername;
     @SerializedName("marketing_officer_name")
     @Expose
     public String marketingOfficerName;
     @SerializedName("fab_unit_id")
     @Expose
     public String fabUnitId;
+    @SerializedName("fab_unit_name")
+    @Expose
+    public String fabUnitName;
     @SerializedName("nature_of_complaint_id")
     @Expose
     public String natureOfComplaintId;
+    @SerializedName("nature_of_complaint_name")
+    public String natureOfComplaintName;
     @SerializedName("other_nature_of_complaint")
     @Expose
     public String otherNatureOfComplaint;
@@ -75,41 +96,50 @@ public class ComplaintsInsertReqVo implements Serializable {
     public String complaintStatus;
     @SerializedName("remarks")
     @Expose
+    @TypeConverters(RemarksListTC.class)
     public List<RemarksList> remarks;
 
     @SerializedName("supervisior_remarks")
     @Expose
+    @TypeConverters(RemarksListTC.class)
     public List<RemarksList> supervisiorRemarks;
     @SerializedName("complaint_receiver_remarks")
     @Expose
+    @TypeConverters(RemarksListTC.class)
     public List<RemarksList> complaintReceiverRemarks;
     @SerializedName("commercial_department_remarks")
     @Expose
+    @TypeConverters(RemarksListTC.class)
     public List<RemarksList> commercialDepartmentRemarks;
     @SerializedName("final_remarks")
     @Expose
+    @TypeConverters(RemarksListTC.class)
     public List<RemarksList> finalRemarks;
 
     @SerializedName("images")
     @Expose
+    @TypeConverters(ImagesListTC.class)
     public List<ImagesList> imagesLists;
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("requestName", requestName)
-                .append("requesterId",requesterId).append("profileId",profileId)
+                .append("requesterId",requesterId).append("csComplaintRegisterId",csComplaintRegisterId)
+                .append("profileId",profileId)
                 .append("roleId",roleId).append("complaintDate",complaintDate)
                 .append("clientCode",clientCode).append("oaNumber",oaNumber)
                 .append("areaOffice",areaOffice).append("clientName",clientName)
-                .append("csProjectTypeId",csProjectTypeId).append("otherProjectType",otherProjectType)
+                .append("csProjectTypeId",csProjectTypeId).append("projectTypeName",projectTypeName)
+                .append("otherProjectType",otherProjectType)
                 .append("divisionMasterId",divisionMasterId).append("marketingOfficerName",marketingOfficerName)
-                .append("fabUnitId",fabUnitId).append("natureOfComplaintId",natureOfComplaintId)
+                .append("fabUnitId",fabUnitId).append("fabUnitName",fabUnitName)
+                .append("natureOfComplaintId",natureOfComplaintId)
                 .append("otherNatureOfComplaint",otherNatureOfComplaint).append("closingDate",closingDate)
                 .append("noDaysForResolve",noDaysForResolve).append("complaintStatus",complaintStatus)
-                .append("remarks",remarks).toString();
+                .append("remarks",remarks).append("natureOfComplaintName",natureOfComplaintName).toString();
     }
 
-    public class RemarksList implements Serializable{
+    public static class RemarksList implements Serializable{
         @SerializedName("date")
         @Expose
         public String date;

@@ -28,7 +28,7 @@ public class MastersResVo implements Serializable{
     @SerializedName("tada_list")
     @Expose
     public List<TadaList> tadaList = null;
-    @SerializedName("complaint_list")
+    @SerializedName("complaint_register_list")
     @Expose
     public List<ComplaintsInsertReqVo> complaintList = null;
     @SerializedName("opportunities_list")

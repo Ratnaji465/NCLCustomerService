@@ -17,19 +17,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncl.nclcustomerservice.R;
+import com.ncl.nclcustomerservice.activity.ComplaintsViewActivity;
 import com.ncl.nclcustomerservice.activity.CreateComplaintsActivity;
 import com.ncl.nclcustomerservice.activity.MainActivity;
-import com.ncl.nclcustomerservice.activity.ViewDailyReportsActivty;
-import com.ncl.nclcustomerservice.adapter.DailyReportsAdapter;
+import com.ncl.nclcustomerservice.adapter.ComplaintsAdapter;
 import com.ncl.nclcustomerservice.commonutils.Common;
 import com.ncl.nclcustomerservice.commonutils.Constants;
 import com.ncl.nclcustomerservice.database.DatabaseHandler;
+import com.ncl.nclcustomerservice.network.RetrofitRequestController;
 import com.ncl.nclcustomerservice.network.RetrofitResponseListener;
 import com.ncl.nclcustomerservice.object.ApiRequestController;
 import com.ncl.nclcustomerservice.object.ApiResponseController;
-import com.ncl.nclcustomerservice.object.DailyReportsAddVO;
-import com.ncl.nclcustomerservice.object.DailyReportsResListVO;
+import com.ncl.nclcustomerservice.object.ComplaintsInsertReqVo;
+import com.ncl.nclcustomerservice.object.MastersResVo;
+import com.ncl.nclcustomerservice.object.Team;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ComplaintsFragment extends BaseFragment implements RetrofitResponseListener {
@@ -79,40 +82,58 @@ public class ComplaintsFragment extends BaseFragment implements RetrofitResponse
             public boolean onQueryTextChange(String s) {
                 Common.Log.i(s);
                 queryString='%'+s+'%';
-                List<DailyReportsAddVO> dailyReportsResVOS = db.commonDao().getDailyReportsList(100, 0, queryString);
-                if (dailyReportsResVOS != null)
-                    setOnAdapter(rvList, dailyReportsResVOS);
+                List<ComplaintsInsertReqVo> complaintsInsertReqVos = db.commonDao().getComplaints(100, 0, queryString);
+                if (complaintsInsertReqVos != null)
+                    setOnAdapter(rvList, complaintsInsertReqVos);
                 return false;
             }
         });
         return view;
     }
-    private void setOnAdapter(RecyclerView rvList, List<DailyReportsAddVO>  dailyReportsResVOList) {
-        DailyReportsAdapter dailyReportsAdapter = new DailyReportsAdapter(getContext(), dailyReportsResVOList);
-        rvList.setAdapter(dailyReportsAdapter);
-        dailyReportsAdapter.setOnItemClickListener(new DailyReportsAdapter.OnItemClickListener() {
+    private void setOnAdapter(RecyclerView rvList, List<ComplaintsInsertReqVo>  complaintsInsertReqVos) {
+        ComplaintsAdapter complaintsAdapter = new ComplaintsAdapter(getContext(), complaintsInsertReqVos);
+        rvList.setAdapter(complaintsAdapter);
+        complaintsAdapter.setOnItemClickListener(new ComplaintsAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, View viewItem, int position) {
-                ViewDailyReportsActivty.open(
-                        requireActivity(),
-                        dailyReportsResVOList.get(position)
-                );
+                Intent intent = new Intent(getActivity(), ComplaintsViewActivity.class);
+                intent.putExtra("complaint_register_id", complaintsInsertReqVos.get(position).csComplaintRegisterId);
+                getActivity().startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        callService(""+Common.getUserIdFromSP(getActivity()));
+    }
+    private void callService(String userId) {
+        if (Common.haveInternet(getActivity())) {
+            Team contactTeam = new Team();
+            contactTeam.teamId = userId;
+            contactTeam.roleId =String.valueOf(Common.getRoleIdFromSP(getActivity()));
+            contactTeam.profileId=Common.getProfileId(getActivity());
+            new RetrofitRequestController(this).sendRequest(Constants.RequestNames.COMPLAINT_REGISTER_LIST, contactTeam, false);
+        } else {
+            List<ComplaintsInsertReqVo> complaintsInsertReqVos = db.commonDao().getComplaints( 100,0, queryString);
+            if (complaintsInsertReqVos != null)
+                setOnAdapter(rvList, complaintsInsertReqVos);
+        }
     }
     @Override
     public void onResponseSuccess(ApiResponseController objectResponse, ApiRequestController objectRequest, ProgressDialog progressDialog) {
         try {
             switch (objectRequest.requestname) {
-                case Constants.RequestNames.DAILY_REPORTS_LIST:
+                case Constants.RequestNames.COMPLAINT_REGISTER_LIST:
                     if (objectResponse.result != null) {
-                        DailyReportsResListVO dailyReportsResListVO = Common.getSpecificDataObject(objectResponse.result, DailyReportsResListVO.class);
-                        if (dailyReportsResListVO != null && dailyReportsResListVO.dailyReportsResVOList != null) {
-                            db.commonDao().deleteDailyReportsList();
-                            db.commonDao().insertDailyReportsList(dailyReportsResListVO.dailyReportsResVOList);
-                            setOnAdapter(rvList, dailyReportsResListVO.dailyReportsResVOList);
-                        }
-                    } else {
+                        MastersResVo mastersResVo = Common.getSpecificDataObject(objectResponse.result, MastersResVo.class);
+                        if(mastersResVo.complaintList!=null && mastersResVo.complaintList.size()>0) {
+                                db.commonDao().deleteComplaintList();
+                                db.commonDao().insertComplaints(mastersResVo.complaintList);
+                                setOnAdapter(rvList, mastersResVo.complaintList);
+                            }
+                        } else {
                         Toast.makeText(getActivity(), objectResponse.message, Toast.LENGTH_SHORT).show();
                     }
                     break;

@@ -661,6 +661,7 @@
                             android:layout_height="@dimen/_30sdp"
                             android:background="@drawable/button_border_black"
                             android:imeOptions="actionNext"
+                            android:enabled="false"
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>

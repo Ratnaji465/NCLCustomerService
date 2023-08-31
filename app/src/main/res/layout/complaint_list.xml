@@ -34,17 +34,16 @@
                     android:orientation="vertical">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/item_name_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Customer Name"
+                        android:text="Complaint Date"
                         android:textColor="@color/gray" />
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/complaint_list_customername"
+                        android:id="@+id/tv_complaint_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Palle"
+                        android:text=""
                         android:textColor="@android:color/black" />
 
                 </LinearLayout>
@@ -57,17 +56,16 @@
                     android:orientation="vertical">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/item_company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Batch Number"
+                        android:text="Client Code"
                         android:textColor="@color/gray" />
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/complaint_list_orgin"
+                        android:id="@+id/tv_client_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Transcon"
+                        android:text=""
                         android:textColor="@android:color/black" />
                 </LinearLayout>
 
@@ -88,17 +86,16 @@
                     android:orientation="vertical">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/item_mobile_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Invoice Number"
+                        android:text="OA Number"
                         android:textColor="@color/gray" />
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/complaint_list_invoicenumber"
+                        android:id="@+id/tv_oa_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="098877"
+                        android:text=""
                         android:textColor="@android:color/black" />
 
                 </LinearLayout>
@@ -111,17 +108,67 @@
                     android:orientation="vertical">
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/item_lead_source_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sales Order Date"
+                        android:text="Area Office"
                         android:textColor="@color/gray" />
 
                     <com.ncl.nclcustomerservice.customviews.CustomTextView
-                        android:id="@+id/complaint_list_status"
+                        android:id="@+id/tv_area_office"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Active"
+                        android:text=""
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Client Name"
+                        android:textColor="@color/gray" />
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tv_client_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@android:color/black" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.25"
+                    android:gravity="left"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Project Type"
+                        android:textColor="@color/gray" />
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextView
+                        android:id="@+id/tv_project_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
                         android:textColor="@android:color/black" />
                 </LinearLayout>
 

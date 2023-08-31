@@ -15,6 +15,7 @@ import androidx.room.Update;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityLogsPojo;
 import com.ncl.nclcustomerservice.checkinout.EmpActivityPojo;
 import com.ncl.nclcustomerservice.object.ComplaintRegisterMasterVo;
+import com.ncl.nclcustomerservice.object.ComplaintsInsertReqVo;
 import com.ncl.nclcustomerservice.object.ComplaintsTable;
 import com.ncl.nclcustomerservice.object.ContactList;
 import com.ncl.nclcustomerservice.object.ContractList;
@@ -229,14 +230,24 @@ public interface CommonDao {
     void deleteContactFromDb(int contactId);
 
 
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    void insertComplaints(List<ComplaintsTable> complaint);
+//
+//
+//    @Query("SELECT * FROM ComplaintsTable where customerName like :queryString ORDER BY complaintId DESC LIMIT :limit OFFSET :offset")
+//    public List<ComplaintsTable> getComplaints(int limit, int offset, String queryString);
+//
+//    @Query("DELETE FROM ComplaintsTable")
+//    void deleteComplaintList();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertComplaints(List<ComplaintsTable> complaint);
+    void insertComplaints(List<ComplaintsInsertReqVo> complaint);
 
 
-    @Query("SELECT * FROM ComplaintsTable ORDER BY complaintId DESC LIMIT :limit OFFSET :offset")
-    public List<ComplaintsTable> getComplaints(int limit, int offset);
+    @Query("SELECT * FROM ComplaintsInsertReqVo where clientName like :queryString ORDER BY csComplaintRegisterId DESC LIMIT :limit OFFSET :offset")
+    public List<ComplaintsInsertReqVo> getComplaints(int limit, int offset, String queryString);
 
-    @Query("DELETE FROM ComplaintsTable")
+    @Query("DELETE FROM ComplaintsInsertReqVo")
     void deleteComplaintList();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

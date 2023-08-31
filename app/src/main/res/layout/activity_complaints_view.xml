@@ -59,10 +59,10 @@
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Customer Name" />
+                                android:text="Complaint Date" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaint_view_customername"
+                                android:id="@+id/tv_complaint_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -79,10 +79,10 @@
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sales Order Date" />
+                                android:text="Client Code" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaint_view_sales_order_date"
+                                android:id="@+id/tv_client_code"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -109,10 +109,10 @@
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sales Order Number" />
+                                android:text="OA Number" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaint_view_sales_order_number"
+                                android:id="@+id/tv_oa_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -129,10 +129,10 @@
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Customer Feedback and Expectation" />
+                                android:text="Area Office" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaint_view_feedback"
+                                android:id="@+id/tv_area_office"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -158,10 +158,10 @@
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Application Training Date" />
+                                android:text="Client Name" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaint_view_application_date"
+                                android:id="@+id/tv_client_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -178,60 +178,10 @@
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Other" />
+                                android:text="Project Type" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaints_view_other"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Invoice Date" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaints_view_invoice_date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Invoice Number" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaints_view_invoice_number"
+                                android:id="@+id/tv_project_type"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -258,10 +208,10 @@
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Batch Numbers" />
+                                android:text="Product" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaints_view_batch_numbers"
+                                android:id="@+id/tv_product"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -278,10 +228,60 @@
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Defective Sample Taken" />
+                                android:text="Marketing Officer Name" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaints_view_sample"
+                                android:id="@+id/tv_marketing_officer_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Fab Unit" />
+
+                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                                android:id="@+id/tv_fab_unit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nature Of Complaint" />
+
+                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                                android:id="@+id/tv_nature_of_complaint"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
@@ -297,26 +297,74 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sample send to plant or R&amp;D Lab" />
+                                android:text="Closing Date" />
 
                             <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaints_view_sample_send"
+                                android:id="@+id/tv_closing_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=""
                                 android:textColor="@color/black" />
 
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No.of days took to resove" />
+
+                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                                android:id="@+id/tv_no_of_days_took"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Complaint Status" />
+
+                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                                android:id="@+id/tv_complaint_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
                 </LinearLayout>
@@ -332,7 +380,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/grey"
                         android:padding="@dimen/_5sdp"
-                        android:text="Sales Officer"
+                        android:text="Images"
                         android:textAllCaps="true" />
 
                     <LinearLayout
@@ -343,48 +391,62 @@
                         android:weightSum="2">
 
                         <LinearLayout
+                            android:id="@+id/ll_image_preview1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Site Visit By" />
 
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/site_visit_sales_officer"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=" "
-                                android:textColor="@color/black" />
+                                android:text="File 1:"
+                                android:textColor="@android:color/black"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:id="@+id/iv_file1_preview"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:padding="8dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_baseline_camera_alt_24" />
 
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/ll_image_preview2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:layout_marginStart="5dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Assessment" />
 
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/assessment_sales_officer"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
+                                android:text="File 2:"
+                                android:textColor="@android:color/black"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:id="@+id/iv_file2_preview"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_baseline_camera_alt_24" />
 
                         </LinearLayout>
-
-
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -393,48 +455,151 @@
                         android:weightSum="2">
 
                         <LinearLayout
+                            android:id="@+id/ll_image_preview3"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
 
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Recommended Solution" />
+                                android:text="File 3:"
+                                android:textColor="@android:color/black"
+                                android:textSize="12sp" />
 
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/recommended_solution_sales_officer"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
+                            <ImageView
+                                android:id="@+id/iv_file3_preview"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:padding="8dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_baseline_camera_alt_24" />
 
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/ll_image_preview4"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:layout_marginStart="5dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Status" />
 
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/status_sales_officer"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
+                                android:text="File 4:"
+                                android:textColor="@android:color/black"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:id="@+id/iv_file4_preview"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:padding="8dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_baseline_camera_alt_24" />
 
                         </LinearLayout>
-
-
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/grey"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Supervisior Remarks"
+                        android:textAllCaps="true" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbarSize="@dimen/_2sdp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_supervisor_remarks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/grey"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Remarks by complaint receiver"
+                        android:textAllCaps="true" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbarSize="@dimen/_2sdp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_complaint_receiver_remarks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+                    </HorizontalScrollView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:orientation="vertical">
+
+                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/grey"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Commercial dept Remarks"
+                        android:textAllCaps="true" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbarSize="@dimen/_2sdp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_commercial_remarks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+                    </HorizontalScrollView>
 
 
                 </LinearLayout>
@@ -450,628 +615,22 @@
                         android:layout_height="wrap_content"
                         android:background="@color/grey"
                         android:padding="@dimen/_5sdp"
-                        android:text="area manager"
+                        android:text="Final Remarks"
                         android:textAllCaps="true" />
 
-                    <LinearLayout
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbarSize="@dimen/_2sdp">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:id="@+id/ll_final_remarks"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Site Visit By" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/site_visit_area_manager"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=" "
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Assessment" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/assessment_area_manager"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Recommended Solution" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/recommended_solution_area_manager"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Status" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/status_area_manager"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:orientation="vertical">
-
-                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/grey"
-                        android:padding="@dimen/_5sdp"
-                        android:text="Regional manager"
-                        android:textAllCaps="true" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Site Visit By" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/site_visit_regional_manager"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=" "
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Assessment" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/assessment_regional_manager"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Recommended Solution" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/recommended_solution_regional_manager"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Status" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/status_regional_manager"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:orientation="vertical">
-
-                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/grey"
-                        android:padding="@dimen/_5sdp"
-                        android:text="National Head"
-                        android:textAllCaps="true" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Site Visit By" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/site_visit_national_head"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=" "
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Assessment" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/assessment_national_head"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Recommended Solution" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/recommended_solution_national_head"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Status" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/status_national_head"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:orientation="vertical">
-
-                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/grey"
-                        android:padding="@dimen/_5sdp"
-                        android:text="quality department"
-                        android:textAllCaps="true" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Tests Done" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/tests_done_quality_dep"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Assessment" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/assessment__quality_dep"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="vertical">
-
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Recommendation" />
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:id="@+id/recommendation__quality_dep"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:orientation="vertical">
-
-                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/grey"
-                        android:padding="@dimen/_5sdp"
-                        android:text="manufacturing department"
-                        android:textAllCaps="true" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="vertical">
-
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Assessment" />
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:id="@+id/complaint_view_manufacture_assessment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:orientation="vertical">
-
-                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/grey"
-                        android:padding="@dimen/_5sdp"
-                        android:text="management department"
-                        android:textAllCaps="true" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Assessment" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaint_view_manage_assessment"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Recommendation" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/complaint_view_manage_recommendation"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:orientation="vertical">
-
-                    <com.ncl.nclcustomerservice.customviews.CustomTextviewSemiBold
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/grey"
-                        android:padding="@dimen/_5sdp"
-                        android:text="Commercial Department"
-                        android:textAllCaps="true" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Tests Done" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/credit_note_commercial_department"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Assessment" />
-
-                            <com.ncl.nclcustomerservice.customviews.CustomTextView
-                                android:id="@+id/material_replaced_commercial_department"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:orientation="vertical">
-
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Remarks" />
-
-                        <com.ncl.nclcustomerservice.customviews.CustomTextView
-                            android:id="@+id/remarks_commercial_department"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-
+                            android:orientation="vertical" />
+                    </HorizontalScrollView>
                 </LinearLayout>
             </LinearLayout>
 
@@ -1125,6 +684,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:visibility="invisible"
             android:orientation="vertical"
             android:weightSum="2">
 
