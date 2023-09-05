@@ -86,6 +86,8 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
 
     @BindView(R.id.tv_complaint_date)
     CustomTextView tv_complaint_date;
+    @BindView(R.id.tv_client_code_head)
+    CustomTextView tv_client_code_head;
     @BindView(R.id.et_client_code)
     CustomEditText et_client_code;
     @BindView(R.id.tv_oa_no_head)
@@ -429,8 +431,8 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
             complaintsInsertReqVo.fabUnitId=selectedFabUnitId;
             complaintsInsertReqVo.natureOfComplaintId=selectedNatureOfComplaintId;
             complaintsInsertReqVo.otherNatureOfComplaint=et_other_nature_of_compl.getText().toString();
-            complaintsInsertReqVo.closingDate=tv_closing_date.getText().toString();
-            complaintsInsertReqVo.noDaysForResolve=et_days_took_resolve.getText().toString();
+//            complaintsInsertReqVo.closingDate=tv_closing_date.getText().toString();
+//            complaintsInsertReqVo.noDaysForResolve=et_days_took_resolve.getText().toString();
             complaintsInsertReqVo.complaintStatus=selectedComplaintStatus;
             if (Common.getUserType(this).equalsIgnoreCase("Supervisior")) {
                 complaintsInsertReqVo.remarks= getRemarks(by_supervisor_layout);
@@ -562,6 +564,10 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
     }
     private boolean isValidated() {
         boolean Validate = true;
+        if (et_client_code.getText().toString().trim().length() == 0) {
+            et_client_code.setError("Please Add Client Code");
+            return false;
+        }
         if (et_oa_no.getText().toString().trim().length() == 0) {
             et_oa_no.setError("Please Add OA Number");
             return false;
@@ -885,6 +891,7 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
     }
 
     private void findViewSetHint() {
+        tv_client_code_head.setText(Common.setSppanableText("* Client Code"));
         tv_oa_no_head.setText(Common.setSppanableText("* OA NO"));
         tv_client_name_head.setText(Common.setSppanableText("* Client Name"));
         tv_project_type_head.setText(Common.setSppanableText("* Project Type"));

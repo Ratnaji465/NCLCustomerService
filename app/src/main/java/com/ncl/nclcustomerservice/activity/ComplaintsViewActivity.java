@@ -91,6 +91,8 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
     @BindView(R.id.edit_linear)
     LinearLayout edit_linear;
 
+    @BindView(R.id.ll_closing)
+    LinearLayout ll_closing;
     String complaintRegisterId;
     ComplaintsInsertReqVo complaintsInsertReqVo;
 
@@ -145,8 +147,13 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                             tv_marketing_officer_name.setText(complaintsInsertReqVo.marketingOfficerName);
                             tv_fab_unit.setText(complaintsInsertReqVo.fabUnitName);
                             tv_nature_of_complaint.setText(complaintsInsertReqVo.natureOfComplaintName);
-                            tv_closing_date.setText(complaintsInsertReqVo.closingDate);
-                            tv_no_of_days_took.setText(complaintsInsertReqVo.noDaysForResolve);
+                            if(complaintsInsertReqVo.complaintStatus.equalsIgnoreCase("Closed")){
+                                ll_closing.setVisibility(View.VISIBLE);
+                                tv_closing_date.setText(complaintsInsertReqVo.closingDate);
+                                tv_no_of_days_took.setText(complaintsInsertReqVo.noDaysForResolve);
+                            }else {
+                                ll_closing.setVisibility(View.GONE);
+                            }
                             tv_complaint_status.setText(complaintsInsertReqVo.complaintStatus);
 
                             if (complaintsInsertReqVo.commercialDepartmentRemarks != null) {
@@ -178,6 +185,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file1_preview);
+                                        ViewImageWhenClicked(iv_file1_preview,complaintsInsertReqVo.imagesLists.get(0).imagePath);
                                     }
                                     break;
                                 case 2:
@@ -189,6 +197,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file1_preview);
+                                        ViewImageWhenClicked(iv_file1_preview,complaintsInsertReqVo.imagesLists.get(0).imagePath);
                                     }
                                     if ((complaintsInsertReqVo.imagesLists.get(1).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(1).imagePath))) {
                                         Picasso.with(this)
@@ -196,6 +205,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file2_preview);
+                                        ViewImageWhenClicked(iv_file2_preview,complaintsInsertReqVo.imagesLists.get(1).imagePath);
                                     }
                                     break;
                                 case 3:
@@ -206,6 +216,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file1_preview);
+                                        ViewImageWhenClicked(iv_file1_preview,complaintsInsertReqVo.imagesLists.get(0).imagePath);
                                     }
                                     if ((complaintsInsertReqVo.imagesLists.get(1).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(1).imagePath))) {
                                         Picasso.with(this)
@@ -213,6 +224,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file2_preview);
+                                        ViewImageWhenClicked(iv_file2_preview,complaintsInsertReqVo.imagesLists.get(1).imagePath);
                                     }
                                     if ((complaintsInsertReqVo.imagesLists.get(2).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(2).imagePath))) {
                                         Picasso.with(this)
@@ -220,6 +232,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file3_preview);
+                                        ViewImageWhenClicked(iv_file3_preview,complaintsInsertReqVo.imagesLists.get(2).imagePath);
                                     }
                                     break;
                                 case 4:
@@ -229,6 +242,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file1_preview);
+                                        ViewImageWhenClicked(iv_file1_preview,complaintsInsertReqVo.imagesLists.get(0).imagePath);
                                     }
                                     if ((complaintsInsertReqVo.imagesLists.get(1).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(1).imagePath))) {
                                         Picasso.with(this)
@@ -236,6 +250,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file2_preview);
+                                        ViewImageWhenClicked(iv_file2_preview,complaintsInsertReqVo.imagesLists.get(1).imagePath);
                                     }
                                     if ((complaintsInsertReqVo.imagesLists.get(2).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(2).imagePath))) {
                                         Picasso.with(this)
@@ -243,6 +258,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file3_preview);
+                                        ViewImageWhenClicked(iv_file3_preview,complaintsInsertReqVo.imagesLists.get(2).imagePath);
                                     }
                                     if ((complaintsInsertReqVo.imagesLists.get(3).imagePath != null && !TextUtils.isEmpty(complaintsInsertReqVo.imagesLists.get(3).imagePath))) {
                                         Picasso.with(this)
@@ -250,6 +266,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                                                 .resize(100, 100)
                                                 .error(R.drawable.ic_baseline_camera_alt_24)
                                                 .into(iv_file4_preview);
+                                        ViewImageWhenClicked(iv_file4_preview,complaintsInsertReqVo.imagesLists.get(3).imagePath);
                                     }
                                     break;
 
@@ -265,6 +282,17 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void ViewImageWhenClicked(ImageView imageView,String imageUrl) {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ComplaintsViewActivity.this, ViewImageActivity.class);
+                intent.putExtra("ImagePath", imageUrl);
+                startActivity(intent);
+            }
+        });
     }
 
     private void addRemarksLineItems(LinearLayout linearLayout, List<ComplaintsInsertReqVo.RemarksList> remarksLists) {
