@@ -680,7 +680,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/grey"
                         android:padding="@dimen/_5sdp"
-                        android:text="Final Remarks"
+                        android:text="CS Head Final Remarks"
                         android:textAllCaps="true"
                         android:textColor="@android:color/black" />
                     <HorizontalScrollView

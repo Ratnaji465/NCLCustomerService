@@ -62,8 +62,8 @@
        </LinearLayout>
 
        <LinearLayout
-           android:layout_width="@dimen/_100sdp"
-           android:layout_height="@dimen/_70sdp"
+           android:layout_width="@dimen/_110sdp"
+           android:layout_height="@dimen/_80sdp"
            android:orientation="vertical"
            android:layout_marginLeft="@dimen/_10sdp"
            android:weightSum="1">
@@ -77,12 +77,13 @@
            <EditText
                android:id="@+id/etRemarks"
                android:layout_width="match_parent"
-               android:layout_height="0dp"
-               android:layout_weight="1"
-               android:inputType="text"
-               android:gravity="start"
-               android:imeOptions="actionNext"
+               android:layout_height="wrap_content"
+               android:inputType="textMultiLine"
+               android:gravity="top|start"
+               android:lines="8"
+               android:maxLines="10"
                android:textSize="12sp"
+               android:scrollbars="vertical"
                android:background="@drawable/button_bg_white"/>
        </LinearLayout>
 
