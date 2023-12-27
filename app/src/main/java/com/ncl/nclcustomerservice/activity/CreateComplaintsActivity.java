@@ -7,8 +7,10 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.gson.Gson;
 import com.ncl.nclcustomerservice.R;
@@ -636,17 +639,19 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            File file = ImagePicker.Companion.getFile(data);
-            if (file != null) {
+        if (resultCode == Activity.RESULT_OK && data!=null && data.getData()!=null) {
+//            File file = ImagePicker.Companion.getFile(data);
+//            File file =new File(data.getData().getPath());
+            Uri selectedImageUri = data.getData( );
+            if(selectedImageUri!=null){
+                File file = new File(getRealPathFromURI(selectedImageUri));
                 if (requestFileCode == 1001) {
+
                     Picasso.with(this)
                             .load("file:///" + file.getAbsolutePath())
                             .resize(100, 100)
                             .error(R.drawable.ic_upload)
                             .into(iv_file1_preview);
-                    String firstlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
-                    System.out.println("## firstlink:" + firstlink1);
                     fileDetails1 = new FileDetails();
                     fileDetails1.filePath = file.getAbsolutePath();
                 }else if (requestFileCode == 1002) {
@@ -655,8 +660,6 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
                             .resize(100, 100)
                             .error(R.drawable.ic_upload)
                             .into(iv_file2_preview);
-                    String secondlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
-                    System.out.println("## secondlink:" + secondlink1);
                     fileDetails2 = new FileDetails();
                     fileDetails2.filePath = file.getAbsolutePath();
                 }else if (requestFileCode == 1003) {
@@ -665,8 +668,6 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
                             .resize(100, 100)
                             .error(R.drawable.ic_upload)
                             .into(iv_file3_preview);
-                    String secondlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
-                    System.out.println("## thirdlink:" + secondlink1);
                     fileDetails3 = new FileDetails();
                     fileDetails3.filePath = file.getAbsolutePath();
                 }else if (requestFileCode == 1004) {
@@ -675,15 +676,30 @@ public class CreateComplaintsActivity extends NetworkChangeListenerActivity impl
                             .resize(100, 100)
                             .error(R.drawable.ic_upload)
                             .into(iv_file4_preview);
-                    String secondlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
-                    System.out.println("## fouthlink:" + secondlink1);
                     fileDetails4 = new FileDetails();
                     fileDetails4.filePath = file.getAbsolutePath();
                 }
             }
+
         }
     }
-
+    private String getRealPathFromURI(Uri contentURI) {
+        try {
+            if(getContentResolver()!=null){
+                Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+                if (cursor == null) { // Source is Dropbox or other similar local file path
+                    return contentURI.getPath();
+                } else {
+                    cursor.moveToFirst();
+                    int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    return cursor.getString(idx);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
     private void loadDataIntoFields() {
         tv_complaint_date.setText(Common.getCurrentDate());
         tv_area_office.setText(Common.getAreaOffice(this));

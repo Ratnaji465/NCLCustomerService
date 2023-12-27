@@ -22,7 +22,7 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.github.dhaval2404.imagepicker.ImagePicker.Companion.getFile
+import com.github.dhaval2404.imagepicker.ImagePicker.Companion
 import com.github.dhaval2404.imagepicker.ImagePicker.Companion.with
 import com.google.gson.Gson
 import com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner
@@ -1169,9 +1169,10 @@ class CreateClientProjectActivity : NetworkChangeListenerActivity(), RetrofitRes
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && data != null) {
-            val file = getFile(data)
+//            val file = getFile(data)
+            val file = File(data.data?.path ?: "")
             val firstlink1 =
-                    file!!.absolutePath.subSequence(0, file.absolutePath.lastIndexOf('/'))
+                    file.absolutePath.subSequence(0, file.absolutePath.lastIndexOf('/'))
                             .toString()
             wc_certificate_file = File(file.absolutePath) // Assuming it is in Internal Storage
             println("## firstlink:$firstlink1")

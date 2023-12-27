@@ -41,7 +41,8 @@
         <activity
             android:name=".activity.ViewCustomerProjectActivity"
             android:exported="false" />
-        <activity android:name=".activity.SplashActivity">
+        <activity android:name=".activity.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -76,7 +77,8 @@
 
         <service android:name="com.ncl.nclcustomerservice.checkinout.CheckoutService" />
 
-        <receiver android:name="com.ncl.nclcustomerservice.checkinout.LocationProviderChanged">
+        <receiver android:name="com.ncl.nclcustomerservice.checkinout.LocationProviderChanged"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.location.PROVIDERS_CHANGED" />
             </intent-filter>
@@ -94,12 +96,14 @@
             android:exported="true"
             android:stopWithTask="false" />
 
-        <receiver android:name="com.ncl.nclcustomerservice.checkinout.AlarmReceiver">
+        <receiver android:name="com.ncl.nclcustomerservice.checkinout.AlarmReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.test.intent.action.ALARM" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.ncl.nclcustomerservice.checkinout.CheckoutAlarmReceiver">
+        <receiver android:name="com.ncl.nclcustomerservice.checkinout.CheckoutAlarmReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.nsl.intent.action.ALARM" />
             </intent-filter>
@@ -111,7 +115,8 @@
         -->
         <activity android:name=".activity.CreateDailyReportsActivity" />
 
-        <service android:name="com.ncl.nclcustomerservice.fcm.MyFirebaseMessagingService1">
+        <service android:name="com.ncl.nclcustomerservice.fcm.MyFirebaseMessagingService1"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -120,57 +125,13 @@
 
         <receiver
             android:name="com.ncl.nclcustomerservice.broadcastreceiver.ConnectivityReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
-        <!-- <service -->
-        <!-- android:name="com.suprasoft.ncl.checkinout.LocationUpdateService" -->
-        <!-- android:enabled="true" -->
-        <!-- android:exported="true" -->
-        <!-- android:stopWithTask="false" -->
-        <!-- /> -->
-        <!-- <receiver android:name="com.suprasoft.ncl.checkinout.AlarmReceiver"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="com.test.intent.action.ALARM" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
-        <!--
-         <service
-             android:exported="false"
-             android:name=".oreo.LocationUpdatesJobService1">
-             <intent-filter>
-                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-             </intent-filter>
-         </service>
-         <receiver android:name="com.nsl.beejtantra.oreo.MyWakefulReceiver"></receiver>
-        -->
-
-
-        <!-- <service -->
-        <!-- android:name="com.suprasoft.ncl.checkinout.JobScheduleService" -->
-        <!-- android:permission="android.permission.BIND_JOB_SERVICE"/> -->
-
-
-        <!-- <receiver android:name="com.suprasoft.ncl.checkinout.LocationProviderChanged"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.location.PROVIDERS_CHANGED" /> -->
-        <!-- </intent-filter> -->
-        <!-- <intent-filter> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
-
-
-        <!-- <receiver -->
-        <!-- android:name="com.suprasoft.ncl.checkinout.StartMyActivityAtBootReceiver" -->
-        <!-- android:label="StartMyServiceAtBootReceiver"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
 
         <activity
             android:name="com.ncl.nclcustomerservice.activity.CreateNewContactActivity"
@@ -188,14 +149,16 @@
             android:name="com.ncl.nclcustomerservice.uploadfiles.OffLineDataUploadService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <receiver android:name="com.ncl.nclcustomerservice.uploadfiles.FileProgressReceiver">
+        <receiver android:name="com.ncl.nclcustomerservice.uploadfiles.FileProgressReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.wave.ACTION_CLEAR_NOTIFICATION" />
                 <action android:name="com.wave.ACTION_PROGRESS_NOTIFICATION" />
                 <action android:name="com.wave.ACTION_UPLOADED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.ncl.nclcustomerservice.uploadfiles.RetryJobReceiver">
+        <receiver android:name="com.ncl.nclcustomerservice.uploadfiles.RetryJobReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.wave.ACTION_RETRY" />
                 <action android:name="com.wave.ACTION_CLEAR" />

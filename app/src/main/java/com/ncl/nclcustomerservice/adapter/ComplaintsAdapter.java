@@ -45,6 +45,7 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.Vi
         holder.tv_area_office.setText(complaintsInsertReqVos.get(position).areaOffice);
         holder.tv_client_name.setText(complaintsInsertReqVos.get(position).clientName);
         holder.tv_project_type.setText(complaintsInsertReqVos.get(position).projectTypeName);
+        holder.tv_complaint_number.setText(complaintsInsertReqVos.get(position).complaintRegistrationNumber);
     }
     @Override
     public int getItemCount() {
@@ -64,6 +65,8 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.Vi
         TextView tv_client_name;
         @BindView(R.id.tv_project_type)
         TextView tv_project_type;
+        @BindView(R.id.tv_complaint_number)
+        TextView tv_complaint_number;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

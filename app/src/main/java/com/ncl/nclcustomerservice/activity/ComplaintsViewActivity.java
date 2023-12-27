@@ -49,6 +49,8 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
     CustomTextView tv_client_name;
     @BindView(R.id.tv_project_type)
     CustomTextView tv_project_type;
+    @BindView(R.id.tv_complaint_number)
+    CustomTextView tv_complaint_number;
     @BindView(R.id.tv_product)
     CustomTextView tv_product;
     @BindView(R.id.tv_marketing_officer_name)
@@ -143,6 +145,7 @@ public class ComplaintsViewActivity extends AppCompatActivity implements Retrofi
                             tv_area_office.setText(complaintsInsertReqVo.areaOffice);
                             tv_client_name.setText(complaintsInsertReqVo.clientName);
                             tv_project_type.setText(complaintsInsertReqVo.projectTypeName);
+                            tv_complaint_number.setText(complaintsInsertReqVo.complaintRegistrationNumber);
                             tv_product.setText(complaintsInsertReqVo.divisionMastername);
                             tv_marketing_officer_name.setText(complaintsInsertReqVo.marketingOfficerName);
                             tv_fab_unit.setText(complaintsInsertReqVo.fabUnitName);

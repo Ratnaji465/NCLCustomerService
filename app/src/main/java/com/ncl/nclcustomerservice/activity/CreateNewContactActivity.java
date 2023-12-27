@@ -986,21 +986,24 @@ public class CreateNewContactActivity extends NetworkChangeListenerActivity impl
         try {
             if (resultCode == Activity.RESULT_OK && data != null) {
                 if (click_aadhar) {
-                    File file = ImagePicker.Companion.getFile(data);
+//                    File file = ImagePicker.Companion.getFile(data);
+                    File file =new File(data.getData().getPath());
                     String firstlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
                     con_aadha_file = new File(file.getAbsolutePath()); // Assuming it is in Internal Storage
                     System.out.println("## firstlink:" + firstlink1);
                     adhar_cc_FileName.setText(file.getName());
                 }
                 if (click_pan) {
-                    File file = ImagePicker.Companion.getFile(data);
+//                    File file = ImagePicker.Companion.getFile(data);
+                    File file =new File(data.getData().getPath());
                     String firstlink1 = file.getAbsolutePath().subSequence(0, file.getAbsolutePath().lastIndexOf('/')).toString();
                     con_pan_file = new File(file.getAbsolutePath()); // Assuming it is in Internal Storage
                     System.out.println("## firstlink:" + firstlink1);
                     pan_cc_FileName.setText(file.getName());
                 }
                 if (tm_click_aadhar) {
-                    File file = ImagePicker.Companion.getFile(data);
+//                    File file = ImagePicker.Companion.getFile(data);
+                    File file =new File(data.getData().getPath());
                     File tm_aadhar_file = new File(file.getAbsolutePath());
                     setTMAadharFileName(tm_aadhar_file);
                 }

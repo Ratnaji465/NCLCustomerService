@@ -59,6 +59,9 @@ public class ComplaintsInsertReqVo implements Serializable {
     @SerializedName("project_type_name")
     @Expose
     public String projectTypeName;
+    @SerializedName("complaint_registration_number")
+    @Expose
+    public String complaintRegistrationNumber;
     @SerializedName("other_Project_type")
     @Expose
     public String otherProjectType;
@@ -131,6 +134,7 @@ public class ComplaintsInsertReqVo implements Serializable {
                 .append("areaOffice",areaOffice).append("clientName",clientName)
                 .append("csProjectTypeId",csProjectTypeId).append("projectTypeName",projectTypeName)
                 .append("otherProjectType",otherProjectType)
+                .append("complaintRegistrationNumber",complaintRegistrationNumber)
                 .append("divisionMasterId",divisionMasterId).append("marketingOfficerName",marketingOfficerName)
                 .append("fabUnitId",fabUnitId).append("fabUnitName",fabUnitName)
                 .append("natureOfComplaintId",natureOfComplaintId)
